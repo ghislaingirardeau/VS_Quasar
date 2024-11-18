@@ -69,7 +69,7 @@ const menuList = ref([
   },
   {
     icon: 'check',
-    label: 'Todos',
+    label: 'Todos - table',
     separator: false,
     to: {
       name: 'todos',
