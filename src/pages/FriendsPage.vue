@@ -1,79 +1,131 @@
 <template>
-  <q-page padding>
-    friends page
+  <div class="q-pa-md">
     <q-table
-      ref="tableComponent"
-      v-model:fullscreen="fullscreen"
-      title="Todos"
-      :columns
-      :rows="todos"
-      :loading="isFetching"
-      :rows-per-page-options="[2]"
-      color="blue"
-      row-key="name"
-      @row-click="(_evt, row) => console.log(row)"
+      ref="tableRef"
+      v-model:pagination="pagination"
+      flat
+      bordered
+      title="Treats"
+      :rows="rows"
+      row-key="id"
+      :loading="loading"
+      :filter="filter"
+      binary-state-sort
+      @request="onRequest"
     >
       <template #top-right>
-        <!-- Template: pour avoir un controle totale des cellules du tableau et personnaliser -->
-        <q-btn
-          :icon="!fullscreen ? 'fullscreen' : 'fullscreen_exit'"
-          @click="fullscreen = !fullscreen"
+        <q-input
+          v-model="filter"
+          borderless
+          dense
+          debounce="300"
+          placeholder="Search"
         >
-        </q-btn>
-      </template>
-      <template #pagination="scope">
-        <!-- scope: renvoie toutes les informations "pré-établi" par quasar, et que l'on peut réutilisé -->
-        <!-- <pre>{{ scope }} </pre> -->
-        <q-btn
-          icon="arrow_left"
-          :disable="scope.isFirstPage"
-          @click="scope.prevPage()"
-        >
-        </q-btn>
-        <q-btn
-          icon="arrow_right"
-          :disable="scope.isLastPage"
-          @click="scope.nextPage()"
-        >
-        </q-btn>
+          <template #append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
       </template>
     </q-table>
-  </q-page>
+  </div>
 </template>
 
-<script setup>
+<script>
+import { ref, onMounted } from 'vue';
 import { useFetch } from '@vueuse/core';
-import { computed, ref } from 'vue';
 
-const fullscreen = ref(false);
-// Pour utiliser les méthodes du tableau directement dans le js
-const tableComponent = ref();
+/* 
+Pour un chargement des données depuis un serveur
+si on veut rappeler les données du serveur au changement de page ou sur un filtre
+on va utiliser onRequest pour récupérer les datas et faire la MAJ en conséquence du tableau
+*/
 
-const { isFetching, error, data } = useFetch(
-  'https://jsonplaceholder.typicode.com/todos',
-);
+export default {
+  setup() {
+    const tableRef = ref();
+    const rows = ref([]);
+    const filter = ref('');
+    const loading = ref(false);
+    const pagination = ref({
+      sortBy: 'desc',
+      descending: false,
+      page: 1,
+      rowsPerPage: 3,
+      rowsNumber: 10,
+    });
 
-const todos = computed(() => {
-  return data.value ? JSON.parse(data.value) : [];
-});
+    // emulate ajax call
+    // SELECT * FROM ... WHERE...LIMIT...
+    async function fetchFromServer(
+      startRow,
+      count,
+      filter,
+      sortBy,
+      descending,
+    ) {
+      const { isFetching, error, data } = await useFetch(
+        'https://jsonplaceholder.typicode.com/users',
+      );
 
-const columns = ref([
-  {
-    name: 'title',
-    required: true,
-    label: 'Title',
-    field: 'title',
-    align: 'left',
-    sortable: true,
+      return JSON.parse(data.value);
+    }
+
+    async function onRequest(props) {
+      const { page, rowsPerPage, sortBy, descending } = props.pagination;
+      const filter = props.filter;
+
+      loading.value = true;
+
+      // emulate server
+      setTimeout(async () => {
+        // update rowsCount with appropriate value
+
+        // get all rows if "All" (0) is selected
+        const fetchCount =
+          rowsPerPage === 0 ? pagination.value.rowsNumber : rowsPerPage;
+
+        // calculate starting row of data
+        const startRow = (page - 1) * rowsPerPage;
+
+        // fetch data from "server"
+
+        const returnedData = await fetchFromServer(
+          startRow,
+          fetchCount,
+          filter,
+          sortBy,
+          descending,
+        );
+
+        // clear out existing data and add new
+        rows.value.splice(0, rows.value.length, ...returnedData);
+
+        // don't forget to update local pagination object
+        pagination.value.page = page;
+        pagination.value.rowsPerPage = returnedData.length;
+        pagination.value.sortBy = sortBy;
+        pagination.value.descending = descending;
+
+        // ...and turn of loading indicator
+        loading.value = false;
+      }, 1500);
+    }
+
+    onMounted(() => {
+      // get initial data from server (1st page)
+      // method de q-table, accessible car le tableau est lié à la ref tableRef
+      tableRef.value.requestServerInteraction();
+    });
+
+    return {
+      tableRef,
+      filter,
+      loading,
+      pagination,
+      rows,
+
+      onRequest,
+    };
   },
-  {
-    name: 'completed',
-    align: 'center',
-    label: 'Done',
-    field: 'completed',
-    sortable: false,
-  },
-]);
+};
 </script>
-
-<style lang="scss" scoped></style>

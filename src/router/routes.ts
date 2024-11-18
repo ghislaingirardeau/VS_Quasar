@@ -15,6 +15,11 @@ const routes: RouteRecordRaw[] = [
         name: 'todos',
         component: () => import('pages/TodosPage.vue'),
       },
+      {
+        path: 'friends',
+        name: 'friends',
+        component: () => import('pages/FriendsPage.vue'),
+      },
     ],
   },
 
