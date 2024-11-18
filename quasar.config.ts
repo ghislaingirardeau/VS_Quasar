@@ -20,6 +20,12 @@ export default configure((ctx) => {
     css: ['app.scss'],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
+    // Icons or font librairies you can include in quasar
+    // juste besoin de decommenter les autres librairie si on souhaite les utiliser
+    // material-icons est celui configurer par defaut
+    // A COMBINER avec framework.config.iconset => pour préciser à quasar quelle librairie d'icone je veux utiliser
+    // INCONVENIENT : cela à pour effet de télécharger tous le fichiers des icones depuis la librairie lors du chargment de l'app
+    // Meilleurs solutions est d'utiliser l'import SVG d'icones directement dans le component en fonction de nos besoins ex: home page
     extras: [
       // 'ionicons-v4',
       // 'mdi-v7',
@@ -104,7 +110,7 @@ export default configure((ctx) => {
     framework: {
       config: {},
 
-      // iconSet: 'material-icons', // Quasar icon set
+      iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
 
       // For special cases outside of where the auto-import strategy can have an impact

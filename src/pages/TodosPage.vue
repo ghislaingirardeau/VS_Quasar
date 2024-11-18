@@ -132,10 +132,6 @@ const columns = ref([
     sortable: false,
   },
 ]);
-
-function onRequest(props) {
-  console.log(props);
-}
 </script>
 
 <style lang="scss" scoped>

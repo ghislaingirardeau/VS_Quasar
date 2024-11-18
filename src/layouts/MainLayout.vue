@@ -76,9 +76,12 @@ const menuList = ref([
     },
   },
   {
-    icon: 'delete',
-    label: 'Trash',
+    icon: 'description',
+    label: 'form',
     separator: false,
+    to: {
+      name: 'form',
+    },
   },
   {
     icon: 'error',
