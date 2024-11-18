@@ -1,12 +1,12 @@
 <template>
   <q-page padding>
-    friends page
+    <h2 class="text-h4 q-my-sm">Todo list</h2>
     <q-table
       ref="tableComponent"
       v-model:fullscreen="fullscreen"
       title="Todos"
-      :columns
       :rows="todos"
+      :columns
       :loading="isFetching"
       :rows-per-page-options="[2]"
       color="blue"
@@ -20,6 +20,19 @@
           @click="fullscreen = !fullscreen"
         >
         </q-btn>
+      </template>
+
+      <template #body-cell-username="scope">
+        <!-- scope cells, appliquera la mise en forme des cellules par défaut et non celle spécifié  -->
+        <!-- Pour garantir que les cellules garderont leur mise en forme, il faut passer la props scope dans q-td -->
+        <q-td :props="scope">
+          <q-chip class="glossy">{{ scope.value }} </q-chip>
+        </q-td>
+      </template>
+      <template #body-cell-address="scope">
+        <q-td :props="scope">
+          {{ scope.value.street }}
+        </q-td>
       </template>
       <template #pagination="scope">
         <!-- scope: renvoie toutes les informations "pré-établi" par quasar, et que l'on peut réutilisé -->
@@ -38,6 +51,7 @@
         </q-btn>
       </template>
     </q-table>
+    <pre>{{ todos }}</pre>
   </q-page>
 </template>
 
@@ -50,7 +64,7 @@ const fullscreen = ref(false);
 const tableComponent = ref();
 
 const { isFetching, error, data } = useFetch(
-  'https://jsonplaceholder.typicode.com/todos',
+  'https://jsonplaceholder.typicode.com/users',
 );
 
 const todos = computed(() => {
@@ -59,18 +73,25 @@ const todos = computed(() => {
 
 const columns = ref([
   {
-    name: 'title',
+    name: 'name',
     required: true,
-    label: 'Title',
-    field: 'title',
+    label: 'name',
+    field: 'name',
     align: 'left',
     sortable: true,
   },
   {
-    name: 'completed',
+    name: 'username',
     align: 'center',
-    label: 'Done',
-    field: 'completed',
+    label: 'username',
+    field: 'username',
+    sortable: false,
+  },
+  {
+    name: 'address',
+    align: 'center',
+    label: 'address',
+    field: 'address',
     sortable: false,
   },
 ]);

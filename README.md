@@ -75,6 +75,30 @@ yarn format
 npm run format
 ```
 
+## Build Android App
+
+Avant, on aura besoin d'installer android studio
+
+https://developer.android.com/studio?hl=fr
+
+```bash
+quasar dev -m capacitor -T android
+```
+
+Pour voir l'application directement sur mon telephone :
+https://developer.android.com/studio/debug/dev-options?hl=fr
+
+Suivre les étapes de:
+
+- Activer les options pour les développeurs
+- Activer le débogage USB sur votre appareil
+
+**lors du branchement USB du telephone, mettre sur "transfert de fichier"**
+
+Pour Débugger: aller sur Chrome et saisir **chrome://inspect#devices**
+
+Et voila ! on peut maintenant développer notre application
+
 ## Quasar DOC
 
 ### Build your layout
