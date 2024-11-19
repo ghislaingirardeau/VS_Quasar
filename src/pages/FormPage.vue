@@ -19,6 +19,15 @@
         >
           <q-td key="title" :props="props">
             {{ props.row.title }}
+            <q-popup-edit v-slot="scope" v-model="props.row.title">
+              <q-input
+                v-model="scope.value"
+                dense
+                autofocus
+                counter
+                @keyup.enter="scope.set"
+              />
+            </q-popup-edit>
           </q-td>
           <q-td key="quantity" :props="props">
             {{ props.row.quantity }}
@@ -40,7 +49,7 @@
 </template>
 
 <script setup>
-import CreateItemForm from '../components/FormPage/createItemForm.vue';
+import CreateItemForm from 'components/FormPage/createItemForm.vue';
 import { useLocalStorage } from '@vueuse/core';
 import { uid } from 'quasar';
 import { ref } from 'vue';

@@ -121,7 +121,7 @@ export default configure((ctx) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['AppFullscreen', 'Notify'],
     },
 
     // animations: 'all', // --- includes all animations

@@ -6,15 +6,9 @@ A Quasar Project
 
 npm install -g @quasar/cli
 
-## Install the dependencies
-
-```bash
-yarn
-# or
-npm install
-```
-
 ### Start the app in development mode
+
+![mode list](https://quasar.dev/quasar-cli-webpack/commands-list/)
 
 Run on App en mode SPA par défaut
 
@@ -65,14 +59,6 @@ quasar.config.ts
 yarn lint
 # or
 npm run lint
-```
-
-### Format the files
-
-```bash
-yarn format
-# or
-npm run format
 ```
 
 ## Build Android App
