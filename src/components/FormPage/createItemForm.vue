@@ -1,10 +1,32 @@
 <template>
   <!-- Form to add item -->
   <q-card class="q-mx-xl q-px-xl">
+    <q-btn @click="giveMeError">error backend</q-btn>
     <q-card-section>
-      <q-form class="q-gutter-y-md" @submit="emit('create')">
-        <q-input v-model="form.title" label="title" outlined />
-        <q-input v-model="form.quantity" label="quantité" outlined />
+      <q-form
+        ref="formComponent"
+        class="q-gutter-y-md"
+        @submit="handleSubmitForm"
+      >
+        <q-input
+          v-model="form.title"
+          label="title"
+          outlined
+          :error="!!error?.title"
+          :error-message="error?.title"
+        />
+        <!-- internal error validation avec lazy-rules => alert show only when input blur -->
+        <!-- rules: value inside input (if true no error) else display message -->
+        <q-input
+          v-model="form.quantity"
+          label="quantité"
+          outlined
+          lazy-rules
+          :rules="[
+            (value) => value > 0 || 'Need at least one quantity',
+            (value) => value < 10 || 'Too many quantity',
+          ]"
+        />
 
         <q-input v-model="form.color" filled class="my-input">
           <template #append>
@@ -33,8 +55,32 @@
 </template>
 
 <script setup>
+// Validator est une librairie pour vérif des validations
+
+import { ref } from 'vue';
+
 const form = defineModel('form', { type: Object });
 const emit = defineEmits(['create']);
+
+// SIMULATE EXTERNAL ERROR VALIDATION FROM BACKEND
+/* l'erreur sera rendu grace au 2 attribut à ajouter dans l'input
+:error="!!error?.title.length"
+:error-message="error?.title"
+*/
+const error = ref({});
+function giveMeError() {
+  error.value = {
+    title: 'This title already exist in the bdd',
+  };
+}
+
+// Validation form on submit
+const formComponent = ref();
+async function handleSubmitForm() {
+  // rules is async, to pass each rules control (spécialement si on fait un appel au server pour controler une rule)
+  const isValid = await formComponent.value.validate();
+  if (isValid) emit('create');
+}
 </script>
 
 <style lang="scss" scoped></style>

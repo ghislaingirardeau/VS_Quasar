@@ -5,6 +5,8 @@
 </template>
 
 <script setup>
+// https://quasar.dev/quasar-plugins/notify#basic
+
 import { useQuasar } from 'quasar';
 
 const $q = useQuasar();

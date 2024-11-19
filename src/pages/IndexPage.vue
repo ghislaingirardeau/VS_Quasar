@@ -1,11 +1,14 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <div class="q-pa-md">
+  <q-page class="row flex-center content-start">
+    <div class="col-12 q-pa-md bg-blue-5">
       <GoFullscreenBtn />
     </div>
-    <q-icon size="xl" :name="mdiHomeAccount" color="blue"> </q-icon>
-    hello
-    <div>
+    <div class="col-8 q-pa-md bg-blue-5 flex flex-center">
+      <q-icon size="xl" :name="mdiHomeAccount" color="blue"> </q-icon>
+      <p>hello</p>
+    </div>
+
+    <div class="col-4 q-pa-md bg-blue-5">
       <NotifyBtn />
     </div>
   </q-page>
