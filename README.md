@@ -99,6 +99,43 @@ copy and import inside your layout file
 quasar build
 ```
 
+## Installation de plugins tiers
+
+Si on veut installer des plugins externe, pour l'installation, il faut rechercher Vite. Quasar utilise Vite pour fonctionner!
+
+Une fois le plugins installer:
+
+Au lieu d'aller dans le fichier vite.config.js (qui n'existe pas sous quasar), on va utiliser quasar.config.ts puis aller sur la propiete `vitePlugins`
+
+```js
+vitePlugins: {
+  // on vient y mettre l'import du plugins, puis les params de config si besoin
+  ['unocss/vite', {}];
+}
+```
+
+**Si on voit une référence à main.ts file pour l'installation, il faudra utiliser boot file pour quasar**
+
+### Installation de Tailwinds dans le projet
+
+```bash
+npm install -D tailwindcss
+npx tailwindcss init -p
+```
+
+creer le fichier .css avec les imports tailwinds
+
+Ajouter le fichier css dans quasar config
+
+**Ajouter dans le postcss.config.mjs, le plugins tailwinds via l'import du plugins**
+
+```js
+import tailwindcss from 'tailwindcss';
+export default {
+  plugins: [
+    tailwindcss(),
+```
+
 ### Customize the configuration
 
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).

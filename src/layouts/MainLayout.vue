@@ -68,7 +68,9 @@ import { mdiGrid } from '@quasar/extras/mdi-v7';
 import { useI18n } from 'vue-i18n';
 
 // en changeant la valeur de locale, cela changera la langue directement
-const { locale } = useI18n();
+const { locale, availableLocales } = useI18n();
+const i18n = useI18n();
+console.log(i18n);
 
 const localeOptions = ref([
   { value: 'en-US', label: 'English' },
@@ -76,6 +78,7 @@ const localeOptions = ref([
 ]);
 
 const router = useRouter();
+
 const leftDrawerOpen = ref(false);
 const menuList = ref([
   {

@@ -23,7 +23,6 @@ declare module 'vue-i18n' {
 /* eslint-enable @typescript-eslint/no-empty-interface */
 
 export default boot(({ app }) => {
-  console.log(Lang.getLocale());
   // Pour detecter la lang du browser, on utilise la propriete de quasar
   const langOfBrowser = Lang.getLocale();
   const i18n = createI18n({

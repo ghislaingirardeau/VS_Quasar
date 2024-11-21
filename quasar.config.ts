@@ -14,10 +14,10 @@ export default configure((ctx) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios', 'authentification'],
+    boot: ['i18n', 'axios', 'authentification' /* , 'unocss' */],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
-    css: ['app.scss'],
+    css: ['app.scss', 'tailwind.css'],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     // Icons or font librairies you can include in quasar
@@ -70,6 +70,7 @@ export default configure((ctx) => {
       // viteVuePluginOptions: {},
 
       vitePlugins: [
+        ['unocss/vite', {}],
         [
           '@intlify/unplugin-vue-i18n/vite',
           {
