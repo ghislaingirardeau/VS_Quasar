@@ -4,7 +4,6 @@
     <!-- <div class="ma-xl op40 animate-bounce">hello quasar</div> -->
     <!-- With Tailwind -->
     <div class="text-3xl font-bold underline">hello quasar</div>
-    <h1 class="text-3xl font-bold underline">Hello world!</h1>
 
     <BootFile />
   </q-page>

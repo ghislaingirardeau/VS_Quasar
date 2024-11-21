@@ -12,6 +12,7 @@
       <div class="col-6 shadow-3 bg-red-6">
         <div class="bg-blue-4 full-height flex flex-center">
           <GoFullscreenBtn />
+          <NotifyBtn />
         </div>
       </div>
       <!-- bg-red-6 represente l'espace du gutter -->
@@ -88,6 +89,7 @@
 <script setup lang="ts">
 // Pour charger une seule icone et non toute la librairie d'icones, le rendu sera simplement un SVG
 import GoFullscreenBtn from 'components/GoFullscreenBtn.vue';
+import NotifyBtn from 'components/NotifyBtn.vue';
 
 import { mdiHomeAccount, mdiPlus } from '@quasar/extras/mdi-v7';
 </script>

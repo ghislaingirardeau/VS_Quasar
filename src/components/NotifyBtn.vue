@@ -5,14 +5,12 @@
 </template>
 
 <script setup>
+import { Notify } from 'quasar';
+
 // https://quasar.dev/quasar-plugins/notify#basic
 
-import { useQuasar } from 'quasar';
-
-const $q = useQuasar();
-
 function showNotif() {
-  $q.notify({
+  Notify.create({
     message: 'Jim just pinged you.',
     color: 'primary',
     avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',

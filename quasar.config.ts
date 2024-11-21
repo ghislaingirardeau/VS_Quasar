@@ -70,7 +70,7 @@ export default configure((ctx) => {
       // viteVuePluginOptions: {},
 
       vitePlugins: [
-        ['unocss/vite', {}],
+        // ['unocss/vite', {}],
         [
           '@intlify/unplugin-vue-i18n/vite',
           {
@@ -126,7 +126,7 @@ export default configure((ctx) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['AppFullscreen', 'Notify'],
+      plugins: ['AppFullscreen', 'Notify', 'Dialog', 'Loading'],
     },
 
     // animations: 'all', // --- includes all animations

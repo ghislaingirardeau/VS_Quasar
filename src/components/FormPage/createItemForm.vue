@@ -57,6 +57,8 @@
 <script setup>
 // Validator est une librairie pour vérif des validations
 
+import { mdiCheck, mdiPlus } from '@quasar/extras/mdi-v7';
+import { Dialog, Loading, Notify } from 'quasar';
 import { ref } from 'vue';
 
 const form = defineModel('form', { type: Object });
@@ -79,7 +81,39 @@ const formComponent = ref();
 async function handleSubmitForm() {
   // rules is async, to pass each rules control (spécialement si on fait un appel au server pour controler une rule)
   const isValid = await formComponent.value.validate();
-  if (isValid) emit('create');
+  if (isValid) {
+    // ouvir une dialog de confirmation
+    Dialog.create({
+      title: 'Are you sure?',
+      message: 'Voulez vous ajouter cet item ?',
+      // sur la config des boutons, on peut ajouter toutes les props dispo sur q-btn (ie. icon, flat...)
+      ok: {
+        label: 'Yes',
+        icon: mdiCheck,
+      },
+      cancel: {
+        label: 'No',
+        flat: true,
+      },
+    })
+      .onOk(() => {
+        Loading.show();
+
+        setTimeout(() => {
+          emit('create');
+          Loading.hide();
+          Notify.create({
+            message: 'Item successfully added',
+            icon: mdiPlus,
+            color: 'positive',
+          });
+        }, 3000);
+      })
+      .onCancel(() => {
+        /* handle cancel */
+        form.value = {};
+      });
+  }
 }
 </script>
 

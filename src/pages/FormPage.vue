@@ -53,6 +53,7 @@ import CreateItemForm from 'components/FormPage/createItemForm.vue';
 import { useLocalStorage } from '@vueuse/core';
 import { uid } from 'quasar';
 import { ref } from 'vue';
+import { title } from 'process';
 
 /* 
 Pour stocker des données, on peut ne pas utiliser de array mais directement un objet (ce qui peut etre plus facile à manipuler)
@@ -61,7 +62,10 @@ On se retrouvera avec un objet ayant pour chaque clé, un id propre à une data
 */
 const list = useLocalStorage('list', {});
 
-const form = ref({});
+const form = ref({
+  title: 'Wine',
+  quantity: 4,
+});
 const isFormVisible = ref(true);
 
 function handleAddItem() {

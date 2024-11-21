@@ -99,7 +99,20 @@ copy and import inside your layout file
 quasar build
 ```
 
+## Quasar plugins
+
+Plugins que l'on peut utiliser directement dans le JS et qui permettent d'afficher des éléments en fonction de l'éxécution du code
+
+ex: `createItemForm.vue`
+Au click sur la suppression d'un item, dans la fonction qui gere se clique on va pouvoir :
+
+- ourvir une dialog de confirmation
+- afficher le loader en attente d'une reponse backend
+- afficher une notification de succès
+
 ## Installation de plugins tiers
+
+### UnoCss
 
 Si on veut installer des plugins externe, pour l'installation, il faut rechercher Vite. Quasar utilise Vite pour fonctionner!
 
@@ -116,7 +129,7 @@ vitePlugins: {
 
 **Si on voit une référence à main.ts file pour l'installation, il faudra utiliser boot file pour quasar**
 
-### Installation de Tailwinds dans le projet
+### Tailwind
 
 ```bash
 npm install -D tailwindcss
