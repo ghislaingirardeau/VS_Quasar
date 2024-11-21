@@ -14,7 +14,7 @@ export default configure((ctx) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios'],
+    boot: ['i18n', 'axios', 'authentification'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss'],
@@ -55,7 +55,11 @@ export default configure((ctx) => {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: {
+        API: ctx.dev
+          ? 'https://jsonplaceholder.typicode.com'
+          : 'https://prod.api.com',
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,

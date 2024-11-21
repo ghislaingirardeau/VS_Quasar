@@ -1,4 +1,11 @@
 // app global css in SCSS form
-.global_border {
-  border: 2px solid red;
+
+// Add your customize colors
+// accessible via les attribut color="custom"
+.text-custom {
+  color: #bcc127aa;
+}
+
+.bg-custom {
+  background-color: #bcc127aa;
 }

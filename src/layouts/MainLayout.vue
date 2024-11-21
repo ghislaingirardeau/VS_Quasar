@@ -3,8 +3,10 @@
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+        <q-toolbar-title> {{ $t('layout.title') }}</q-toolbar-title>
+        <q-space />
 
-        <q-toolbar-title> Quasar playground </q-toolbar-title>
+        <q-btn stretch flat :label="$t('layout.language')" />
       </q-toolbar>
     </q-header>
 
@@ -21,12 +23,7 @@
       <q-scroll-area class="fit">
         <q-list>
           <template v-for="(menuItem, index) in menuList" :key="index">
-            <q-item
-              v-ripple
-              clickable
-              :active="menuItem.label === 'Outbox'"
-              @click="handleLink(menuItem)"
-            >
+            <q-item exact :to="menuItem.to">
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
@@ -36,6 +33,18 @@
             </q-item>
             <q-separator v-if="menuItem.separator" :key="'sep' + index" />
           </template>
+          <q-separator />
+
+          <q-select
+            v-model="locale"
+            :options="localeOptions"
+            dense
+            borderless
+            emit-value
+            map-options
+            options-dense
+            label="Lang"
+          ></q-select>
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -46,7 +55,7 @@
 
     <q-footer bordered class="bg-grey-8 text-white">
       <q-toolbar class="flex-center">
-        <q-btn icon="person" size="lg" color="warning" class="global_border" />
+        <q-btn icon="person" size="lg" color="warning" />
       </q-toolbar>
     </q-footer>
   </q-layout>
@@ -55,6 +64,16 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { mdiGrid } from '@quasar/extras/mdi-v7';
+import { useI18n } from 'vue-i18n';
+
+// en changeant la valeur de locale, cela changera la langue directement
+const { locale } = useI18n();
+
+const localeOptions = ref([
+  { value: 'en-US', label: 'English' },
+  { value: 'fr', label: 'French' },
+]);
 
 const router = useRouter();
 const leftDrawerOpen = ref(false);
@@ -84,25 +103,20 @@ const menuList = ref([
     },
   },
   {
-    icon: 'error',
-    label: 'Spam',
-    separator: true,
+    icon: 'list',
+    label: 'list',
+    separator: false,
+    to: {
+      name: 'list',
+    },
   },
   {
-    icon: 'settings',
-    label: 'Settings',
+    icon: mdiGrid,
+    label: 'grid',
     separator: false,
-  },
-  {
-    icon: 'feedback',
-    label: 'Send Feedback',
-    separator: false,
-  },
-  {
-    icon: 'help',
-    iconColor: 'primary',
-    label: 'Help',
-    separator: false,
+    to: {
+      name: 'grid',
+    },
   },
 ]);
 

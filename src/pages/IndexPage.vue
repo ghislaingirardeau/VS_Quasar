@@ -1,25 +1,27 @@
 <template>
-  <q-page class="row flex-center content-start">
-    <div class="col-12 q-pa-md bg-blue-5">
-      <GoFullscreenBtn />
-    </div>
-    <div class="col-8 q-pa-md bg-blue-5 flex flex-center">
-      <q-icon size="xl" :name="mdiHomeAccount" color="blue"> </q-icon>
-      <p>hello</p>
-    </div>
-
-    <div class="col-4 q-pa-md bg-blue-5">
-      <NotifyBtn />
-    </div>
+  <q-page>
+    <div>hello quasar</div>
+    <BootFile />
   </q-page>
 </template>
 
 <script setup lang="ts">
-// Pour charger une seule icone et non toute la librairie d'icones, le rendu sera simplement un SVG
-import GoFullscreenBtn from 'components/GoFullscreenBtn.vue';
+/* Pour avoir toutes les informations utilisées par quasar
+lang, dark mode, screen & device, plateforme...
+*/
+import BootFile from 'components/BootFile.vue';
+import { useQuasar } from 'quasar';
+import { onMounted } from 'vue';
 
-import { mdiHomeAccount } from '@quasar/extras/mdi-v7';
-import NotifyBtn from 'components/NotifyBtn.vue';
+const $q = useQuasar();
+
+onMounted(() => {
+  console.log($q);
+});
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.col-border {
+  border: 2px solid $accent;
+}
+</style>
