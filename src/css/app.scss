@@ -9,3 +9,9 @@
 .bg-custom {
   background-color: #bcc127aa;
 }
+
+// Si je veux personnaliser le mode dark, je selectionne toutes les class finissant par --dark correspondant
+body.body--dark,
+[class*='--dark'] {
+  color: #f3a154;
+}

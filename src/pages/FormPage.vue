@@ -55,6 +55,12 @@ import { uid } from 'quasar';
 import { ref } from 'vue';
 import { title } from 'process';
 
+/* ----------- META ------------------ */
+import { useMeta } from 'quasar';
+useMeta({
+  title: 'Form',
+});
+
 /* 
 Pour stocker des données, on peut ne pas utiliser de array mais directement un objet (ce qui peut etre plus facile à manipuler)
 Chaque clé de l'objet sera l'id (unique) de la data, et celle-ci aura comme valeur la data (dans laquelle on aura une prop id donc 2 fois)

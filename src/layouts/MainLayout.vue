@@ -7,6 +7,10 @@
         <q-space />
 
         <q-btn stretch flat :label="$t('layout.language')" />
+        <q-btn
+          :icon="isThemeDark ? mdiMoonFirstQuarter : mdiSunAngle"
+          @click="Dark.toggle()"
+        />
       </q-toolbar>
     </q-header>
 
@@ -63,8 +67,27 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
-import { mdiGrid } from '@quasar/extras/mdi-v7';
+import { computed, ref } from 'vue';
+import {
+  mdiGrid,
+  mdiLightbulb,
+  mdiLightSwitch,
+  mdiMoonFirstQuarter,
+  mdiSunAngle,
+  mdiThemeLightDark,
+} from '@quasar/extras/mdi-v7';
+
+/* ----------- META ------------------ */
+
+import { useMeta } from 'quasar';
+
+useMeta({
+  title: 'Tutorial',
+  titleTemplate: (title) => `Quasar - ${title}`,
+});
+
+/* ---------------- i18n------------------- */
+
 import { useI18n } from 'vue-i18n';
 
 // en changeant la valeur de locale, cela changera la langue directement
@@ -77,7 +100,14 @@ const localeOptions = ref([
   { value: 'fr', label: 'French' },
 ]);
 
-const router = useRouter();
+/* --------------- DARK MODE -------------------- */
+import { Dark } from 'quasar';
+
+const isThemeDark = computed(() => {
+  return Dark.isActive;
+});
+
+/* --------------- MENU -------------------- */
 
 const leftDrawerOpen = ref(false);
 const menuList = ref([
@@ -122,10 +152,13 @@ const menuList = ref([
     },
   },
 ]);
-
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
+
+/* -------------- PROGRAMATIC ROUTING--------------------- */
+
+const router = useRouter();
 
 function handleLink(item) {
   console.log(item);

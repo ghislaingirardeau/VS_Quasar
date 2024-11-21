@@ -112,6 +112,9 @@ async function handleSubmitForm() {
       .onCancel(() => {
         /* handle cancel */
         form.value = {};
+      })
+      .onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
       });
   }
 }

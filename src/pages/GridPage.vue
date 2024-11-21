@@ -92,6 +92,12 @@ import GoFullscreenBtn from 'components/GoFullscreenBtn.vue';
 import NotifyBtn from 'components/NotifyBtn.vue';
 
 import { mdiHomeAccount, mdiPlus } from '@quasar/extras/mdi-v7';
+
+/* ----------- META ------------------ */
+import { useMeta } from 'quasar';
+useMeta({
+  title: 'Grid',
+});
 </script>
 
 <style scoped lang="scss">

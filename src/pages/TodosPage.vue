@@ -18,6 +18,15 @@
       @row-click="(_evt, row) => console.log(row)"
     >
       <template #top-right>
+        <q-select
+          v-model="selectFilter"
+          :options="optionsFilter"
+          class="q-mr-md"
+          dense
+          filled
+          @update:model-value="handleSelectFilter()"
+        >
+        </q-select>
         <!-- Template: pour avoir un controle totale des cellules du tableau et personnaliser -->
         <q-input
           v-model="filter"
@@ -54,6 +63,11 @@
           {{ scope.value }}
         </q-td>
       </template>
+      <template #body-cell-website="scope">
+        <q-td :props="scope" class="md">
+          {{ scope.value }}
+        </q-td>
+      </template>
       <template #body-cell-address="scope">
         <q-td :props="scope">
           {{ scope.value.street }}
@@ -77,7 +91,29 @@
         </q-btn>
       </template>
     </q-table>
-    <!-- <pre>{{ todos }}</pre> -->
+    <!-- TABLE FILTERS CONTROL EXAMPLE -->
+    <div class="q-pa-md">
+      <q-input
+        v-model="filterText.name"
+        dense
+        debounce="300"
+        color="primary"
+        label="Search"
+        clearable
+      >
+        <template #append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+      <q-table
+        title="Treats"
+        :rows="todos"
+        :columns="columns"
+        row-key="name"
+        :filter="filterText"
+        :filter-method="myfiltermethod"
+      ></q-table>
+    </div>
   </q-page>
 </template>
 
@@ -93,12 +129,17 @@ const filter = ref('');
 // Pour utiliser les méthodes du tableau directement dans le js
 const tableComponent = ref();
 
-const { isFetching, error, data } = useFetch(
+const { isFetching, error, data, execute } = useFetch(
   'https://jsonplaceholder.typicode.com/users',
 );
 
-const todos = computed(() => {
-  return data.value ? JSON.parse(data.value) : [];
+const todos = computed({
+  get() {
+    return data.value ? JSON.parse(data.value) : [];
+  },
+  set(newValue) {
+    data.value = JSON.stringify(newValue);
+  },
 });
 
 const columns = ref([
@@ -125,6 +166,14 @@ const columns = ref([
     sortable: false,
   },
   {
+    name: 'website',
+    align: 'left',
+    label: 'website',
+    field: 'website',
+    sortable: false,
+  },
+
+  {
     name: 'address',
     align: 'center',
     label: 'address',
@@ -132,6 +181,36 @@ const columns = ref([
     sortable: false,
   },
 ]);
+
+/* ------------ FILTER BASIC 1 FULL CONTROLE ------------------------- */
+
+const selectFilter = ref();
+const filterText = ref({ name: null, email: null });
+
+const optionsFilter = ref([
+  { value: '0', label: 'None' },
+  { value: '1', label: '1' },
+  { value: '2', label: '2' },
+]);
+
+function myfiltermethod(rows, terms, cols) {
+  console.log('calling a filter', terms);
+  if (!terms.name) {
+    return rows;
+  }
+  return rows.filter(
+    (row) => row.name.includes(terms.name) || row.email.includes(terms.name),
+  );
+}
+
+async function handleSelectFilter() {
+  await execute();
+  if (Number(selectFilter.value.value)) {
+    todos.value = todos.value.filter(
+      (todo) => todo.id == selectFilter.value.label,
+    );
+  }
+}
 </script>
 
 <style lang="scss" scoped>
