@@ -24,7 +24,7 @@ SSR
 quasar dev -m ssr
 ```
 
-Application
+Web Application - on desktop
 
 ```bash
 quasar dev -m electron
@@ -149,6 +149,50 @@ export default {
     tailwindcss(),
 ```
 
-### Customize the configuration
+## Quasar electron
 
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+Electron permet de creer des applications web pour desktop.
+
+Attention l'application a alors accès à des éléments de l'ordinateur de l'utilisateur. Il faut donc faire attention à ne donner l'accès qu'a certains éléments gràce notamment au "bridge" qui va faire le lien entre l'application et le PC
+
+Pour cela dans `src-electron`, electron fournit 2 fichiers notamment:
+
+- electron-main.ts: logique concernant les éléments du PC **Dangerous**
+- electron-preload.ts: qui sert de "bridge" entre le code dans .vue et le main electron
+
+```js vue
+window.notification.show({
+  title: 'Hello world',
+  body: 'Notification from web app',
+});
+```
+
+```ts electron-main
+function showNotification(
+  _event: Event,
+  { title, body }: { title: string; body: string },
+) {
+  const notification = new Notification({ title, body });
+  notification.show();
+}
+
+// Inter Process Communication
+// Pour dire au bridge, "hey bridge, cette fonction existe et permet de montrer une authentification sur l'ordi"
+ipcMain.handle('notification:show', showNotification);
+```
+
+```ts electron-preload (bridge)
+// Expose 'notification' on window object inside vue component has a property
+// We can now access to window.notification inside our code to execute this bridge
+contextBridge.exposeInMainWorld('notification', {
+  show: ({ title, body }: { title: string; body: string }) => {
+    // Va chercher dans electron-main, le handler qui a pour nom notification:show
+    // et je lui envoie en params l'objet
+    ipcRenderer.invoke('notification:show', { title, body });
+  },
+});
+```
+
+**PRO/CON than using native webAPI new Notification(). Exemple, si on veut que ajouter un bouton dans la notification pour que l'utilisateur répond ? (pas possible avec native notification)! OU rendu commun quelque soit l'OS, or si on veut personnaliser, pas possible**
+
+Electron va offrir plus de possibilités si on veut aller plus loin dans les fonctionnalités de la notification
