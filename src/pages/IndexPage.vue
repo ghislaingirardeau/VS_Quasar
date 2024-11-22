@@ -22,6 +22,13 @@ const $q = useQuasar();
 onMounted(() => {
   console.log($q);
 });
+
+import { useMeta } from 'quasar';
+
+useMeta({
+  title: 'Tutorial',
+  titleTemplate: (title) => `Quasar - ${title}`,
+});
 </script>
 
 <style scoped lang="scss">
