@@ -11,6 +11,14 @@
           :icon="isThemeDark ? mdiMoonFirstQuarter : mdiSunAngle"
           @click="Dark.toggle()"
         />
+        <q-btn
+          :icon="mdiLogout"
+          class="mx-4"
+          round
+          flat
+          :loading="auth.logging"
+          @click="auth.logout()"
+        />
       </q-toolbar>
     </q-header>
 
@@ -72,10 +80,16 @@ import {
   mdiGrid,
   mdiLightbulb,
   mdiLightSwitch,
+  mdiLogout,
   mdiMoonFirstQuarter,
   mdiSunAngle,
   mdiThemeLightDark,
 } from '@quasar/extras/mdi-v7';
+
+/* ----------- Logout ------------------ */
+import { useAuth } from 'stores/auth';
+
+const auth = useAuth();
 
 /* ----------- META ------------------ */
 
