@@ -17,7 +17,7 @@
           round
           flat
           :loading="auth.logging"
-          @click="auth.logout()"
+          @click="handleLogout"
         />
       </q-toolbar>
     </q-header>
@@ -179,5 +179,12 @@ function handleLink(item) {
   if (item.to) {
     router.push(item.to);
   }
+}
+
+/* -------------- AUTH--------------------- */
+
+async function handleLogout() {
+  await auth.logout();
+  router.push({ name: 'login' });
 }
 </script>

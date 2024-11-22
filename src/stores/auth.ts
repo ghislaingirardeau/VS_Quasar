@@ -11,23 +11,29 @@ export const useAuth = defineStore('auth', () => {
   const loggedOut = ref(true);
 
   function login() {
-    logging.value = true;
+    return new Promise((resolve, reject) => {
+      logging.value = true;
 
-    // ICI on viendrait mettre la logique de connexion await...
-    setTimeout(() => {
-      logging.value = false;
-      loggedIn.value = true;
-    }, 3000);
+      // ICI on viendrait mettre la logique de connexion await...
+      setTimeout(() => {
+        logging.value = false;
+        loggedIn.value = true;
+        resolve(true);
+      }, 3000);
+    });
   }
 
   function logout() {
-    logging.value = true;
+    return new Promise((resolve, reject) => {
+      logging.value = true;
 
-    setTimeout(() => {
-      loggedIn.value = false;
-      logging.value = false;
-      loggedOut.value = true;
-    }, 2000);
+      setTimeout(() => {
+        loggedIn.value = false;
+        logging.value = false;
+        loggedOut.value = true;
+        resolve(true);
+      }, 2000);
+    });
   }
 
   return {
