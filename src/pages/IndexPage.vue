@@ -3,7 +3,7 @@
     <!-- With unocss -->
     <!-- <div class="ma-xl op40 animate-bounce">hello quasar</div> -->
     <!-- With Tailwind -->
-    <div class="text-3xl font-bold underline">hello quasar</div>
+    <div class="text-3xl font-bold underline">hello</div>
 
     <BootFile />
   </q-page>
@@ -21,13 +21,6 @@ const $q = useQuasar();
 
 onMounted(() => {
   console.log($q);
-});
-
-import { useMeta } from 'quasar';
-
-useMeta({
-  title: 'Tutorial',
-  titleTemplate: (title) => `Quasar - ${title}`,
 });
 </script>
 

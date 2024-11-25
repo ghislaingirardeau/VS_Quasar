@@ -3,7 +3,9 @@
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-        <q-toolbar-title> {{ $t('layout.title') }}</q-toolbar-title>
+        <q-toolbar-title>
+          {{ $t('layout.title') }} {{ moment().format('dddd') }}
+        </q-toolbar-title>
         <q-space />
 
         <q-btn stretch flat :label="$t('layout.language')" />
@@ -56,6 +58,7 @@
             map-options
             options-dense
             label="Lang"
+            @update:model-value="handleSelectChange()"
           ></q-select>
         </q-list>
       </q-scroll-area>
@@ -65,11 +68,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer bordered class="bg-grey-8 text-white">
-      <q-toolbar class="flex-center">
-        <q-btn icon="person" size="lg" color="warning" />
-      </q-toolbar>
-    </q-footer>
+    <FooterLayout :key="locale" />
   </q-layout>
 </template>
 
@@ -103,6 +102,7 @@ useMeta({
 /* ---------------- i18n------------------- */
 
 import { useI18n } from 'vue-i18n';
+// import moment from 'moment';
 
 // en changeant la valeur de locale, cela changera la langue directement
 const { locale, availableLocales } = useI18n();
@@ -114,8 +114,15 @@ const localeOptions = ref([
   { value: 'fr', label: 'French' },
 ]);
 
+import { moment } from 'boot/moment';
+function handleSelectChange() {
+  // A associer avec Key => pour un update des components moment
+  moment.locale(locale.value);
+}
+
 /* --------------- DARK MODE -------------------- */
 import { Dark } from 'quasar';
+import FooterLayout from 'components/FooterLayout.vue';
 
 const isThemeDark = computed(() => {
   return Dark.isActive;

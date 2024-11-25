@@ -2,6 +2,21 @@
 
 A Quasar Project
 
+- [Quasar App (quasar-vueschool)](#quasar-app-quasar-vueschool)
+  - [Quasar CLI](#quasar-cli)
+    - [Start the app in development mode](#start-the-app-in-development-mode)
+    - [Lint the files](#lint-the-files)
+  - [Build Android App](#build-android-app)
+  - [Quasar DOC](#quasar-doc)
+    - [Build your layout](#build-your-layout)
+    - [Build the app for production](#build-the-app-for-production)
+  - [Quasar plugins](#quasar-plugins)
+  - [Installation de plugins tiers](#installation-de-plugins-tiers)
+    - [UnoCss](#unocss)
+    - [Tailwind](#tailwind)
+  - [assets VS public](#assets-vs-public)
+  - [Quasar electron](#quasar-electron)
+
 ## Quasar CLI
 
 npm install -g @quasar/cli
@@ -148,6 +163,18 @@ export default {
   plugins: [
     tailwindcss(),
 ```
+
+## assets VS public
+
+assets => Relative URLs - sont interprété comme un module et auront donc une URL auto généré
+
+`<img src="~assets/logo.png">` pour afficher une image dans assets, utilise **~ et /**
+
+public => Root-relative URLs - aucun process n'est fait dessus
+
+`<q-img src="image.jpg">` pas besoin du **/** si dans le dossier public
+
+_Files in the “assets” folder are only included in your build if they have a literal reference in one of your Vue files. Every file and folder from the “public” folder are copied into your production build as-is, no matter what._
 
 ## Quasar electron
 

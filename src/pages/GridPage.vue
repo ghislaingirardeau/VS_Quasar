@@ -82,6 +82,20 @@
         </q-card>
         <q-btn fab :icon="mdiPlus" color="info absolute-top-right"></q-btn>
       </div>
+      <div class="col-4 q-pa-md">
+        <q-card class="my-card">
+          <q-img src="image.jpg">
+            <div class="absolute-bottom text-h6">Title</div>
+          </q-img>
+
+          <q-card-section>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+            tempore eligendi illo nesciunt magni ipsa consequuntur nobis aliquid
+            doloremque iure adipisci sequi saepe blanditiis eaque nemo
+            perferendis, consequatur quis inventore!
+          </q-card-section>
+        </q-card>
+      </div>
     </div>
   </q-page>
 </template>

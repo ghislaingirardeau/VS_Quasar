@@ -8,13 +8,14 @@ import { fileURLToPath } from 'node:url';
 
 export default configure((ctx) => {
   return {
+    supportTS: true,
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
     // preFetch: true,
 
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios', 'authentification' /* , 'unocss' */],
+    boot: ['i18n', 'axios', 'authentification', 'moment' /* , 'unocss' */],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss', 'tailwind.css'],
