@@ -10,6 +10,7 @@
       <q-btn stretch flat :label="$t('layout.language')" />
       <q-btn
         :icon="isThemeDark ? mdiMoonFirstQuarter : mdiSunAngle"
+        flat
         @click="Dark.toggle()"
       />
       <q-btn
@@ -35,7 +36,9 @@ import { useAuth } from 'stores/auth';
 import { useRouter } from 'vue-router';
 const leftDrawerOpen = defineModel('leftDrawerOpen', { type: Boolean });
 
-defineProps(['isThemeDark']);
+defineProps({
+  isThemeDark: Boolean,
+});
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;

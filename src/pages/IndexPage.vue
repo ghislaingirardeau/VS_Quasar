@@ -3,9 +3,14 @@
     <!-- With unocss -->
     <!-- <div class="ma-xl op40 animate-bounce">hello quasar</div> -->
     <!-- With Tailwind -->
-    <div class="text-3xl font-bold underline">hello</div>
+    <div class="text-3xl font-bold underline pl-5">
+      {{ moment().format('dddd') }}
+    </div>
 
+    <!-- Intro au fichier boots et aux appels API-->
     <BootFile />
+    <!-- Pour les gros bloc de contenu ou image, le rendu et appel api se feront au fur et à mesure du scroll du user -->
+    <IntersectionImage />
   </q-page>
 </template>
 
@@ -13,10 +18,11 @@
 /* Pour avoir toutes les informations utilisées par quasar
 lang, dark mode, screen & device, plateforme...
 */
+import IntersectionImage from 'components/IntersectionImage.vue';
 import BootFile from 'components/BootFile.vue';
 import { useQuasar } from 'quasar';
 import { onMounted } from 'vue';
-
+import { moment } from '../boot/moment';
 const $q = useQuasar();
 
 onMounted(() => {

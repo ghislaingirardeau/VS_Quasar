@@ -12,9 +12,9 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/IndexPage.vue'),
       },
       {
-        path: 'todos',
-        name: 'todos',
-        component: () => import('pages/TodosPage.vue'),
+        path: 'table',
+        name: 'table',
+        component: () => import('pages/TablePage.vue'),
       },
       {
         path: 'friends',
@@ -38,10 +38,18 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  /* ROUTES AVEC UN NOUVEAU LAYOUT */
   {
-    path: '/auth/login',
-    name: 'login',
-    component: () => import('pages/auth/LoginPage.vue'),
+    path: '/login',
+    name: 'auth',
+    component: () => import('layouts/GuestLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'login',
+        component: () => import('pages/auth/LoginPage.vue'),
+      },
+    ],
   },
 
   // Always leave this as last one,

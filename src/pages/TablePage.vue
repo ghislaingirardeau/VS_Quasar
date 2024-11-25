@@ -1,7 +1,33 @@
 <template>
   <q-page padding>
+    <!-- Add floating button -->
+    <q-page-sticky
+      :offset="[22, 22]"
+      position="bottom-right"
+      style="z-index: 9999 !important"
+    >
+      <q-fab :icon="mdiPlus" color="info" direction="up">
+        <q-fab-action
+          :icon="mdiBook"
+          color="accent"
+          external-label
+          label="Book"
+          label-position="left"
+        />
+        <q-fab-action
+          :icon="mdiEmail"
+          color="black"
+          external-label
+          label="Email"
+          label-position="left"
+        />
+      </q-fab>
+    </q-page-sticky>
     <h2 class="text-h4 q-my-sm">Todo list</h2>
-    <pre>{{ selectedRow }}{{ filter }}</pre>
+    <!-- Get selected row -->
+    <pre class="scroll" style="max-height: 200px"
+      >{{ selectedRow }}{{ filter }}</pre
+    >
     <q-table
       ref="tableComponent"
       v-model:fullscreen="fullscreen"
@@ -91,6 +117,7 @@
         </q-btn>
       </template>
     </q-table>
+    <h2 class="text-h4 q-mt-lg">Table with custom filters</h2>
     <!-- TABLE FILTERS CONTROL EXAMPLE -->
     <div class="q-pa-md">
       <q-input
@@ -118,6 +145,7 @@
 </template>
 
 <script setup>
+import { mdiBook, mdiEmail, mdiPlus } from '@quasar/extras/mdi-v7';
 import { useFetch } from '@vueuse/core';
 import { computed, onMounted, ref } from 'vue';
 

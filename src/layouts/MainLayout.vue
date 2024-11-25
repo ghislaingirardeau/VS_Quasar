@@ -25,7 +25,7 @@
             </q-item>
             <q-separator v-if="menuItem.separator" :key="'sep' + index" />
           </template>
-          <q-separator />
+          <q-separator color="blue-grey-10" size="2px" />
 
           <q-select
             v-model="locale"
@@ -36,6 +36,7 @@
             map-options
             options-dense
             label="Lang"
+            class="mt-5"
             @update:model-value="handleSelectChange()"
           ></q-select>
         </q-list>
@@ -92,8 +93,8 @@ function handleSelectChange() {
 
 /* --------------- DARK MODE -------------------- */
 import { Dark } from 'quasar';
-import FooterLayout from 'components/FooterLayout.vue';
-import HeaderLayout from 'components/HeaderLayout.vue';
+import FooterLayout from 'components/Layout/FooterLayout.vue';
+import HeaderLayout from 'components/Layout/HeaderLayout.vue';
 
 const isThemeDark = computed(() => {
   return Dark.isActive;
@@ -113,10 +114,10 @@ const menuList = ref([
   },
   {
     icon: 'check',
-    label: 'Todos - table',
+    label: 'Table',
     separator: false,
     to: {
-      name: 'todos',
+      name: 'table',
     },
   },
   {
