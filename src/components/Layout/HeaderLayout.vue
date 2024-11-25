@@ -32,7 +32,7 @@ import {
   mdiSunAngle,
 } from '@quasar/extras/mdi-v7';
 import { Dark } from 'quasar';
-import { useAuth } from 'stores/auth';
+import { useAuth } from 'src/stores/auth';
 import { useRouter } from 'vue-router';
 const leftDrawerOpen = defineModel('leftDrawerOpen', { type: Boolean });
 

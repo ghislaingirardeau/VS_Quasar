@@ -5,6 +5,7 @@
 
 import { configure } from 'quasar/wrappers';
 import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 
 export default configure((ctx) => {
   return {
@@ -45,6 +46,9 @@ export default configure((ctx) => {
       target: {
         browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
         node: 'node20',
+      },
+      alias: {
+        utils: path.resolve(__dirname, './src/utils'),
       },
 
       vueRouterMode: 'history', // available values: 'hash', 'history'

@@ -4,7 +4,7 @@
     <!-- <div class="ma-xl op40 animate-bounce">hello quasar</div> -->
     <!-- With Tailwind -->
     <div class="text-3xl font-bold underline pl-5">
-      {{ moment().format('dddd') }}
+      {{ moment().format('dddd') }} {{ randomNumber() }}
     </div>
 
     <!-- Intro au fichier boots et aux appels API-->
@@ -22,7 +22,9 @@ import IntersectionImage from 'components/IntersectionImage.vue';
 import BootFile from 'components/BootFile.vue';
 import { useQuasar } from 'quasar';
 import { onMounted } from 'vue';
-import { moment } from '../boot/moment';
+import { moment } from 'src/boot/moment';
+import { randomNumber } from 'utils/index';
+
 const $q = useQuasar();
 
 onMounted(() => {

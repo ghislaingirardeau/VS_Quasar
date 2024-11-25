@@ -17,7 +17,7 @@ import { computed } from 'vue';
 // import { computed, inject } from 'vue';
 // const moment = inject('moment');
 
-import { moment } from '../../boot/moment';
+import { moment } from 'src/boot/moment';
 const today = computed(() => moment().format('dddd DD MMMM YYYY'));
 </script>
 

@@ -6,6 +6,7 @@ A Quasar Project
   - [Quasar CLI](#quasar-cli)
     - [Start the app in development mode](#start-the-app-in-development-mode)
     - [Lint the files](#lint-the-files)
+    - [Path for Import](#path-for-import)
   - [Build Android App](#build-android-app)
   - [Quasar DOC](#quasar-doc)
     - [Build your layout](#build-your-layout)
@@ -74,6 +75,36 @@ quasar.config.ts
 yarn lint
 # or
 npm run lint
+```
+
+### Path for Import
+
+**Lors de nos imports, on peut utiliser src/\* qui est intégré par quasar au lieu de @/...**
+
+Si on veut tout de meme personnaliser nos chemins d'import
+
+```js quasr.config
+import path from 'node:path';
+
+build: {
+  alias: {
+        utils: path.resolve(__dirname, './src/utils'),
+      },
+}
+```
+
+```json
+"compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "utils/*": ["src/utils/*"] // ou @utils
+    }
+  },
+```
+
+```js
+// plsu besoin du src dans ce cas là !
+import { randomNumber } from 'utils/index';
 ```
 
 ## Build Android App
