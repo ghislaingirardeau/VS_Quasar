@@ -1,28 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-primary text-white">
-      <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-        <q-toolbar-title>
-          {{ $t('layout.title') }} {{ moment().format('dddd') }}
-        </q-toolbar-title>
-        <q-space />
-
-        <q-btn stretch flat :label="$t('layout.language')" />
-        <q-btn
-          :icon="isThemeDark ? mdiMoonFirstQuarter : mdiSunAngle"
-          @click="Dark.toggle()"
-        />
-        <q-btn
-          :icon="mdiLogout"
-          class="mx-4"
-          round
-          flat
-          :loading="auth.logging"
-          @click="handleLogout"
-        />
-      </q-toolbar>
-    </q-header>
+    <HeaderLayout v-model="leftDrawerOpen" :is-theme-dark />
 
     <q-drawer
       v-model="leftDrawerOpen"
@@ -79,16 +57,8 @@ import {
   mdiGrid,
   mdiLightbulb,
   mdiLightSwitch,
-  mdiLogout,
-  mdiMoonFirstQuarter,
-  mdiSunAngle,
   mdiThemeLightDark,
 } from '@quasar/extras/mdi-v7';
-
-/* ----------- Logout ------------------ */
-import { useAuth } from 'stores/auth';
-
-const auth = useAuth();
 
 /* ----------- META ------------------ */
 
@@ -123,6 +93,7 @@ function handleSelectChange() {
 /* --------------- DARK MODE -------------------- */
 import { Dark } from 'quasar';
 import FooterLayout from 'components/FooterLayout.vue';
+import HeaderLayout from 'components/HeaderLayout.vue';
 
 const isThemeDark = computed(() => {
   return Dark.isActive;
@@ -173,9 +144,6 @@ const menuList = ref([
     },
   },
 ]);
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-}
 
 /* -------------- PROGRAMATIC ROUTING--------------------- */
 
@@ -186,12 +154,5 @@ function handleLink(item) {
   if (item.to) {
     router.push(item.to);
   }
-}
-
-/* -------------- AUTH--------------------- */
-
-async function handleLogout() {
-  await auth.logout();
-  router.push({ name: 'login' });
 }
 </script>
