@@ -52,7 +52,7 @@ const auth = useAuth();
 
 async function handleLogout() {
   await auth.logout();
-  router.push({ name: 'login' });
+  router.push({ name: 'auth' });
 }
 </script>
 

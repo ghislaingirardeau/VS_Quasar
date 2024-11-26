@@ -59,6 +59,7 @@ import {
   mdiLightbulb,
   mdiLightSwitch,
   mdiThemeLightDark,
+  mdiToolbox,
 } from '@quasar/extras/mdi-v7';
 
 /* ----------- META ------------------ */
@@ -142,6 +143,14 @@ const menuList = ref([
     separator: false,
     to: {
       name: 'grid',
+    },
+  },
+  {
+    icon: mdiToolbox,
+    label: 'random',
+    separator: false,
+    to: {
+      name: 'random',
     },
   },
 ]);

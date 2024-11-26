@@ -36,6 +36,11 @@ const routes: RouteRecordRaw[] = [
         name: 'grid',
         component: () => import('pages/GridPage.vue'),
       },
+      {
+        path: 'random',
+        name: 'random',
+        component: () => import('pages/RandomComponentPage.vue'),
+      },
     ],
   },
   /* ROUTES AVEC UN NOUVEAU LAYOUT */

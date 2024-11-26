@@ -19,7 +19,7 @@ export const useAuth = defineStore('auth', () => {
         logging.value = false;
         loggedIn.value = true;
         resolve(true);
-      }, 3000);
+      }, 1500);
     });
   }
 
@@ -32,7 +32,7 @@ export const useAuth = defineStore('auth', () => {
         logging.value = false;
         loggedOut.value = true;
         resolve(true);
-      }, 2000);
+      }, 1000);
     });
   }
 

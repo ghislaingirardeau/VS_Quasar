@@ -27,7 +27,11 @@
       />
     </div>
     <!-- seamless: you can still click outside dialog and interact with app -->
-    <q-dialog v-model="showdialog">
+    <q-dialog
+      v-model="showdialog"
+      transition-show="rotate"
+      transition-hide="jump-up"
+    >
       <div class="column">
         <q-card class="q-my-md">
           <q-bar class="bg-red-7 text-white">

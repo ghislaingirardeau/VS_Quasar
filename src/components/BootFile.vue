@@ -39,7 +39,6 @@ async function handleAxiosFetch() {
 }
 
 async function handleUseFetch() {
-  console.log(process.env);
   const { isFetching, error, data } = await useFetch(
     process.env.API + '/users',
   );
