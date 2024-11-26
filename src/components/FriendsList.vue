@@ -7,37 +7,41 @@
   >
     <template #item="{ element }">
       <q-list separator bordered padding>
-        <q-item
-          :key="element.id"
-          :style="{ borderLeft: `6px solid ${element.color}` }"
-          class="cursor-grab"
-        >
-          <q-item-section avatar>
-            <q-avatar :color="element.color" text-color="white">
-              {{ element.name[0] }}</q-avatar
-            >
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>
-              {{ element.name }}
-            </q-item-label>
-            <q-item-label caption>
-              {{ element.email }}
-            </q-item-label>
-          </q-item-section>
-          <q-item-section side>
-            <div>
-              <q-chip
-                :label="isOSDetailsMap[element.os].label"
-                :color="isOSDetailsMap[element.os].color"
-                :icon="isOSDetailsMap[element.os].icon"
-                class="text-white"
-              />
-              <q-icon :name="element.is_human ? mdiHuman : mdiDog" size="sm">
-              </q-icon>
-            </div>
-          </q-item-section>
-        </q-item>
+        <q-slide-item @left="resetLeft" @right="({ reset }) => reset()">
+          <template #right> <q-icon :name="mdiDelete" /></template>
+          <template #left> <q-icon :name="mdiCheck" /> </template>
+          <q-item
+            :key="element.id"
+            :style="{ borderLeft: `6px solid ${element.color}` }"
+            class="cursor-grab"
+          >
+            <q-item-section avatar>
+              <q-avatar :color="element.color" text-color="white">
+                {{ element.name[0] }}</q-avatar
+              >
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                {{ element.name }}
+              </q-item-label>
+              <q-item-label caption>
+                {{ element.email }}
+              </q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <div>
+                <q-chip
+                  :label="isOSDetailsMap[element.os].label"
+                  :color="isOSDetailsMap[element.os].color"
+                  :icon="isOSDetailsMap[element.os].icon"
+                  class="text-white"
+                />
+                <q-icon :name="element.is_human ? mdiHuman : mdiDog" size="sm">
+                </q-icon>
+              </div>
+            </q-item-section>
+          </q-item>
+        </q-slide-item>
       </q-list>
     </template>
   </draggable>
@@ -52,8 +56,10 @@ import {
   mdiMicrosoft,
   mdiLinux,
   mdiApple,
+  mdiDelete,
 } from '@quasar/extras/mdi-v7';
 import { computed, ref } from 'vue';
+import { mdiCheck } from '@quasar/extras/mdi-v6';
 
 /* SI JE VEUX METTRE EN FORME UN WIDGET A PARTIR D'UNE SEULE DONNEE
 Je peux "map" un objet qui contiendra les différents proporiétés lié à cette donnée
@@ -89,6 +95,12 @@ const dragOptions = computed(() => {
     ghostClass: 'ghost',
   };
 });
+
+function resetLeft({ reset }) {
+  setTimeout(() => {
+    reset();
+  }, 1000);
+}
 </script>
 
 <style lang="scss" scoped></style>

@@ -82,7 +82,7 @@
         </q-card>
         <q-btn fab :icon="mdiPlus" color="info absolute-top-right"></q-btn>
       </div>
-      <div class="col-4 q-pa-md">
+      <div class="col-5 q-pa-md">
         <q-card class="my-card">
           <q-img src="image.jpg">
             <div class="absolute-bottom text-h6">Title</div>
@@ -96,6 +96,12 @@
           </q-card-section>
         </q-card>
       </div>
+      <div class="col-5 q-pa-md">
+        <InnerLoading />
+      </div>
+      <div class="col-6 q-pa-md">
+        <UserCardLoading />
+      </div>
     </div>
   </q-page>
 </template>
@@ -108,7 +114,9 @@ import NotifyBtn from 'components/NotifyBtn.vue';
 import { mdiHomeAccount, mdiPlus } from '@quasar/extras/mdi-v7';
 
 /* ----------- META ------------------ */
-import { useMeta } from 'quasar';
+import { Loading, useMeta } from 'quasar';
+import InnerLoading from 'src/components/InnerLoading.vue';
+import UserCardLoading from 'src/components/UserCardLoading.vue';
 useMeta({
   title: 'Grid',
 });
