@@ -21,7 +21,7 @@ lang, dark mode, screen & device, plateforme...
 import IntersectionImage from 'components/IntersectionImage.vue';
 import BootFile from 'components/BootFile.vue';
 import { useQuasar } from 'quasar';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { moment } from 'src/boot/moment';
 import { randomNumber } from 'utils/index';
 

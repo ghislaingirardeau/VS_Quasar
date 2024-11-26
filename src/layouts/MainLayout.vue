@@ -36,7 +36,7 @@
             map-options
             options-dense
             label="Lang"
-            class="mt-5"
+            class="mt-5 mx-2"
             @update:model-value="handleSelectChange()"
           ></q-select>
         </q-list>
