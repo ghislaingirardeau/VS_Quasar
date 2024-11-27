@@ -1,9 +1,70 @@
 <template>
   <q-page>
+    <div class="row">
+      <div class="col-7">
+        <q-select
+          outlined
+          :model-value="newItem.title"
+          use-input
+          hide-selected
+          hide-dropdown-icon
+          fill-input
+          label="Item"
+          input-debounce="0"
+          :options="itemOptions"
+          @filter="filterFn"
+          @update:model-value="setModel"
+          @input-value="setTitle"
+        >
+          <template #prepend>
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-color
+                v-model="newItem.color"
+                v-close-popup
+                no-header
+                no-footer
+                default-view="palette"
+                class="my-picker"
+              />
+            </q-popup-proxy>
+            <q-btn
+              :icon="mdiBrush"
+              size="sm"
+              round
+              :style="{ backgroundColor: newItem.color }"
+            ></q-btn>
+          </template>
+        </q-select>
+      </div>
+      <div class="col-3 flex flex-center mx-2">
+        <q-input
+          v-model.number="newItem.quantity"
+          label="Quantité"
+          min="1"
+          outlined
+          type="number"
+        ></q-input>
+      </div>
+      <div class="col flex flex-center mx-2">
+        <q-btn
+          :icon="mdiPlus"
+          :disable="isBtnAddEnable"
+          color="primary"
+          round
+          class="cursor-pointer"
+          @click="addNewItem"
+        />
+      </div>
+    </div>
     <q-scroll-area style="height: 520px">
       <draggable
-        v-model="shoppingList"
+        v-model="shoppingItems"
         tag="div"
+        handle=".handle"
         item-key="title"
         style="height: 200px"
         v-bind="dragOptions"
@@ -19,7 +80,15 @@
 
               <q-item :key="element.id" class="cursor-grab">
                 <q-item-section avatar>
-                  <q-avatar :color="element.color" text-color="white" round />
+                  <q-avatar
+                    :style="{
+                      backgroundColor: element.is_purchased
+                        ? 'grey'
+                        : element.color,
+                    }"
+                    text-color="white"
+                    round
+                  />
                 </q-item-section>
 
                 <q-item-section>
@@ -57,89 +126,15 @@
                     <q-icon v-else :name="mdiClose" :color="'red'" />
                   </transition>
                 </q-item-section>
+                <q-item-section side>
+                  <q-icon :name="mdiMenu" class="handle"></q-icon>
+                </q-item-section>
               </q-item>
             </q-slide-item>
           </q-list>
         </template>
       </draggable>
     </q-scroll-area>
-    <!-- <q-input v-model="newItem.title" outlined label="Item">
-      <template #prepend>
-        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-          <q-color
-            v-model="newItem.color"
-            v-close-popup
-            no-header
-            no-footer
-            default-view="palette"
-            class="my-picker"
-          />
-        </q-popup-proxy>
-        <q-btn
-          :icon="mdiBrush"
-          size="sm"
-          round
-          :style="{ backgroundColor: newItem.color }"
-        ></q-btn>
-      </template>
-      <template #append>
-        <q-btn
-          round
-          dense
-          flat
-          :icon="mdiPlus"
-          class="cursor-pointer"
-          @click="addNewItem"
-        />
-      </template>
-    </q-input> -->
-
-    <q-select
-      filled
-      :model-value="newItem.title"
-      use-input
-      hide-selected
-      fill-input
-      label="Item"
-      input-debounce="0"
-      :options="itemOptions"
-      @filter="filterFn"
-      @input-value="setModel"
-    >
-      <template #prepend>
-        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-          <q-color
-            v-model="newItem.color"
-            v-close-popup
-            no-header
-            no-footer
-            default-view="palette"
-            class="my-picker"
-          />
-        </q-popup-proxy>
-        <q-btn
-          :icon="mdiBrush"
-          size="sm"
-          round
-          :style="{ backgroundColor: newItem.color }"
-        ></q-btn>
-      </template>
-      <template #append>
-        <q-btn
-          round
-          dense
-          flat
-          :icon="mdiPlus"
-          class="cursor-pointer"
-          @click="addNewItem"
-        />
-      </template>
-      <!-- <template #no-option>
-        <q-item>
-          <q-item-section class="text-grey"> No results </q-item-section>
-        </q-item>
-      </template> -->
-    </q-select>
   </q-page>
 </template>
 
@@ -150,54 +145,43 @@ import type { Ref } from 'vue';
 import {
   mdiCheck,
   mdiClose,
-  mdiColorHelper,
   mdiDelete,
+  mdiMenu,
   mdiPlus,
 } from '@quasar/extras/mdi-v7';
 import { useLocalStorage } from '@vueuse/core';
 import { uid } from 'quasar';
 import { mdiBrush } from '@quasar/extras/mdi-v6';
 
-const newItem: Ref<Item> = ref({ title: '', color: 'blue' });
+const newItem: Ref<Item> = ref({ title: '', color: 'blue', quantity: 1 });
 
-const shoppings: Ref<Item[]> = useLocalStorage('shoppings', []);
+const shoppingsData: Ref<Item[]> = useLocalStorage('shoppings', []);
 
 type Item = {
   id?: string;
   title: string;
+  quantity: number;
   category?: string;
   color?: string;
   is_purchased?: boolean;
 };
 
-const shoppingList = ref([
+const shoppingItems: Ref<Item[]> = ref([
   {
-    id: 1,
-    title: 'lait',
-    category: 'Laitier',
-    color: 'blue',
+    id: '0ecd588c-3fa6-47f2-9e24-b0e53fd425d7',
+    title: 'poire',
+    quantity: 1,
+    category: 'Vegetable',
+    color: 'rgb(255,255,0)',
     is_purchased: false,
   },
   {
-    id: 2,
-    title: 'pate',
-    category: 'Pate',
-    color: 'yellow',
-    is_purchased: true,
-  },
-  {
-    id: 3,
-    title: 'sauce',
-    category: 'Pate',
-    color: 'yellow',
-    is_purchased: true,
-  },
-  {
-    id: 4,
-    title: 'beurre',
-    category: 'Frais',
-    color: 'blue-4',
-    is_purchased: true,
+    id: '0ecd588c-3fa6-47f2-9e24-b0e53fd425e7',
+    title: 'banane',
+    quantity: 1,
+    category: 'Vegetable',
+    color: 'rgb(255,255,0)',
+    is_purchased: false,
   },
 ]);
 
@@ -212,6 +196,10 @@ const dragOptions = computed(() => {
 
 const itemOptions = ref();
 
+const isBtnAddEnable = computed(() => {
+  return newItem.value.title.length > 0 ? false : true;
+});
+
 const filterItemOptions = computed({
   get() {
     return itemOptions.value;
@@ -221,24 +209,38 @@ const filterItemOptions = computed({
   },
 });
 
-function handleDelete(id: number) {
-  shoppingList.value.filter((el) => el.id !== id);
+function handleDelete(id: string) {
+  shoppingItems.value.filter((el) => el.id !== id);
 }
 
-function handlePurchased(id: number) {
-  const item = shoppingList.value.find((el) => el.id === id);
+function handlePurchased(id: string) {
+  const item = shoppingItems.value.find((el) => el.id === id);
   if (item) item.is_purchased = !item.is_purchased;
 }
 
 function addNewItem() {
-  shoppings.value.push({
+  const isItemInShoppingsData = shoppingsData.value.find(
+    (el) => el.title.toLowerCase() === newItem.value.title.toLowerCase(),
+  );
+  const isItemInList = shoppingItems.value.find(
+    (el) => el.title.toLowerCase() === newItem.value.title.toLowerCase(),
+  );
+  const itemToAdd = {
     id: uid(),
     title: newItem.value.title,
+    quantity: newItem.value.quantity,
     category: 'Vegetable',
     color: newItem.value.color,
     is_purchased: false,
-  });
-  newItem.value = { title: '', color: 'blue' };
+  };
+  if (!isItemInShoppingsData) {
+    shoppingsData.value.push(itemToAdd);
+  }
+  if (!isItemInList) {
+    shoppingItems.value.push(itemToAdd);
+  }
+
+  newItem.value = { title: '', color: 'blue', quantity: 1 };
 }
 
 function filterFn(val: string, update: any) {
@@ -246,21 +248,27 @@ function filterFn(val: string, update: any) {
     const needle = val.toLowerCase();
     filterItemOptions.value = needle;
     if (needle.length) {
-      const filterList = shoppings.value.filter((el) =>
+      const filterList = shoppingsData.value.filter((el) =>
         el.title.toLowerCase().includes(needle),
       );
       filterItemOptions.value = filterList.map((el) => el.title);
     } else {
-      filterItemOptions.value = shoppings.value.map((el) => el.title);
+      filterItemOptions.value = shoppingsData.value.map((el) => el.title);
     }
   });
 }
 
 function setModel(val: string) {
-  const findItem = shoppings?.value.find((el) => el.title === val);
+  const findItem = shoppingsData?.value.find((el) => el.title === val);
   if (findItem) {
-    newItem.value = findItem;
+    newItem.value = { ...findItem };
+  } else {
+    newItem.value.title = val;
   }
+}
+
+function setTitle(val: string) {
+  newItem.value.title = val;
 }
 </script>
 
