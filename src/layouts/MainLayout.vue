@@ -62,6 +62,7 @@ import {
   mdiGrid,
   mdiLightbulb,
   mdiLightSwitch,
+  mdiShopping,
   mdiThemeLightDark,
   mdiToolbox,
 } from '@quasar/extras/mdi-v7';
@@ -156,6 +157,14 @@ const menuList = ref([
     separator: false,
     to: {
       name: 'random',
+    },
+  },
+  {
+    icon: mdiShopping,
+    label: 'shopping',
+    separator: false,
+    to: {
+      name: 'shopping',
     },
   },
 ]);

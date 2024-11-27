@@ -41,6 +41,11 @@ const routes: RouteRecordRaw[] = [
         name: 'random',
         component: () => import('pages/RandomComponentPage.vue'),
       },
+      {
+        path: 'shopping',
+        name: 'shopping',
+        component: () => import('pages/ShoppingListPage.vue'),
+      },
     ],
   },
   /* ROUTES AVEC UN NOUVEAU LAYOUT */

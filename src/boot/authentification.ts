@@ -15,7 +15,7 @@ export default boot(({ app, router, redirect }) => {
     const auth = useAuth();
     // dans routes.js, sur les routes ayant besoin d'une auth, on rajoute une prop qui est un boolean à true
     if (!auth.loggedIn && to.matched.some((route) => route.meta.requiresAuth)) {
-      redirect('/auth/login');
+      redirect('/login');
     }
     next();
   });

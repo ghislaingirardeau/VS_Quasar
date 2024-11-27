@@ -114,7 +114,7 @@ import NotifyBtn from 'components/NotifyBtn.vue';
 import { mdiHomeAccount, mdiPlus } from '@quasar/extras/mdi-v7';
 
 /* ----------- META ------------------ */
-import { Loading, useMeta } from 'quasar';
+import { useMeta } from 'quasar';
 import InnerLoading from 'src/components/InnerLoading.vue';
 import UserCardLoading from 'src/components/UserCardLoading.vue';
 useMeta({
