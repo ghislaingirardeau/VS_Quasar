@@ -1,66 +1,7 @@
 <template>
   <q-page>
-    <div class="row">
-      <div class="col-7">
-        <q-select
-          outlined
-          :model-value="newItem.title"
-          use-input
-          hide-selected
-          hide-dropdown-icon
-          fill-input
-          label="Item"
-          input-debounce="0"
-          :options="itemOptions"
-          @filter="filterFn"
-          @update:model-value="setModel"
-          @input-value="setTitle"
-        >
-          <template #prepend>
-            <q-popup-proxy
-              cover
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-color
-                v-model="newItem.color"
-                v-close-popup
-                no-header
-                no-footer
-                default-view="palette"
-                class="my-picker"
-              />
-            </q-popup-proxy>
-            <q-btn
-              :icon="mdiBrush"
-              size="sm"
-              round
-              :style="{ backgroundColor: newItem.color }"
-            ></q-btn>
-          </template>
-        </q-select>
-      </div>
-      <div class="col-3 flex flex-center mx-2">
-        <q-input
-          v-model.number="newItem.quantity"
-          label="Quantité"
-          min="1"
-          outlined
-          type="number"
-        ></q-input>
-      </div>
-      <div class="col flex flex-center mx-2">
-        <q-btn
-          :icon="mdiPlus"
-          :disable="isBtnAddEnable"
-          color="primary"
-          round
-          class="cursor-pointer"
-          @click="addNewItem"
-        />
-      </div>
-    </div>
-    <q-scroll-area style="height: 520px">
+    <ShoppingToolbar v-model:new-item="newItem" @add-new-item="addNewItem" />
+    <q-scroll-area style="height: 70vh">
       <draggable
         v-model="shoppingItems"
         tag="div"
@@ -142,29 +83,15 @@
 import draggable from 'vuedraggable';
 import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
-import {
-  mdiCheck,
-  mdiClose,
-  mdiDelete,
-  mdiMenu,
-  mdiPlus,
-} from '@quasar/extras/mdi-v7';
+import { mdiCheck, mdiClose, mdiDelete, mdiMenu } from '@quasar/extras/mdi-v7';
 import { useLocalStorage } from '@vueuse/core';
 import { uid } from 'quasar';
-import { mdiBrush } from '@quasar/extras/mdi-v6';
+import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
+import { Item } from 'src/types/index';
 
 const newItem: Ref<Item> = ref({ title: '', color: 'blue', quantity: 1 });
 
 const shoppingsData: Ref<Item[]> = useLocalStorage('shoppings', []);
-
-type Item = {
-  id?: string;
-  title: string;
-  quantity: number;
-  category?: string;
-  color?: string;
-  is_purchased?: boolean;
-};
 
 const shoppingItems: Ref<Item[]> = ref([
   {
@@ -192,21 +119,6 @@ const dragOptions = computed(() => {
     disabled: false,
     ghostClass: 'ghost',
   };
-});
-
-const itemOptions = ref();
-
-const isBtnAddEnable = computed(() => {
-  return newItem.value.title.length > 0 ? false : true;
-});
-
-const filterItemOptions = computed({
-  get() {
-    return itemOptions.value;
-  },
-  set(newValue) {
-    itemOptions.value = newValue;
-  },
 });
 
 function handleDelete(id: string) {
@@ -241,34 +153,6 @@ function addNewItem() {
   }
 
   newItem.value = { title: '', color: 'blue', quantity: 1 };
-}
-
-function filterFn(val: string, update: any) {
-  update(() => {
-    const needle = val.toLowerCase();
-    filterItemOptions.value = needle;
-    if (needle.length) {
-      const filterList = shoppingsData.value.filter((el) =>
-        el.title.toLowerCase().includes(needle),
-      );
-      filterItemOptions.value = filterList.map((el) => el.title);
-    } else {
-      filterItemOptions.value = shoppingsData.value.map((el) => el.title);
-    }
-  });
-}
-
-function setModel(val: string) {
-  const findItem = shoppingsData?.value.find((el) => el.title === val);
-  if (findItem) {
-    newItem.value = { ...findItem };
-  } else {
-    newItem.value.title = val;
-  }
-}
-
-function setTitle(val: string) {
-  newItem.value.title = val;
 }
 </script>
 
