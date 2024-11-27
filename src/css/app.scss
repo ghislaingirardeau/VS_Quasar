@@ -3,15 +3,21 @@
 // Add your customize colors
 // accessible via les attribut color="custom"
 .text-custom {
-  color: #bcc127aa;
+  color: var(--custom-color);
 }
 
 .bg-custom {
-  background-color: #bcc127aa;
+  background-color: var(--custom-color);
 }
 
 // Si je veux personnaliser le mode dark, je selectionne toutes les class finissant par --dark correspondant
 body.body--dark,
 [class*='--dark'] {
-  color: #f3a154;
+  color: var(--color-dark-text);
+}
+
+[theme='elegant'] {
+  --custom-color: #b4e382;
+  --q-secondary: #f15836;
+  --q-primary: #f19136;
 }

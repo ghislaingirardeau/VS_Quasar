@@ -1,6 +1,10 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <HeaderLayout v-model="leftDrawerOpen" :is-theme-dark />
+  <q-layout view="hHh lpR fFf" :theme="themeSelected">
+    <HeaderLayout
+      v-model:drawer="leftDrawerOpen"
+      v-model:theme="themeSelected"
+      :is-theme-dark
+    />
 
     <q-drawer
       v-model="leftDrawerOpen"
@@ -8,14 +12,14 @@
       side="left"
       elevated
       :width="200"
-      :breakpoint="500"
+      :breakpoint="700"
       bordered
       :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
     >
       <q-scroll-area class="fit">
         <q-list>
           <template v-for="(menuItem, index) in menuList" :key="index">
-            <q-item exact :to="menuItem.to">
+            <q-item exact :to="menuItem.to" active-class="text-primary">
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
@@ -25,7 +29,7 @@
             </q-item>
             <q-separator v-if="menuItem.separator" :key="'sep' + index" />
           </template>
-          <q-separator color="blue-grey-10" size="2px" />
+          <q-separator color="primary" size="2px" />
 
           <q-select
             v-model="locale"
@@ -43,7 +47,7 @@
       </q-scroll-area>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container :key="themeSelected">
       <router-view />
     </q-page-container>
 
@@ -104,6 +108,7 @@ const isThemeDark = computed(() => {
 /* --------------- MENU -------------------- */
 
 const leftDrawerOpen = ref(false);
+const themeSelected = ref('Default');
 const menuList = ref([
   {
     icon: 'home',

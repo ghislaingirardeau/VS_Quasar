@@ -17,6 +17,7 @@ A Quasar Project
     - [Tailwind](#tailwind)
   - [assets VS public](#assets-vs-public)
   - [Quasar electron](#quasar-electron)
+  - [Quasar Capacitor for Mobile app](#quasar-capacitor-for-mobile-app)
 
 ## Quasar CLI
 
@@ -254,3 +255,14 @@ contextBridge.exposeInMainWorld('notification', {
 **PRO/CON than using native webAPI new Notification(). Exemple, si on veut que ajouter un bouton dans la notification pour que l'utilisateur répond ? (pas possible avec native notification)! OU rendu commun quelque soit l'OS, or si on veut personnaliser, pas possible**
 
 Electron va offrir plus de possibilités si on veut aller plus loin dans les fonctionnalités de la notification
+
+## Quasar Capacitor for Mobile app
+
+Tous les plugins de capacitor sont dispo dans le lien
+
+![Plugin](https://capacitorjs.com/docs/apis/geolocation)
+![Plugin community](https://github.com/capacitor-community)
+
+Pour installation des plugins, il faut a la fois les installer (npm i @capacitor...) à la racine du projet **ET** dans le dossier "target" (ex: src-capacitor)
+
+Si dans le doc, besoin d'ajouter des éléments dans un fichier ex: androidManifest... On retrouve ces fichiers dans le dossier scr-capacitor

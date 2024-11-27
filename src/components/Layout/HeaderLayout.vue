@@ -7,7 +7,16 @@
       </q-toolbar-title>
       <q-space />
 
-      <q-btn stretch flat :label="$t('layout.language')" />
+      <q-select
+        v-model="themeSelected"
+        outlined
+        label="Theme"
+        :options="['default', 'elegant']"
+      >
+        <template #append>
+          <q-icon name="event" color="white" />
+        </template>
+      </q-select>
       <q-btn
         :icon="isThemeDark ? mdiMoonFirstQuarter : mdiSunAngle"
         flat
@@ -34,7 +43,8 @@ import {
 import { Dark } from 'quasar';
 import { useAuth } from 'src/stores/auth';
 import { useRouter } from 'vue-router';
-const leftDrawerOpen = defineModel('leftDrawerOpen', { type: Boolean });
+const leftDrawerOpen = defineModel('drawer', { type: Boolean });
+const themeSelected = defineModel('theme', { type: String });
 
 defineProps({
   isThemeDark: Boolean,

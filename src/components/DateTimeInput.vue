@@ -5,9 +5,15 @@
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
             <!-- q-date & q-time recoivent le meme mask pour récuperer les datas -->
-            <q-date v-model="dateInput" mask="YYYY-MM-DD HH:mm">
+            <q-date
+              v-model="dateInput"
+              color="secondary"
+              mask="YYYY-MM-DD HH:mm"
+              class="dateTimeContainer"
+              :events="events"
+            >
               <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
+                <q-btn v-close-popup label="Close" color="secondary" flat />
               </div>
             </q-date>
           </q-popup-proxy>
@@ -20,7 +26,7 @@
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
             <q-time v-model="dateInput" mask="YYYY-MM-DD HH:mm" format24h>
               <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
+                <q-btn v-close-popup label="Close" color="secondary" flat />
               </div>
             </q-time>
           </q-popup-proxy>
@@ -37,4 +43,18 @@ import { date } from 'quasar';
 
 const newDate = date.formatDate(new Date(), 'YYYY-MM-DD HH:mm');
 const dateInput = ref(newDate);
+
+const today = date.formatDate(new Date(), 'YYYY/MM/DD');
+
+const events = ref([today, '2024/11/28']);
 </script>
+
+<style lang="scss">
+/* SI je veux personnaliser un element de quasar
+ET le cibler que pour ce component 
+SINON il sera dupliquer partout où q-date est utilisé car PAS SCOPED
+*/
+.dateTimeContainer .q-date__today {
+  background-color: $blue-2;
+}
+</style>

@@ -12,6 +12,11 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
+:root {
+  --color-dark-text: #f3a154;
+  --custom-color: #bcc127aa;
+}
+
 $primary: #1976d2;
 $secondary: #26a69a;
 $accent: #55285d;

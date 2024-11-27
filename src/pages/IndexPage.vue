@@ -3,7 +3,7 @@
     <!-- With unocss -->
     <!-- <div class="ma-xl op40 animate-bounce">hello quasar</div> -->
     <!-- With Tailwind -->
-    <div class="text-3xl font-bold underline pl-5">
+    <div class="text-3xl font-bold underline pl-5 text-secondary">
       {{ moment().format('dddd') }} {{ randomNumber() }}
     </div>
 
@@ -21,15 +21,12 @@ lang, dark mode, screen & device, plateforme...
 import IntersectionImage from 'components/IntersectionImage.vue';
 import BootFile from 'components/BootFile.vue';
 import { useQuasar } from 'quasar';
-import { onMounted, ref } from 'vue';
 import { moment } from 'src/boot/moment';
 import { randomNumber } from 'utils/index';
 
 const $q = useQuasar();
 
-onMounted(() => {
-  console.log($q);
-});
+console.log($q);
 </script>
 
 <style scoped lang="scss">
