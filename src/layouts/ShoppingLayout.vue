@@ -23,7 +23,7 @@ import { computed, Ref } from 'vue';
 const shoppingItems: Ref<Item[]> = useLocalStorage('currentShopping', []);
 
 const totalItems = computed(() => {
-  return shoppingItems.value.length;
+  return shoppingItems.value.filter((el) => !el.is_purchased).length;
 });
 </script>
 

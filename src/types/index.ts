@@ -2,7 +2,13 @@ export type Item = {
   id?: string;
   title: string;
   quantity: number;
-  category?: string;
-  color?: string;
+  category: Category | null;
   is_purchased?: boolean;
+};
+
+export type Category = {
+  id: number;
+  title: string;
+  shortcut: string;
+  color?: string;
 };

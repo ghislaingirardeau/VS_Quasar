@@ -23,15 +23,18 @@
 
               <q-item :key="element.id" class="cursor-grab">
                 <q-item-section avatar>
-                  <q-avatar
+                  <q-chip
                     :style="{
                       backgroundColor: element.is_purchased
                         ? 'grey'
-                        : element.color,
+                        : element.category.color,
                     }"
                     text-color="white"
+                    size="sm"
                     round
-                  />
+                  >
+                    {{ element.category.shortcut }}
+                  </q-chip>
                 </q-item-section>
 
                 <q-item-section>
@@ -46,10 +49,31 @@
                     auto-save
                   >
                     <q-input
-                      v-model="scope.value"
+                      v-model.trim="scope.value"
                       dense
                       autofocus
                       counter
+                      @keyup.enter="scope.set"
+                    />
+                  </q-popup-edit>
+                </q-item-section>
+                <q-item-section side class="q-mr-md">
+                  <q-item-label
+                    :class="{ 'line-through italic': element.is_purchased }"
+                  >
+                    {{ element.quantity }}
+                  </q-item-label>
+                  <q-popup-edit
+                    v-slot="scope"
+                    v-model.number="element.quantity"
+                    auto-save
+                  >
+                    <q-input
+                      v-model.number="scope.value"
+                      style="width: 20px"
+                      dense
+                      autofocus
+                      type="number"
                       @keyup.enter="scope.set"
                     />
                   </q-popup-edit>
@@ -91,28 +115,15 @@ import { uid } from 'quasar';
 import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
 import { Item } from 'src/types/index';
 
-const newItem: Ref<Item> = ref({ title: '', color: 'blue', quantity: 1 });
+const newItem: Ref<Item> = ref({
+  title: '',
+  quantity: 1,
+  category: null,
+});
 
-const shoppingsData: Ref<Item[]> = useLocalStorage('shoppings', []);
+const shoppingsData: Ref<Item[]> = useLocalStorage('shoppingsData', []);
 
-const shoppingItems: Ref<Item[]> = useLocalStorage('currentShopping', [
-  {
-    id: '0ecd588c-3fa6-47f2-9e24-b0e53fd425d7',
-    title: 'poire',
-    quantity: 1,
-    category: 'Vegetable',
-    color: 'rgb(255,255,0)',
-    is_purchased: false,
-  },
-  {
-    id: '0ecd588c-3fa6-47f2-9e24-b0e53fd425e7',
-    title: 'banane',
-    quantity: 1,
-    category: 'Vegetable',
-    color: 'rgb(255,255,0)',
-    is_purchased: false,
-  },
-]);
+const shoppingItems: Ref<Item[]> = useLocalStorage('currentShopping', []);
 
 const dragOptions = computed(() => {
   return {
@@ -143,8 +154,7 @@ function addNewItem() {
     id: uid(),
     title: newItem.value.title,
     quantity: newItem.value.quantity,
-    category: 'Vegetable',
-    color: newItem.value.color,
+    category: newItem.value.category,
     is_purchased: false,
   };
   if (!isItemInShoppingsData) {
@@ -154,7 +164,7 @@ function addNewItem() {
     shoppingItems.value.push(itemToAdd);
   }
 
-  newItem.value = { title: '', color: 'blue', quantity: 1 };
+  newItem.value = { title: '', quantity: 1, category: null };
 }
 </script>
 

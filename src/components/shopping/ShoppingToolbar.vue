@@ -5,22 +5,33 @@
       size="sm"
       class="mr-4"
       round
-      :style="{ backgroundColor: newItem.color }"
+      :style="{ backgroundColor: newItem.category?.color }"
     >
       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-        <q-color
-          v-model="newItem.color"
-          v-close-popup
-          no-header
-          no-footer
-          default-view="palette"
-          class="my-picker"
-        />
+        <q-card>
+          <q-card-section>
+            <h4 class="text-lg">Catégory</h4>
+          </q-card-section>
+          <q-separator></q-separator>
+          <q-card-section>
+            <q-btn
+              v-for="category in categories"
+              :key="category.id"
+              v-close-popup
+              no-caps
+              class="q-ma-xs text-white"
+              :style="{ backgroundColor: category.color }"
+              :label="category.shortcut"
+              @click="handlePickCategory(category)"
+            />
+          </q-card-section>
+        </q-card>
       </q-popup-proxy>
     </q-btn>
     <q-select
       :model-value="newItem.title"
       use-input
+      borderless
       hide-selected
       hide-dropdown-icon
       style="width: 200px"
@@ -35,6 +46,7 @@
     </q-select>
     <q-input
       v-model.number="newItem.quantity"
+      borderless
       style="width: 50px"
       label="Quantité"
       min="1"
@@ -59,9 +71,10 @@ import { mdiBrush } from '@quasar/extras/mdi-v6';
 import { mdiPlus } from '@quasar/extras/mdi-v7';
 import { useLocalStorage } from '@vueuse/core';
 import { computed, Ref, ref } from 'vue';
-import { Item } from 'src/types/index';
+import { Item, Category } from 'src/types/index';
+import { categories } from 'src/assets/category.json';
 
-const shoppingsData: Ref<Item[]> = useLocalStorage('shoppings', []);
+const shoppingsData: Ref<Item[]> = useLocalStorage('shoppingsData', []);
 
 const newItem = defineModel('newItem', { type: Object });
 const emit = defineEmits(['addNewItem']);
@@ -87,11 +100,11 @@ function filterFn(val: string, update: any) {
     filterItemOptions.value = needle;
     if (needle.length) {
       const filterList = shoppingsData.value.filter((el) =>
-        el.title.toLowerCase().includes(needle),
+        el.title.toLowerCase().startsWith(needle),
       );
       filterItemOptions.value = filterList.map((el) => el.title);
     } else {
-      filterItemOptions.value = shoppingsData.value.map((el) => el.title);
+      filterItemOptions.value = [];
     }
   });
 }
@@ -107,6 +120,10 @@ function setModel(val: string) {
 
 function setTitle(val: string) {
   newItem.value.title = val;
+}
+
+function handlePickCategory(category: Category) {
+  newItem.value.category = category;
 }
 </script>
 

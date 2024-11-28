@@ -1,0 +1,107 @@
+{
+  "categories": [
+    { "id": 1, "title": "Fruits", "shortcut": "Fruit", "color": "#FF5733" },
+    { "id": 2, "title": "Légumes", "shortcut": "Légum", "color": "#28A745" },
+    { "id": 3, "title": "Boucherie", "shortcut": "Bouch", "color": "#C70039" },
+    {
+      "id": 4,
+      "title": "Charcuterie",
+      "shortcut": "Charc",
+      "color": "#900C3F"
+    },
+    {
+      "id": 5,
+      "title": "Poissonnerie",
+      "shortcut": "Poiss",
+      "color": "#007BFF"
+    },
+    {
+      "id": 6,
+      "title": "Boulangerie et pâtisserie",
+      "shortcut": "Pain",
+      "color": "#FFC300"
+    },
+    {
+      "id": 7,
+      "title": "Produits laitiers",
+      "shortcut": "Lait",
+      "color": "#FFD700"
+    },
+    {
+      "id": 8,
+      "title": "Épicerie Salée",
+      "shortcut": "Salée",
+      "color": "#6C757D"
+    },
+    {
+      "id": 9,
+      "title": "Épicerie Sucrée",
+      "shortcut": "Sucrée",
+      "color": "#FF6347"
+    },
+    { "id": 10, "title": "Surgelés", "shortcut": "Surg", "color": "#17A2B8" },
+    { "id": 11, "title": "Boissons", "shortcut": "Boiss", "color": "#1E90FF" },
+    {
+      "id": 12,
+      "title": "Vins et spiritueux",
+      "shortcut": "Vins",
+      "color": "#800000"
+    },
+    {
+      "id": 13,
+      "title": "Produits bio et diététiques",
+      "shortcut": "Bio",
+      "color": "#2E8B57"
+    },
+    {
+      "id": 14,
+      "title": "Produits du monde",
+      "shortcut": "Monde",
+      "color": "#8B4513"
+    },
+    {
+      "id": 15,
+      "title": "Produits pour bébés",
+      "shortcut": "Bébé",
+      "color": "#FFC0CB"
+    },
+    {
+      "id": 16,
+      "title": "Hygiène et beauté",
+      "shortcut": "Hyg",
+      "color": "#FF69B4"
+    },
+    {
+      "id": 17,
+      "title": "Produits ménagers",
+      "shortcut": "Ménag",
+      "color": "#8B0000"
+    },
+    { "id": 18, "title": "Animaux", "shortcut": "Anim", "color": "#FFA07A" },
+    { "id": 19, "title": "Textile", "shortcut": "Text", "color": "#20B2AA" },
+    {
+      "id": 20,
+      "title": "Électronique et multimédia",
+      "shortcut": "Élect",
+      "color": "#4682B4"
+    },
+    {
+      "id": 21,
+      "title": "Bricolage et jardinage",
+      "shortcut": "Brico",
+      "color": "#808000"
+    },
+    {
+      "id": 22,
+      "title": "Papeterie et fournitures scolaires",
+      "shortcut": "Bureau",
+      "color": "#708090"
+    },
+    {
+      "id": 23,
+      "title": "Jouets et loisirs",
+      "shortcut": "Jouet",
+      "color": "#FF4500"
+    }
+  ]
+}
