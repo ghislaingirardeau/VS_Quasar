@@ -13,11 +13,13 @@
         <template #item="{ element }">
           <q-list separator bordered padding>
             <q-slide-item
+              left-color="negative"
               @left="handleDelete(element.id)"
-              @right="handleDelete(element.id)"
             >
-              <template #right> <q-icon :name="mdiDelete" /></template>
-              <template #left> <q-icon :name="mdiCheck" /> </template>
+              <template #left>
+                <q-icon :name="mdiDelete" />
+              </template>
+              <template #right> <q-icon :name="mdiDelete" /> </template>
 
               <q-item :key="element.id" class="cursor-grab">
                 <q-item-section avatar>
@@ -93,7 +95,7 @@ const newItem: Ref<Item> = ref({ title: '', color: 'blue', quantity: 1 });
 
 const shoppingsData: Ref<Item[]> = useLocalStorage('shoppings', []);
 
-const shoppingItems: Ref<Item[]> = ref([
+const shoppingItems: Ref<Item[]> = useLocalStorage('currentShopping', [
   {
     id: '0ecd588c-3fa6-47f2-9e24-b0e53fd425d7',
     title: 'poire',
@@ -122,7 +124,7 @@ const dragOptions = computed(() => {
 });
 
 function handleDelete(id: string) {
-  shoppingItems.value.filter((el) => el.id !== id);
+  shoppingItems.value = shoppingItems.value.filter((el) => el.id !== id);
 }
 
 function handlePurchased(id: string) {

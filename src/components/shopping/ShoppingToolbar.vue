@@ -1,11 +1,29 @@
 <template>
   <q-toolbar class="q-my-md">
+    <q-btn
+      :icon="mdiBrush"
+      size="sm"
+      class="mr-4"
+      round
+      :style="{ backgroundColor: newItem.color }"
+    >
+      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+        <q-color
+          v-model="newItem.color"
+          v-close-popup
+          no-header
+          no-footer
+          default-view="palette"
+          class="my-picker"
+        />
+      </q-popup-proxy>
+    </q-btn>
     <q-select
       :model-value="newItem.title"
       use-input
       hide-selected
       hide-dropdown-icon
-      style="width: 220px"
+      style="width: 200px"
       fill-input
       label="Item"
       input-debounce="0"
@@ -14,37 +32,22 @@
       @update:model-value="setModel"
       @input-value="setTitle"
     >
-      <template #prepend>
-        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-          <q-color
-            v-model="newItem.color"
-            v-close-popup
-            no-header
-            no-footer
-            default-view="palette"
-            class="my-picker"
-          />
-        </q-popup-proxy>
-        <q-btn
-          :icon="mdiBrush"
-          size="sm"
-          round
-          :style="{ backgroundColor: newItem.color }"
-        ></q-btn>
-      </template>
     </q-select>
     <q-input
       v-model.number="newItem.quantity"
+      style="width: 50px"
       label="Quantité"
       min="1"
-      class="mx-1"
+      class="mx-2"
       type="number"
     ></q-input>
+    <q-space />
     <q-btn
       :icon="mdiPlus"
       :disable="isBtnAddEnable"
       color="primary"
       round
+      size="sm"
       class="cursor-pointer"
       @click="emit('addNewItem')"
     />

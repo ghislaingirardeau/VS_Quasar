@@ -2,7 +2,7 @@ import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '/tuto',
     component: () => import('layouts/MainLayout.vue'),
     meta: { requiresAuth: true },
     children: [
@@ -58,6 +58,17 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'login',
         component: () => import('pages/auth/LoginPage.vue'),
+      },
+    ],
+  },
+  {
+    path: '/',
+    component: () => import('layouts/ShoppingLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'shopping',
+        component: () => import('pages/ShoppingListPage.vue'),
       },
     ],
   },
