@@ -1,6 +1,6 @@
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
 import { mount } from '@vue/test-utils';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import ExampleComponent from './demo/ExampleComponent.vue';
 import ChildComponent from './demo/ChildComponent.vue';
 
@@ -20,9 +20,9 @@ describe('example Component', () => {
         ],
       },
     });
-    expect(wrapper.vm.clickCount).toBe(0);
+    expect((wrapper.vm as any).clickCount).toBe(0);
     await wrapper.find('.q-item').trigger('click');
-    expect(wrapper.vm.clickCount).toBe(1);
+    expect((wrapper.vm as any).clickCount).toBe(1);
   });
 
   it('should mount component without todos', () => {
@@ -47,11 +47,11 @@ describe('example Component', () => {
     });
 
     /* POUR CONTROLER LE RENDU DU EMIT DANS LE COMPONENT PARENT */
-    expect(wrapper.vm.clickCount).toBe(0);
+    expect((wrapper.vm as any).clickCount).toBe(0);
     wrapper.findComponent(ChildComponent).vm.$emit('incrementFromChild');
-    expect(wrapper.vm.clickCount).toBe(2);
+    expect((wrapper.vm as any).clickCount).toBe(2);
     wrapper.findComponent(ChildComponent).vm.$emit('incrementFromChild');
-    expect(wrapper.vm.clickCount).toBe(4);
+    expect((wrapper.vm as any).clickCount).toBe(4);
   });
   it('should update count to parent', async () => {
     /* POUR CONTROLER QUE LE EMIT RENVOIE BIEN UN PAYLOAD*/
@@ -64,6 +64,6 @@ describe('example Component', () => {
     const incrementEvent = wrapperChild.emitted('incrementFromChild');
 
     expect(incrementEvent).toHaveLength(3);
-    expect(wrapperChild.vm.count).toBe(3);
+    expect((wrapperChild.vm as any).count).toBe(3);
   });
 });

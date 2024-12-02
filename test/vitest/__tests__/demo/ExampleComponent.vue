@@ -45,7 +45,7 @@ function increment() {
   return clickCount.value;
 }
 
-function incrementFromChild(payload) {
+function incrementFromChild(payload: number) {
   clickCount.value += 2;
   return clickCount.value;
 }

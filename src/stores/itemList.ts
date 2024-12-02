@@ -1,7 +1,7 @@
 import { useLocalStorage } from '@vueuse/core/index.cjs';
 import { defineStore } from 'pinia';
 import { Item } from 'src/types';
-import { computed, ref, Ref } from 'vue';
+import { computed, Ref } from 'vue';
 
 export const useItemList = defineStore('itemList', () => {
   const shoppingItems: Ref<Item[]> = useLocalStorage('currentShopping', []);
