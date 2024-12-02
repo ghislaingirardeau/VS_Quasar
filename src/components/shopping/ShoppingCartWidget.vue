@@ -6,15 +6,12 @@
 
 <script setup lang="ts">
 import { mdiCart } from '@quasar/extras/mdi-v7';
-import { useLocalStorage } from '@vueuse/core';
-import { Item } from 'src/types/index';
-import { computed, Ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useItemList } from 'src/stores/itemList';
 
-const shoppingItems: Ref<Item[]> = useLocalStorage('currentShopping', []);
+const itemList = useItemList();
 
-const totalItems = computed(() => {
-  return shoppingItems.value.filter((el) => !el.is_purchased).length;
-});
+const { totalItems } = storeToRefs(itemList);
 </script>
 
 <style scoped></style>

@@ -1,10 +1,12 @@
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
-import { mount } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import { beforeEach, describe, expect, it } from 'vitest';
 import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
 import shoppingListPage from 'src/pages/shoppingListPage.vue';
 import LayoutComponent from 'src/layouts/ShoppingLayout.vue';
 import EmptyCartWidget from 'src/components/shopping/EmptyCartWidget.vue';
+import { setActivePinia, createPinia, storeToRefs } from 'pinia';
+import { useItemList } from 'src/stores/itemList';
 
 installQuasarPlugin();
 
@@ -12,6 +14,8 @@ describe('shopping list', () => {
   let wrapper: ReturnType<typeof mount>;
   let wrapperLayout: ReturnType<typeof mount>;
   beforeEach((): void => {
+    setActivePinia(createPinia());
+
     wrapper = mount(shoppingListPage);
     wrapperLayout = mount(LayoutComponent);
   });
@@ -20,19 +24,23 @@ describe('shopping list', () => {
     wrapper.findComponent(ShoppingToolbar).vm.$emit('addNewItem');
   }
   it('should mount with empty list', async () => {
-    expect(wrapper.vm.shoppingItems).toHaveLength(0);
+    /* Soit je fais le test via le store directement */
+    const itemList = useItemList();
+    const { shoppingItems } = storeToRefs(itemList);
+    expect(shoppingItems.value).toHaveLength(0);
   });
-  it('should mount empty the list', async () => {
+  it('should empty the list', async () => {
+    /* Soit je fais le test du store via l'appel de la props dans le component */
     addItem();
-    expect(wrapper.vm.shoppingItems).toHaveLength(1);
+    expect((wrapper.vm as any).shoppingItems).toHaveLength(1);
     wrapperLayout.findComponent(EmptyCartWidget).vm.$emit('emptyCart');
-    expect(wrapperLayout.vm.shoppingItems).toHaveLength(0);
+    expect((wrapper.vm as any).shoppingItems).toHaveLength(0);
   });
   it('should create a new item in list when click on toolbar button', async () => {
     addItem();
-    expect(wrapper.vm.shoppingItems).toHaveLength(1);
-    wrapper.vm.newItem.title = 'Test';
+    expect((wrapper.vm as any).shoppingItems).toHaveLength(1);
+    (wrapper.vm as any).newItem.title = 'Test';
     addItem();
-    expect(wrapper.vm.shoppingItems).toHaveLength(2);
+    expect((wrapper.vm as any).shoppingItems).toHaveLength(2);
   });
 });

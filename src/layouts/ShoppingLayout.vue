@@ -14,17 +14,14 @@
 </template>
 
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core';
 import EmptyCartWidget from 'src/components/shopping/EmptyCartWidget.vue';
 import ShoppingCartWidget from 'src/components/shopping/ShoppingCartWidget.vue';
-import { Item } from 'src/types';
-import { Ref } from 'vue';
 
-const shoppingItems: Ref<Item[]> = useLocalStorage('currentShopping', []);
+import { useItemList } from 'src/stores/itemList';
 
-function emptyCart() {
-  shoppingItems.value = [];
-}
+const itemList = useItemList();
+
+const { emptyCart } = itemList;
 </script>
 
 <style scoped></style>

@@ -1,10 +1,14 @@
 import { useLocalStorage } from '@vueuse/core/index.cjs';
 import { defineStore } from 'pinia';
 import { Item } from 'src/types';
-import { ref, Ref } from 'vue';
+import { computed, ref, Ref } from 'vue';
 
 export const useItemList = defineStore('itemList', () => {
   const shoppingItems: Ref<Item[]> = useLocalStorage('currentShopping', []);
+
+  const totalItems = computed(() => {
+    return shoppingItems.value.filter((el) => !el.is_purchased).length;
+  });
 
   function handleDelete(id: string) {
     shoppingItems.value = shoppingItems.value.filter((el) => el.id !== id);
@@ -14,9 +18,23 @@ export const useItemList = defineStore('itemList', () => {
     const item = shoppingItems.value.find((el) => el.id === id);
     if (item) item.is_purchased = !item.is_purchased;
   }
+  function addToShoppingList(item: Item) {
+    const isItemInList = shoppingItems.value.find(
+      (el) => el.title.toLowerCase() === item.title.toLowerCase(),
+    );
+    if (!isItemInList) {
+      shoppingItems.value.push(item);
+    }
+  }
+  function emptyCart() {
+    shoppingItems.value = [];
+  }
   return {
     shoppingItems,
+    totalItems,
     handleDelete,
     handlePurchased,
+    addToShoppingList,
+    emptyCart,
   };
 });

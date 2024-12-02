@@ -116,6 +116,7 @@ import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
 import { Item } from 'src/types/index';
 import { categories } from 'src/assets/category.json';
 import { useItemList } from 'src/stores/itemList';
+import { storeToRefs } from 'pinia';
 
 const newItem: Ref<Item> = ref({
   title: '',
@@ -125,9 +126,10 @@ const newItem: Ref<Item> = ref({
 
 const shoppingsData: Ref<Item[]> = useLocalStorage('shoppingsData', []);
 
-// const useItemList = useItemList();
+const itemList = useItemList();
 
-const shoppingItems: Ref<Item[]> = useLocalStorage('currentShopping', []);
+const { shoppingItems } = storeToRefs(itemList);
+const { handleDelete, handlePurchased, addToShoppingList } = itemList;
 
 const dragOptions = computed(() => {
   return {
@@ -138,20 +140,8 @@ const dragOptions = computed(() => {
   };
 });
 
-function handleDelete(id: string) {
-  shoppingItems.value = shoppingItems.value.filter((el) => el.id !== id);
-}
-
-function handlePurchased(id: string) {
-  const item = shoppingItems.value.find((el) => el.id === id);
-  if (item) item.is_purchased = !item.is_purchased;
-}
-
 function addNewItem() {
   const isItemInShoppingsData = shoppingsData.value.find(
-    (el) => el.title.toLowerCase() === newItem.value.title.toLowerCase(),
-  );
-  const isItemInList = shoppingItems.value.find(
     (el) => el.title.toLowerCase() === newItem.value.title.toLowerCase(),
   );
   const itemToAdd = {
@@ -164,10 +154,7 @@ function addNewItem() {
   if (!isItemInShoppingsData) {
     shoppingsData.value.push(itemToAdd);
   }
-  if (!isItemInList) {
-    shoppingItems.value.push(itemToAdd);
-  }
-
+  addToShoppingList(itemToAdd);
   newItem.value = { title: '', quantity: 1, category: categories[0] };
 }
 </script>

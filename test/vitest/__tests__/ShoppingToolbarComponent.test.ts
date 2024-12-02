@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
 import shoppingListPage from 'src/pages/shoppingListPage.vue';
 import { categories } from 'src/assets/category.json';
+import { setActivePinia, createPinia } from 'pinia';
 
 installQuasarPlugin();
 
@@ -11,6 +12,8 @@ describe('toolbar', () => {
   let wrapperChild: ReturnType<typeof mount>;
   let wrapper: ReturnType<typeof mount>;
   beforeEach((): void => {
+    setActivePinia(createPinia());
+
     wrapper = mount(shoppingListPage);
     wrapperChild = mount(ShoppingToolbar, {
       props: {
