@@ -9,10 +9,12 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "test": "echo \"No test specified\" && exit 0",
+    "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
     "dev": "quasar dev",
     "dev:android": "quasar dev -m capacitor -T android",
-    "build": "quasar build"
+    "build": "quasar build",
+    "test:unit": "vitest",
+    "test:unit:ci": "vitest run"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
@@ -30,9 +32,11 @@
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^2.0.0",
     "@quasar/app-vite": "^2.0.0-beta.12",
+    "@quasar/quasar-app-extension-testing-unit-vitest": "^1.1.0",
     "@types/node": "^20.5.9",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
+    "@vue/test-utils": "^2.4.4",
     "autoprefixer": "^10.4.2",
     "electron": "^33.2.0",
     "eslint": "^8.57.0",
@@ -43,7 +47,8 @@
     "typescript": "~5.5.3",
     "unocss": "^0.64.1",
     "vite-plugin-checker": "^0.8.0",
-    "vue-tsc": "^2.0.29"
+    "vue-tsc": "^2.0.29",
+    "vitest": "^2.0.5"
   },
   "engines": {
     "node": "^24 || ^22 || ^20 || ^18",

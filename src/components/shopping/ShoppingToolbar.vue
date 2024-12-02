@@ -3,14 +3,16 @@
     <q-btn
       :icon="mdiBrush"
       size="sm"
-      class="mr-4"
+      class="mr-4 toolbar_category_button"
       round
-      :style="{ backgroundColor: newItem.category?.color }"
+      :style="{
+        backgroundColor: newItem.category?.color,
+      }"
     >
       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
         <q-card>
           <q-card-section>
-            <h4 class="text-lg">Catégory</h4>
+            <h4 class="text-lg">Catégories</h4>
           </q-card-section>
           <q-separator></q-separator>
           <q-card-section>
@@ -60,7 +62,7 @@
       color="primary"
       round
       size="sm"
-      class="cursor-pointer"
+      class="cursor-pointer toolbar_add_button"
       @click="emit('addNewItem')"
     />
   </q-toolbar>

@@ -88,9 +88,9 @@
                     <q-icon
                       v-if="element.is_purchased"
                       :name="mdiCheck"
-                      :color="'green'"
+                      color="positive"
                     />
-                    <q-icon v-else :name="mdiClose" :color="'red'" />
+                    <q-icon v-else :name="mdiClose" color="negative" />
                   </transition>
                 </q-item-section>
                 <q-item-section side>
@@ -114,14 +114,18 @@ import { useLocalStorage } from '@vueuse/core';
 import { uid } from 'quasar';
 import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
 import { Item } from 'src/types/index';
+import { categories } from 'src/assets/category.json';
+import { useItemList } from 'src/stores/itemList';
 
 const newItem: Ref<Item> = ref({
   title: '',
   quantity: 1,
-  category: null,
+  category: categories[0],
 });
 
 const shoppingsData: Ref<Item[]> = useLocalStorage('shoppingsData', []);
+
+// const useItemList = useItemList();
 
 const shoppingItems: Ref<Item[]> = useLocalStorage('currentShopping', []);
 
@@ -164,7 +168,7 @@ function addNewItem() {
     shoppingItems.value.push(itemToAdd);
   }
 
-  newItem.value = { title: '', quantity: 1, category: null };
+  newItem.value = { title: '', quantity: 1, category: categories[0] };
 }
 </script>
 
