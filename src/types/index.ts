@@ -2,7 +2,7 @@ export type Item = {
   id?: string;
   title: string;
   quantity: number;
-  category: Category | null;
+  category: Category;
   is_purchased?: boolean;
 };
 

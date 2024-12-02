@@ -37,6 +37,12 @@ describe('shopping list', () => {
     wrapperLayout.findComponent(EmptyCartWidget).vm.$emit('emptyCart');
     expect((wrapper.vm as any).shoppingItems).toHaveLength(0);
   });
+  it('should not add item if already exist', async () => {
+    addItem();
+    expect((wrapper.vm as any).shoppingItems).toHaveLength(1);
+    addItem();
+    expect((wrapper.vm as any).shoppingItems).toHaveLength(1);
+  });
   it('should create a new item in list when click on toolbar button', async () => {
     addItem();
     expect((wrapper.vm as any).shoppingItems).toHaveLength(1);

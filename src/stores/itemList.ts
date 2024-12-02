@@ -24,6 +24,9 @@ export const useItemList = defineStore('itemList', () => {
     );
     if (!isItemInList) {
       shoppingItems.value.push(item);
+      shoppingItems.value.sort(function (a: Item, b) {
+        return a?.category.id - b?.category.id;
+      });
     }
   }
   function emptyCart() {

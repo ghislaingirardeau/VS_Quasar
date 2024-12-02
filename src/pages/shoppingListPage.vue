@@ -70,10 +70,11 @@
                   >
                     <q-input
                       v-model.number="scope.value"
-                      style="width: 20px"
+                      style="width: 40px"
                       dense
                       autofocus
                       type="number"
+                      min="1"
                       @keyup.enter="scope.set"
                     />
                   </q-popup-edit>

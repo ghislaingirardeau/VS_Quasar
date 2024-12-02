@@ -8,31 +8,35 @@ import { setActivePinia, createPinia } from 'pinia';
 installQuasarPlugin();
 
 describe('toolbar', () => {
-  let wrapperChild: ReturnType<typeof mount>;
+  let wrapper: ReturnType<typeof mount>;
   beforeEach((): void => {
     setActivePinia(createPinia());
 
-    wrapperChild = mount(ShoppingToolbar, {
+    wrapper = mount(ShoppingToolbar, {
       props: {
         newItem: {
-          title: 'Pomme',
+          title: '',
           quantity: 1,
           category: categories[0],
         },
-        'onUpdate:newItem': (e: any) => wrapperChild.setProps({ newItem: e }),
+        'onUpdate:newItem': (e: any) => wrapper.setProps({ newItem: e }),
       },
     });
   });
   it('should mount component properly', () => {
-    expect(wrapperChild.exists()).to.be.true;
+    expect(wrapper.exists()).to.be.true;
+  });
+  it('should have button disabled if no title item', () => {
+    const addBtn = wrapper.find('.toolbar_add_button');
+    expect(addBtn.attributes('disabled')).toBe('');
   });
   it('should emit event on click', async () => {
-    const select = wrapperChild.find('.q-field input');
+    const select = wrapper.find('.q-field input');
     await select.setValue('Canelle');
-    const input = wrapperChild.find('.q-input input');
+    const input = wrapper.find('.q-input input');
     await input.setValue('5');
-    const addBtn = wrapperChild.find('.toolbar_add_button');
+    const addBtn = wrapper.find('.toolbar_add_button');
     await addBtn.trigger('click');
-    expect(wrapperChild.emitted()).toHaveProperty('addNewItem');
+    expect(wrapper.emitted()).toHaveProperty('addNewItem');
   });
 });
