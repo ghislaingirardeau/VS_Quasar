@@ -1,9 +1,10 @@
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
-import { mount, VueWrapper } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import { beforeEach, describe, expect, it } from 'vitest';
 import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
 import shoppingListPage from 'src/pages/shoppingListPage.vue';
-import LayoutComponent from 'src/layouts/ShoppingLayout.vue';
+import LayoutHeader from 'src/components/shopping/LayoutHeader.vue';
+
 import EmptyCartWidget from 'src/components/shopping/EmptyCartWidget.vue';
 import { setActivePinia, createPinia, storeToRefs } from 'pinia';
 import { useItemList } from 'src/stores/itemList';
@@ -17,7 +18,7 @@ describe('shopping list', () => {
     setActivePinia(createPinia());
 
     wrapper = mount(shoppingListPage);
-    wrapperLayout = mount(LayoutComponent);
+    wrapperLayout = mount(LayoutHeader);
   });
 
   function addItem() {

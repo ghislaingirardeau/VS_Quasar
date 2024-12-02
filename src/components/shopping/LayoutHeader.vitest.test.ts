@@ -1,8 +1,8 @@
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
 import { mount } from '@vue/test-utils';
 import { beforeEach, describe, expect, it } from 'vitest';
-import LayoutComponent from 'src/layouts/ShoppingLayout.vue';
 import ShoppingCartWidget from 'src/components/shopping/ShoppingCartWidget.vue';
+import LayoutHeader from 'src/components/shopping/LayoutHeader.vue';
 
 import { setActivePinia, createPinia } from 'pinia';
 
@@ -12,7 +12,7 @@ describe('layout shopping', () => {
   let wrapper: ReturnType<typeof mount>;
   beforeEach((): void => {
     setActivePinia(createPinia());
-    wrapper = mount(LayoutComponent);
+    wrapper = mount(LayoutHeader);
   });
   it('should mount component properly', () => {
     expect(wrapper.exists()).to.be.true;
