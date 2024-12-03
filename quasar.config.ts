@@ -146,17 +146,17 @@ export default configure((ctx) => {
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#sourcefiles
-    // sourceFiles: {
-    //   rootComponent: 'src/App.vue',
-    //   router: 'src/router/index',
-    //   store: 'src/store/index',
-    //   pwaRegisterServiceWorker: 'src-pwa/register-service-worker',
-    //   pwaServiceWorker: 'src-pwa/custom-service-worker',
-    //   pwaManifestFile: 'src-pwa/manifest.json',
-    //   electronMain: 'src-electron/electron-main',
-    //   electronPreload: 'src-electron/electron-preload'
-    //   bexManifestFile: 'src-bex/manifest.json
-    // },
+    sourceFiles: {
+      // rootComponent: 'src/App.vue',
+      // router: 'src/router/index',
+      // store: 'src/store/index',
+      pwaRegisterServiceWorker: 'src-pwa/register-service-worker',
+      pwaServiceWorker: 'src-pwa/custom-service-worker',
+      pwaManifestFile: 'src-pwa/manifest.json',
+      // electronMain: 'src-electron/electron-main',
+      // electronPreload: 'src-electron/electron-preload'
+      // bexManifestFile: 'src-bex/manifest.json
+    },
 
     // https://v2.quasar.dev/quasar-cli-vite/developing-ssr/configuring-ssr
     ssr: {
@@ -187,8 +187,8 @@ export default configure((ctx) => {
     // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
     pwa: {
       workboxMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
-      // swFilename: 'sw.js',
-      // manifestFilename: 'manifest.json'
+      swFilename: 'sw.js',
+      manifestFilename: 'manifest.json',
       // extendManifestJson (json) {},
       // useCredentialsForManifestTag: true,
       // injectPwaMetaTags: false,
