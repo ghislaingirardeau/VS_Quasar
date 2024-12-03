@@ -1,7 +1,6 @@
 <template>
-  <q-page>
-    <ShoppingToolbar v-model:new-item="newItem" @add-new-item="addNewItem" />
-    <q-scroll-area style="height: 70vh">
+  <q-page class="relative-position">
+    <q-scroll-area style="height: 85vh">
       <draggable
         v-model="shoppingItems"
         tag="div"
@@ -103,6 +102,11 @@
         </template>
       </draggable>
     </q-scroll-area>
+    <ShoppingToolbar
+      v-model:new-item="newItem"
+      class="absolute absolute-bottom"
+      @add-new-item="addNewItem"
+    />
   </q-page>
 </template>
 

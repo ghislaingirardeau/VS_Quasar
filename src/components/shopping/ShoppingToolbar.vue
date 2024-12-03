@@ -1,9 +1,9 @@
 <template>
-  <q-toolbar class="q-my-md">
+  <q-toolbar class="bg-secondary">
     <q-btn
-      :icon="mdiBrush"
+      :icon="mdiShapeOutline"
       size="sm"
-      class="mr-4 toolbar_category_button"
+      class="mr-6 border border-solid border-white toolbar_category_button"
       round
       :style="{
         backgroundColor: newItem.category?.color,
@@ -33,7 +33,6 @@
     <q-select
       :model-value="newItem.title"
       use-input
-      borderless
       hide-selected
       hide-dropdown-icon
       style="width: 200px"
@@ -48,8 +47,7 @@
     </q-select>
     <q-input
       v-model.number="newItem.quantity"
-      borderless
-      style="width: 50px"
+      style="width: 80px"
       label="Quantité"
       min="1"
       class="mx-2"
@@ -59,7 +57,7 @@
     <q-btn
       :icon="mdiPlus"
       :disable="isBtnAddEnable"
-      color="primary"
+      color="secondary"
       round
       size="sm"
       class="cursor-pointer toolbar_add_button"
@@ -69,8 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { mdiBrush } from '@quasar/extras/mdi-v6';
-import { mdiPlus } from '@quasar/extras/mdi-v7';
+import { mdiPlus, mdiShapeOutline } from '@quasar/extras/mdi-v7';
 import { useLocalStorage } from '@vueuse/core';
 import { computed, Ref, ref } from 'vue';
 import { Item, Category } from 'src/types/index';
@@ -129,4 +126,4 @@ function handlePickCategory(category: Category) {
 }
 </script>
 
-<style scoped></style>
+<style></style>

@@ -1,10 +1,12 @@
 <template>
-  <q-bar class="bg-blue-2 q-pa-lg">
-    <h4 class="title">Shopping List</h4>
-    <q-space />
-    <EmptyCartWidget @empty-cart="emptyCart" />
-    <ShoppingCartWidget />
-  </q-bar>
+  <q-header elevated class="bg-primary text-white">
+    <q-toolbar>
+      <q-toolbar-title> Shopping List </q-toolbar-title>
+      <!-- <q-space /> -->
+      <EmptyCartWidget @empty-cart="emptyCart" />
+      <ShoppingCartWidget />
+    </q-toolbar>
+  </q-header>
 </template>
 
 <script setup lang="ts">

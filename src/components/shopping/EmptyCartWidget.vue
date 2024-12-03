@@ -1,9 +1,9 @@
 <template>
   <q-btn
-    size="lg"
-    flat
+    size="sm"
+    round
     :icon="mdiTrashCan"
-    class="q-ml-lg text-grey-8"
+    class="q-ml-lg text-white"
     @click="emit('emptyCart')"
   >
   </q-btn>

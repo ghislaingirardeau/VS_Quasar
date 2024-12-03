@@ -1,5 +1,5 @@
 <template>
-  <q-icon size="md" flat :name="mdiCart" class="q-ml-lg text-grey-8">
+  <q-icon size="md" flat :name="mdiCart" class="q-ml-lg text-white">
     <q-badge rounded color="red" floating>{{ totalItems }}</q-badge>
   </q-icon>
 </template>
