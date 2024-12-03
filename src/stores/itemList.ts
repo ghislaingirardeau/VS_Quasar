@@ -32,6 +32,9 @@ export const useItemList = defineStore('itemList', () => {
   function emptyCart() {
     shoppingItems.value = [];
   }
+  function cleanCart() {
+    shoppingItems.value = shoppingItems.value.filter((el) => !el.is_purchased);
+  }
   return {
     shoppingItems,
     totalItems,
@@ -39,5 +42,6 @@ export const useItemList = defineStore('itemList', () => {
     handlePurchased,
     addToShoppingList,
     emptyCart,
+    cleanCart,
   };
 });

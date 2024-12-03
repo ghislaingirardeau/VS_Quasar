@@ -2,16 +2,16 @@
   <q-btn
     size="sm"
     round
-    :icon="mdiCartRemove"
+    :icon="mdiBasketRemove"
     class="q-ml-lg text-white"
-    @click="emit('emptyCart')"
+    @click="emit('cleanCart')"
   >
   </q-btn>
 </template>
 
 <script setup lang="ts">
-import { mdiCartRemove } from '@quasar/extras/mdi-v7';
-const emit = defineEmits(['emptyCart']);
+import { mdiBasketRemove } from '@quasar/extras/mdi-v7';
+const emit = defineEmits(['cleanCart']);
 </script>
 
 <style scoped></style>

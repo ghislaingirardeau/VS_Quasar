@@ -21,7 +21,7 @@
               <template #right> <q-icon :name="mdiDelete" /> </template>
 
               <q-item :key="element.id" class="cursor-grab">
-                <q-item-section avatar>
+                <q-item-section avatar @click="handlePurchased(element.id)">
                   <q-chip
                     :style="{
                       backgroundColor: element.is_purchased

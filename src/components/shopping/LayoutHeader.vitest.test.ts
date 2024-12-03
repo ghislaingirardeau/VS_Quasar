@@ -16,7 +16,7 @@ describe('layout shopping', () => {
   });
   it('should mount component properly', () => {
     expect(wrapper.exists()).to.be.true;
-    expect(wrapper.find('h4').text()).toBe('Shopping List');
+    expect(wrapper.find('.q-toolbar__title').text()).toBe('Shopping List');
   });
   it('should mount cart widget', () => {
     const wrapperWidget = mount(ShoppingCartWidget);
