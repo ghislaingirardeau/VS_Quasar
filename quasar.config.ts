@@ -6,6 +6,9 @@
 import { configure } from 'quasar/wrappers';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import 'dotenv/config';
+
+console.log(process.env.TEST);
 
 export default configure((ctx) => {
   return {
@@ -64,6 +67,8 @@ export default configure((ctx) => {
         API: ctx.dev
           ? 'https://jsonplaceholder.typicode.com'
           : 'https://prod.api.com',
+        VAPIDKEY: process.env.VAPIDKEY,
+        TEST: process.env.TEST,
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
