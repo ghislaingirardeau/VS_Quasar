@@ -12,6 +12,11 @@ import { useItemList } from 'src/stores/itemList';
 const itemList = useItemList();
 
 const { totalItems } = storeToRefs(itemList);
+
+// To display badges inside app icon
+if (navigator.setAppBadge) {
+  navigator.setAppBadge(totalItems.value);
+}
 </script>
 
 <style scoped></style>
