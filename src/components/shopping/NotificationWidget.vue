@@ -43,6 +43,7 @@ function notifyMe() {
 }
 
 onMounted(() => {
+  // when mounted
   notifyMe();
 });
 </script>
