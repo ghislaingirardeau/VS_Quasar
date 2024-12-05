@@ -69,6 +69,9 @@ export default configure((ctx) => {
           : 'https://prod.api.com',
         VAPIDKEY: process.env.VAPIDKEY,
         TEST: process.env.TEST,
+        BASEURL: ctx.dev
+          ? 'http://localhost:8888/api/webpush/save-subscription'
+          : 'https://vercel-eloyny8y3-gg-web-devs-projects.vercel.app/save-subscription',
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
