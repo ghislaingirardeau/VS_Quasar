@@ -16,8 +16,6 @@ import { computed, onMounted, Ref, ref } from 'vue';
 
 const permission: Ref<string | null> = ref(null);
 
-console.log(process.env.TEST);
-
 const hasToShowNotificationButton = computed(() => {
   return permission.value !== 'granted';
 });
