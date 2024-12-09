@@ -70,7 +70,7 @@ export default configure((ctx) => {
         VAPIDKEY: process.env.VAPIDKEY,
         TEST: process.env.TEST,
         BASEURL: ctx.dev
-          ? 'https://vercel-express-server.onrender.com/api/save-subscription'
+          ? 'http://localhost:3000/api/save-subscription'
           : 'https://vercel-express-server.onrender.com/api/save-subscription',
       },
       // rawDefine: {}
@@ -199,7 +199,7 @@ export default configure((ctx) => {
       manifestFilename: 'manifest.json',
       // extendManifestJson (json) {},
       // useCredentialsForManifestTag: true,
-      // injectPwaMetaTags: false,
+      // injectPwaMetaTags: true,
       // extendPWACustomSWConf (esbuildConf) {},
       // extendGenerateSWOptions (cfg) {},
       // extendInjectManifestOptions (cfg) {}
