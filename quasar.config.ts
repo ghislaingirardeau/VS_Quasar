@@ -66,7 +66,7 @@ export default configure((ctx) => {
       env: {
         API: ctx.dev
           ? 'https://jsonplaceholder.typicode.com'
-          : 'https://prod.api.com',
+          : 'https://jsonplaceholder.typicode.com',
         VAPIDKEY: process.env.VAPIDKEY,
         TEST: process.env.TEST,
         BASEURL: ctx.dev
