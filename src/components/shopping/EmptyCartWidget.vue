@@ -3,7 +3,7 @@
     size="sm"
     round
     :icon="mdiCartRemove"
-    class="q-ml-lg text-white"
+    class="q-ml-sm text-white"
     @click="emit('emptyCart')"
   >
   </q-btn>

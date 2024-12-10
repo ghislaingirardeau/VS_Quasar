@@ -4,7 +4,7 @@
     size="sm"
     round
     :icon="mdiDownload"
-    class="q-ml-lg text-white"
+    class="q-ml-sm text-white"
     @click="handlePromptInstall"
   >
   </q-btn>

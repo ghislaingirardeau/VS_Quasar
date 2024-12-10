@@ -3,6 +3,7 @@
     <q-toolbar>
       <q-toolbar-title> Shopping List </q-toolbar-title>
       <!-- <q-space /> -->
+      <ConnectionWidget />
       <NotificationWidget />
       <DownloadWidget />
       <EmptyCartWidget @empty-cart="emptyCart" />
@@ -19,6 +20,7 @@ import { useItemList } from 'src/stores/itemList';
 import CleanCartWidget from './CleanCartWidget.vue';
 import DownloadWidget from './DownloadWidget.vue';
 import NotificationWidget from './NotificationWidget.vue';
+import ConnectionWidget from './ConnectionWidget.vue';
 
 const itemList = useItemList();
 

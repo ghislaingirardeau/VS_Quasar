@@ -4,7 +4,7 @@
     size="sm"
     round
     :icon="mdiBell"
-    class="q-ml-lg text-white"
+    class="q-ml-sm text-white"
     @click="requestNotificationPermission"
   >
   </q-btn>

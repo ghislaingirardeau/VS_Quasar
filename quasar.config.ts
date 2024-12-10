@@ -193,6 +193,10 @@ export default configure((ctx) => {
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
+    /**
+     * GenerateSW > si on veut un SW basique > cache file, home app, offline
+     * InjectManifest > si on veut plus de config notamment Web Push > alors on utilisera en plus custom-service-worker file
+     */
     pwa: {
       workboxMode: 'InjectManifest', // 'GenerateSW' or 'InjectManifest'
       swFilename: 'sw.js',
