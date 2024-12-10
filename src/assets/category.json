@@ -40,65 +40,78 @@
       "color": "#FF6347"
     },
     { "id": 10, "title": "Surgelés", "shortcut": "Surg", "color": "#17A2B8" },
-    { "id": 11, "title": "Boissons", "shortcut": "Boiss", "color": "#1E90FF" },
+    {
+      "id": 11,
+      "title": "Frais Laitier",
+      "shortcut": "Frais L",
+      "color": "#11748f"
+    },
     {
       "id": 12,
+      "title": "Plat Préparé",
+      "shortcut": "Frais P",
+      "color": "#199185"
+    },
+
+    { "id": 13, "title": "Boissons", "shortcut": "Boiss", "color": "#1E90FF" },
+    {
+      "id": 14,
       "title": "Vins et spiritueux",
       "shortcut": "Vins",
       "color": "#800000"
     },
     {
-      "id": 13,
+      "id": 15,
       "title": "Produits bio et diététiques",
       "shortcut": "Bio",
       "color": "#2E8B57"
     },
     {
-      "id": 14,
+      "id": 16,
       "title": "Produits du monde",
       "shortcut": "Monde",
       "color": "#8B4513"
     },
     {
-      "id": 15,
+      "id": 17,
       "title": "Produits pour bébés",
       "shortcut": "Bébé",
       "color": "#FFC0CB"
     },
     {
-      "id": 16,
+      "id": 18,
       "title": "Hygiène et beauté",
       "shortcut": "Hyg",
       "color": "#FF69B4"
     },
     {
-      "id": 17,
+      "id": 19,
       "title": "Produits ménagers",
       "shortcut": "Ménag",
       "color": "#8B0000"
     },
-    { "id": 18, "title": "Animaux", "shortcut": "Anim", "color": "#FFA07A" },
-    { "id": 19, "title": "Textile", "shortcut": "Text", "color": "#20B2AA" },
+    { "id": 20, "title": "Animaux", "shortcut": "Anim", "color": "#FFA07A" },
+    { "id": 21, "title": "Textile", "shortcut": "Text", "color": "#20B2AA" },
     {
-      "id": 20,
+      "id": 22,
       "title": "Électronique et multimédia",
       "shortcut": "Élect",
       "color": "#4682B4"
     },
     {
-      "id": 21,
+      "id": 23,
       "title": "Bricolage et jardinage",
       "shortcut": "Brico",
       "color": "#808000"
     },
     {
-      "id": 22,
+      "id": 24,
       "title": "Papeterie et fournitures scolaires",
       "shortcut": "Bureau",
       "color": "#708090"
     },
     {
-      "id": 23,
+      "id": 25,
       "title": "Jouets et loisirs",
       "shortcut": "Jouet",
       "color": "#FF4500"

@@ -103,7 +103,7 @@ function filterFn(val: string, update: any) {
       );
       filterItemOptions.value = filterList.map((el) => el.title);
     } else {
-      filterItemOptions.value = [];
+      filterItemOptions.value = shoppingsData.value.map((el) => el.title);
     }
   });
 }
