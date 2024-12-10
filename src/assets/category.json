@@ -1,7 +1,7 @@
 {
   "categories": [
     { "id": 1, "title": "Fruits", "shortcut": "Fruit", "color": "#FF5733" },
-    { "id": 2, "title": "Légumes", "shortcut": "Légum", "color": "#28A745" },
+    { "id": 2, "title": "Légumes", "shortcut": "Légume", "color": "#28A745" },
     { "id": 3, "title": "Boucherie", "shortcut": "Bouch", "color": "#C70039" },
     {
       "id": 4,
@@ -12,7 +12,7 @@
     {
       "id": 5,
       "title": "Poissonnerie",
-      "shortcut": "Poiss",
+      "shortcut": "Poisson",
       "color": "#007BFF"
     },
     {
@@ -43,17 +43,22 @@
     {
       "id": 11,
       "title": "Frais Laitier",
-      "shortcut": "Frais L",
+      "shortcut": "Frais Laitier",
       "color": "#11748f"
     },
     {
       "id": 12,
       "title": "Plat Préparé",
-      "shortcut": "Frais P",
+      "shortcut": "Frais Prep",
       "color": "#199185"
     },
 
-    { "id": 13, "title": "Boissons", "shortcut": "Boiss", "color": "#1E90FF" },
+    {
+      "id": 13,
+      "title": "Boissons",
+      "shortcut": "Boisson",
+      "color": "#1E90FF"
+    },
     {
       "id": 14,
       "title": "Vins et spiritueux",
@@ -81,7 +86,7 @@
     {
       "id": 18,
       "title": "Hygiène et beauté",
-      "shortcut": "Hyg",
+      "shortcut": "Hygiène",
       "color": "#FF69B4"
     },
     {
