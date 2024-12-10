@@ -31,6 +31,7 @@
       </q-popup-proxy>
     </q-btn>
     <q-select
+      ref="elementItemsSelect"
       :model-value="newItem.title"
       use-input
       hide-selected
@@ -43,6 +44,7 @@
       @filter="filterFn"
       @update:model-value="setModel"
       @input-value="setTitle"
+      @keyup.enter="handleKey"
     >
     </q-select>
     <q-input
@@ -79,6 +81,7 @@ const newItem = defineModel('newItem', { type: Object });
 const emit = defineEmits(['addNewItem']);
 
 const itemOptions = ref();
+const elementItemsSelect = ref();
 
 const isBtnAddEnable = computed(() => {
   return newItem.value.title.length > 0 ? false : true;
@@ -123,6 +126,10 @@ function setTitle(val: string) {
 
 function handlePickCategory(category: Category) {
   newItem.value.category = category;
+}
+
+function handleKey(e: any) {
+  elementItemsSelect.value.hidePopup();
 }
 </script>
 
