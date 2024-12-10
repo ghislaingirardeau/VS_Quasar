@@ -1,6 +1,6 @@
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
 import { mount } from '@vue/test-utils';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import ShoppingCartWidget from 'src/components/shopping/ShoppingCartWidget.vue';
 import LayoutHeader from 'src/components/shopping/LayoutHeader.vue';
 
@@ -11,6 +11,7 @@ installQuasarPlugin();
 describe('layout shopping', () => {
   let wrapper: ReturnType<typeof mount>;
   beforeEach((): void => {
+    vi.spyOn(window, 'alert');
     setActivePinia(createPinia());
     wrapper = mount(LayoutHeader);
   });
