@@ -8,8 +8,6 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import 'dotenv/config';
 
-console.log(process.env.TEST);
-
 export default configure((ctx) => {
   return {
     supportTS: true,
@@ -68,7 +66,6 @@ export default configure((ctx) => {
           ? 'https://jsonplaceholder.typicode.com'
           : 'https://jsonplaceholder.typicode.com',
         VAPIDKEY: process.env.VAPIDKEY,
-        TEST: process.env.TEST,
         API_URL_WEBPUSH: ctx.dev
           ? 'http://localhost:3000/api/webpush'
           : process.env.API_URL_WEBPUSH,
