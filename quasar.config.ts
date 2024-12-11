@@ -71,7 +71,7 @@ export default configure((ctx) => {
         TEST: process.env.TEST,
         BASEURL: ctx.dev
           ? 'http://localhost:3000/api/webpush/save-subscription'
-          : 'https://vercel-express-server.onrender.com/api/save-subscription',
+          : 'https://pwa-general-express.onrender.com/api/webpush/save-subscription',
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
