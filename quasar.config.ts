@@ -69,9 +69,12 @@ export default configure((ctx) => {
           : 'https://jsonplaceholder.typicode.com',
         VAPIDKEY: process.env.VAPIDKEY,
         TEST: process.env.TEST,
-        BASEURL: ctx.dev
-          ? 'http://localhost:3000/api/webpush/save-subscription'
-          : 'https://pwa-general-express.onrender.com/api/webpush/save-subscription',
+        API_URL_WEBPUSH: ctx.dev
+          ? 'http://localhost:3000/api/webpush'
+          : process.env.API_URL_WEBPUSH,
+        API_URL_WEBAUTH: ctx.dev
+          ? 'http://localhost:3000/api/webAuhtn'
+          : process.env.API_URL_WEBAUTH,
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

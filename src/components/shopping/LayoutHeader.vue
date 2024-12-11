@@ -6,6 +6,7 @@
       <ConnectionWidget />
       <NotificationWidget />
       <DownloadWidget />
+      <AuthentificationWidget />
       <EmptyCartWidget @empty-cart="emptyCart" />
       <CleanCartWidget @clean-cart="cleanCart" />
       <ShoppingCartWidget />
@@ -21,6 +22,7 @@ import CleanCartWidget from './CleanCartWidget.vue';
 import DownloadWidget from './DownloadWidget.vue';
 import NotificationWidget from './NotificationWidget.vue';
 import ConnectionWidget from './ConnectionWidget.vue';
+import AuthentificationWidget from './AuthentificationWidget.vue';
 
 const itemList = useItemList();
 
