@@ -133,7 +133,6 @@ async function handleRegisterCredential() {
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'https://ghislaingirardeau.github.io',
         },
         body: JSON.stringify({ credential: data }),
         credentials: 'include',
