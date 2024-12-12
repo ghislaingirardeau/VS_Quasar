@@ -1,6 +1,7 @@
 <template>
   <q-layout view="hHh lpR fFf" :theme="themeSelected">
     <HeaderLayout
+      :key="`header-${locale}`"
       v-model:drawer="leftDrawerOpen"
       v-model:theme="themeSelected"
       :is-theme-dark
@@ -51,7 +52,7 @@
       <router-view />
     </q-page-container>
 
-    <FooterLayout :key="locale" />
+    <FooterLayout :key="`footer-${locale}`" />
   </q-layout>
 </template>
 
@@ -84,7 +85,7 @@ import { useI18n } from 'vue-i18n';
 // en changeant la valeur de locale, cela changera la langue directement
 const { locale, availableLocales } = useI18n();
 const i18n = useI18n();
-console.log(i18n);
+console.log(locale.value);
 
 const localeOptions = ref([
   { value: 'en-US', label: 'English' },

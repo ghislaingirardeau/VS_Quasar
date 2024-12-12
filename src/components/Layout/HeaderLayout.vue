@@ -2,8 +2,8 @@
   <q-header elevated class="bg-primary text-white">
     <q-toolbar>
       <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-      <q-toolbar-title>
-        {{ $t('layout.title') }}
+      <q-toolbar-title ref="headerTitle">
+        {{ $t('layout.welcome') }}
       </q-toolbar-title>
       <q-space />
 
@@ -17,6 +17,7 @@
           <q-icon name="event" color="white" />
         </template>
       </q-select>
+      <AuthentificationWidget />
       <q-btn
         :icon="isThemeDark ? mdiMoonFirstQuarter : mdiSunAngle"
         flat
@@ -43,8 +44,35 @@ import {
 import { Dark } from 'quasar';
 import { useAuth } from 'src/stores/auth';
 import { useRouter } from 'vue-router';
+import { gsap } from 'src/boot/libraries';
+
 const leftDrawerOpen = defineModel('drawer', { type: Boolean });
 const themeSelected = defineModel('theme', { type: String });
+
+// const headerTitle = useTemplateRef<HTMLInputElement>('headerTitle');
+const headerTitle = ref<Ref | null>(null);
+
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
+onMounted(() => {
+  const elementTarget = headerTitle.value?.$el as HTMLDivElement;
+  gsap.to(elementTarget, {
+    duration: 2,
+    text: t('layout.title'),
+    ease: 'none',
+    delay: 1,
+  });
+});
+
+/* -------------- HYDRATATION OR ASYNC COMPONENT--------------------- */
+
+import { defineAsyncComponent, onMounted, Ref, ref } from 'vue';
+
+const AuthentificationWidget = defineAsyncComponent(
+  () => import('src/components/AuthentificationWidget.vue'),
+);
 
 defineProps({
   isThemeDark: Boolean,

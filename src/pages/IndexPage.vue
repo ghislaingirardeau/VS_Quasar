@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="test">
     <!-- With unocss -->
     <!-- <div class="ma-xl op40 animate-bounce">hello quasar</div> -->
     <!-- With Tailwind -->
