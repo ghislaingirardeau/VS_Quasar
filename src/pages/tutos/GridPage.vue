@@ -108,15 +108,15 @@
 
 <script setup lang="ts">
 // Pour charger une seule icone et non toute la librairie d'icones, le rendu sera simplement un SVG
-import GoFullscreenBtn from 'components/GoFullscreenBtn.vue';
-import NotifyBtn from 'components/NotifyBtn.vue';
+import GoFullscreenBtn from 'components/tuto/GoFullscreenBtn.vue';
+import NotifyBtn from 'components/tuto/NotifyBtn.vue';
 
 import { mdiHomeAccount, mdiPlus } from '@quasar/extras/mdi-v7';
 
 /* ----------- META ------------------ */
 import { useMeta } from 'quasar';
-import InnerLoading from 'src/components/InnerLoading.vue';
-import UserCardLoading from 'src/components/UserCardLoading.vue';
+import InnerLoading from 'src/components/tuto/InnerLoading.vue';
+import UserCardLoading from 'src/components/tuto/UserCardLoading.vue';
 useMeta({
   title: 'Grid',
 });

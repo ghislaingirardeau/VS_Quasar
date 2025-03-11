@@ -100,8 +100,8 @@ function handleSelectChange() {
 
 /* --------------- DARK MODE -------------------- */
 import { Dark } from 'quasar';
-import FooterLayout from 'components/Layout/FooterLayout.vue';
-import HeaderLayout from 'components/Layout/HeaderLayout.vue';
+import FooterLayout from 'components/tuto/Layout/FooterLayout.vue';
+import HeaderLayout from 'components/tuto/Layout/HeaderLayout.vue';
 
 const isThemeDark = computed(() => {
   return Dark.isActive;

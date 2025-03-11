@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import FriendsList from 'components/FriendsList.vue';
+import FriendsList from 'components/tuto/FriendsList.vue';
 </script>
 
 <style scoped></style>

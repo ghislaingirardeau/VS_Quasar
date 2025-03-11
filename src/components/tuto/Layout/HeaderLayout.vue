@@ -71,7 +71,7 @@ onMounted(() => {
 import { defineAsyncComponent, onMounted, Ref, ref } from 'vue';
 
 const AuthentificationWidget = defineAsyncComponent(
-  () => import('src/components/AuthentificationWidget.vue'),
+  () => import('src/components/tuto/AuthentificationWidget.vue'),
 );
 
 defineProps({

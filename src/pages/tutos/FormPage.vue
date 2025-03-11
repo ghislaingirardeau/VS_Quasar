@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import CreateItemForm from 'components/FormPage/createItemForm.vue';
+import CreateItemForm from 'components/tuto/FormPage/createItemForm.vue';
 import { useLocalStorage } from '@vueuse/core';
 import { uid } from 'quasar';
 import { ref } from 'vue';

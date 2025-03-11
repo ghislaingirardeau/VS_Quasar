@@ -18,8 +18,8 @@
 /* Pour avoir toutes les informations utilisées par quasar
 lang, dark mode, screen & device, plateforme...
 */
-import IntersectionImage from 'components/IntersectionImage.vue';
-import BootFile from 'components/BootFile.vue';
+import IntersectionImage from 'components/tuto/IntersectionImage.vue';
+import BootFile from 'components/tuto/BootFile.vue';
 import { useQuasar } from 'quasar';
 import { moment } from 'src/boot/moment';
 import { randomNumber } from 'utils/index';

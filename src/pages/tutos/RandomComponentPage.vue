@@ -30,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import CarouselImage from 'src/components/CarouselImage.vue';
-import DateTimeInput from 'src/components/DateTimeInput.vue';
-import DemoGsap from 'src/components/DemoGsap.vue';
+import CarouselImage from 'src/components/tuto/CarouselImage.vue';
+import DateTimeInput from 'src/components/tuto/DateTimeInput.vue';
+import DemoGsap from 'src/components/tuto/DemoGsap.vue';
 import { ref } from 'vue';
 
 const showBtn = ref(false);
