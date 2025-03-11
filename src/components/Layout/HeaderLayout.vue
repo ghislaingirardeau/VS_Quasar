@@ -60,7 +60,7 @@ onMounted(() => {
   const elementTarget = headerTitle.value?.$el as HTMLDivElement;
   gsap.to(elementTarget, {
     duration: 2,
-    text: t('layout.title'),
+    text: { value: t('layout.title'), newClass: 'text-grey-6' },
     ease: 'none',
     delay: 1,
   });

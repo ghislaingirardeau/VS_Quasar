@@ -1,5 +1,5 @@
 <template>
-  <div>simple liste</div>
+  <div>password page</div>
 </template>
 
 <script setup lang="ts"></script>

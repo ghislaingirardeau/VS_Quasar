@@ -77,7 +77,7 @@ const value = ref(50);
 
 async function handleLogin() {
   await auth.login();
-  router.push({ name: 'home' });
+  router.push({ name: 'homeTuto' });
 }
 </script>
 

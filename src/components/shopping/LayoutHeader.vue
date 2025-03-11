@@ -1,14 +1,16 @@
 <template>
   <q-header elevated class="bg-primary text-white">
     <q-toolbar>
-      <q-toolbar-title> Shopping List </q-toolbar-title>
+      <q-toolbar-title> {{ route.meta.title }} </q-toolbar-title>
       <!-- <q-space /> -->
-      <ConnectionWidget />
-      <NotificationWidget />
-      <DownloadWidget />
-      <EmptyCartWidget @empty-cart="emptyCart" />
-      <CleanCartWidget @clean-cart="cleanCart" />
-      <ShoppingCartWidget />
+      <div v-if="isShoppingPage">
+        <ConnectionWidget />
+        <NotificationWidget />
+        <DownloadWidget />
+        <EmptyCartWidget @empty-cart="emptyCart" />
+        <CleanCartWidget @clean-cart="cleanCart" />
+        <ShoppingCartWidget />
+      </div>
     </q-toolbar>
   </q-header>
 </template>
@@ -21,10 +23,18 @@ import CleanCartWidget from './CleanCartWidget.vue';
 import DownloadWidget from './DownloadWidget.vue';
 import NotificationWidget from './NotificationWidget.vue';
 import ConnectionWidget from './ConnectionWidget.vue';
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+
+const route = useRoute();
 
 const itemList = useItemList();
 
 const { emptyCart, cleanCart } = itemList;
+
+const isShoppingPage = computed(() => {
+  return route.name === 'shopping';
+});
 </script>
 
 <style scoped></style>
