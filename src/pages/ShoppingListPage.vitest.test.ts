@@ -95,8 +95,10 @@ describe('shopping list', () => {
   });
 
   it('should empty the list items', async () => {
-    expect((wrapper.vm as any).shoppingItems).toHaveLength(4);
+    const itemList = useShoppingItem();
+    const { shoppingItems } = storeToRefs(itemList);
+    expect(shoppingItems.value).toHaveLength(4);
     wrapperLayout.findComponent(EmptyCartWidget).vm.$emit('emptyCart');
-    expect((wrapper.vm as any).shoppingItems).toHaveLength(0);
+    expect(shoppingItems.value).toHaveLength(0);
   });
 });

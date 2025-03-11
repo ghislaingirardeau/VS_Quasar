@@ -2,6 +2,8 @@ import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-v
 import { mount } from '@vue/test-utils';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import ShoppingCartWidget from 'src/components/shopping/ShoppingCartWidget.vue';
+import EmptyCartWidget from './EmptyCartWidget.vue';
+import CleanCartWidget from './CleanCartWidget.vue';
 import LayoutHeader from 'src/components/shopping/LayoutHeader.vue';
 
 import { setActivePinia, createPinia } from 'pinia';
@@ -62,5 +64,21 @@ describe('layout shopping', () => {
     const wrapperWidget = mount(ShoppingCartWidget);
     expect((wrapperWidget.vm as any).totalItems).toBe(0);
     expect(wrapper.exists()).to.be.true;
+  });
+
+  it('mount empty cart widget', () => {
+    const wrapperEmptyCart = mount(EmptyCartWidget);
+    expect(wrapperEmptyCart.exists()).to.be.true;
+  });
+
+  it('mount clean cart widget', () => {
+    const wrapperCleanCart = mount(CleanCartWidget);
+    expect(wrapperCleanCart.exists()).to.be.true;
+  });
+
+  it('should emit cleanCart event when button is clicked', async () => {
+    const wrapperCleanCart = mount(CleanCartWidget);
+    await wrapperCleanCart.find('button').trigger('click');
+    expect(wrapperCleanCart.emitted()).toHaveProperty('cleanCart');
   });
 });
