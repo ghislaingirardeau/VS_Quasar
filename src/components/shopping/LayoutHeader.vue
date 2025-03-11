@@ -11,6 +11,7 @@
         <CleanCartWidget @clean-cart="cleanCart" />
         <ShoppingCartWidget />
       </div>
+      <div v-if="isListPage">add</div>
     </q-toolbar>
   </q-header>
 </template>
@@ -18,7 +19,7 @@
 <script setup lang="ts">
 import EmptyCartWidget from 'src/components/shopping/EmptyCartWidget.vue';
 import ShoppingCartWidget from 'src/components/shopping/ShoppingCartWidget.vue';
-import { useItemList } from 'src/stores/itemList';
+import { useShoppingItem } from 'src/stores/shoppingItems';
 import CleanCartWidget from './CleanCartWidget.vue';
 import DownloadWidget from './DownloadWidget.vue';
 import NotificationWidget from './NotificationWidget.vue';
@@ -28,12 +29,16 @@ import { computed } from 'vue';
 
 const route = useRoute();
 
-const itemList = useItemList();
+const itemList = useShoppingItem();
 
 const { emptyCart, cleanCart } = itemList;
 
 const isShoppingPage = computed(() => {
   return route.name === 'shopping';
+});
+
+const isListPage = computed(() => {
+  return route.name === 'list';
 });
 </script>
 

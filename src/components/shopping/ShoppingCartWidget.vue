@@ -7,10 +7,10 @@
 <script setup lang="ts">
 import { mdiCart } from '@quasar/extras/mdi-v7';
 import { storeToRefs } from 'pinia';
-import { useItemList } from 'src/stores/itemList';
+import { useShoppingItem } from 'src/stores/shoppingItems';
 import { onMounted } from 'vue';
 
-const itemList = useItemList();
+const itemList = useShoppingItem();
 
 const { totalItems } = storeToRefs(itemList);
 

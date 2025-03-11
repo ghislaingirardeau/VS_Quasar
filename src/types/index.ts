@@ -1,4 +1,10 @@
 export type Item = {
+  id: number;
+  name: string;
+  description: string;
+};
+
+export type ShoppingItem = {
   id?: string;
   title: string;
   quantity: number;

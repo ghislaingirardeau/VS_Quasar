@@ -8,31 +8,65 @@ import EmptyCartWidget from 'src/components/shopping/EmptyCartWidget.vue';
 import CleanCartWidget from 'src/components/shopping/CleanCartWidget.vue';
 
 import { setActivePinia, createPinia, storeToRefs } from 'pinia';
-import { useItemList } from 'src/stores/itemList';
+import { useShoppingItem } from 'src/stores/shoppingItems';
+import ShoppingListPage from 'src/pages/shoppingListPage.vue';
+import { createRouter, createMemoryHistory } from 'vue-router';
 
 installQuasarPlugin();
+
+// Faire un mock du router => si on utilise useRoute, et notamment des données, j'ai besoin de celui-ci dans mon test
+const routes = [
+  {
+    path: '/shopping',
+    name: 'shopping',
+    component: ShoppingListPage,
+    meta: {
+      title: 'Liste de course',
+    },
+  },
+  // Ajoute d'autres routes si nécessaire
+];
 
 describe('shopping list', () => {
   let wrapper: ReturnType<typeof mount>;
   let wrapperLayout: ReturnType<typeof mount>;
-  beforeEach((): void => {
+  let router: ReturnType<typeof createRouter>;
+
+  beforeEach(async () => {
     vi.spyOn(window, 'alert');
 
     setActivePinia(createPinia());
 
+    // Créer le routeur avec une route mémoire
+    router = createRouter({
+      history: createMemoryHistory('/shopping'),
+      routes,
+    });
+
+    // Monter le composant avec le routeur simulé
+    wrapperLayout = mount(LayoutHeader, {
+      global: {
+        plugins: [router],
+      },
+    });
     wrapper = mount(shoppingListPage);
-    wrapperLayout = mount(LayoutHeader);
+
+    // Simuler la navigation vers la route 'shopping'
+    await router.push('/shopping');
+    await router.isReady(); // Assurer que la navigation est prête
   });
 
   function addItem() {
     wrapper.findComponent(ShoppingToolbar).vm.$emit('addNewItem');
   }
+
   it('should mount with empty list', async () => {
     /* Soit je fais le test via le store directement */
-    const itemList = useItemList();
+    const itemList = useShoppingItem();
     const { shoppingItems } = storeToRefs(itemList);
     expect(shoppingItems.value).toHaveLength(0);
   });
+
   it('should clear the list of purchased item', async () => {
     /* Soit je fais le test du store via l'appel de la props dans le component */
     addItem();
@@ -43,12 +77,14 @@ describe('shopping list', () => {
     wrapperLayout.findComponent(CleanCartWidget).vm.$emit('cleanCart');
     expect((wrapper.vm as any).shoppingItems).toHaveLength(1);
   });
+
   it('should not add item if already exist', async () => {
     addItem();
     expect((wrapper.vm as any).shoppingItems).toHaveLength(2);
     addItem();
     expect((wrapper.vm as any).shoppingItems).toHaveLength(2);
   });
+
   it('should create a new item in list when click on toolbar button', async () => {
     (wrapper.vm as any).newItem.title = 'Poire';
     addItem();
@@ -57,6 +93,7 @@ describe('shopping list', () => {
     addItem();
     expect((wrapper.vm as any).shoppingItems).toHaveLength(4);
   });
+
   it('should empty the list items', async () => {
     expect((wrapper.vm as any).shoppingItems).toHaveLength(4);
     wrapperLayout.findComponent(EmptyCartWidget).vm.$emit('emptyCart');

@@ -118,20 +118,20 @@ import { mdiCheck, mdiClose, mdiDelete, mdiMenu } from '@quasar/extras/mdi-v7';
 import { useLocalStorage } from '@vueuse/core';
 import { uid } from 'quasar';
 import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
-import { Item } from 'src/types/index';
+import { ShoppingItem } from 'src/types/index';
 import { categories } from 'src/assets/category.json';
-import { useItemList } from 'src/stores/itemList';
+import { useShoppingItem } from 'src/stores/shoppingItems';
 import { storeToRefs } from 'pinia';
 
-const newItem: Ref<Item> = ref({
+const newItem: Ref<ShoppingItem> = ref({
   title: '',
   quantity: 1,
   category: categories[0],
 });
 
-const shoppingsData: Ref<Item[]> = useLocalStorage('shoppingsData', []);
+const shoppingsData: Ref<ShoppingItem[]> = useLocalStorage('shoppingsData', []);
 
-const itemList = useItemList();
+const itemList = useShoppingItem();
 
 const { shoppingItems } = storeToRefs(itemList);
 const { handleDelete, handlePurchased, addToShoppingList } = itemList;

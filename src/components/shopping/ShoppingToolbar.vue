@@ -72,10 +72,10 @@
 import { mdiPlus, mdiShapeOutline } from '@quasar/extras/mdi-v7';
 import { useLocalStorage } from '@vueuse/core';
 import { computed, Ref, ref } from 'vue';
-import { Item, Category } from 'src/types/index';
+import { ShoppingItem, Category } from 'src/types/index';
 import { categories } from 'src/assets/category.json';
 
-const shoppingsData: Ref<Item[]> = useLocalStorage('shoppingsData', []);
+const shoppingsData: Ref<ShoppingItem[]> = useLocalStorage('shoppingsData', []);
 
 const newItem = defineModel('newItem', { type: Object });
 const emit = defineEmits(['addNewItem']);
