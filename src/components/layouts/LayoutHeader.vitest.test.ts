@@ -2,8 +2,8 @@ import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-v
 import { mount } from '@vue/test-utils';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import ShoppingCartWidget from 'src/components/shopping/ShoppingCartWidget.vue';
-import EmptyCartWidget from './EmptyCartWidget.vue';
-import CleanCartWidget from './CleanCartWidget.vue';
+import EmptyCartWidget from 'src/components/shopping/EmptyCartWidget.vue';
+import CleanCartWidget from 'src/components/shopping/CleanCartWidget.vue';
 import LayoutHeader from 'src/components/shopping/LayoutHeader.vue';
 
 import { setActivePinia, createPinia } from 'pinia';

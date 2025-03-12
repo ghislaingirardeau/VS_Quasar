@@ -4,7 +4,7 @@ import ListPage from './ListPage.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { setActivePinia, createPinia, storeToRefs } from 'pinia';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
-import { useItemList } from 'src/stores/itemList';
+import { useLists } from 'src/stores/lists';
 
 installQuasarPlugin();
 
@@ -44,9 +44,9 @@ describe('ListPage', () => {
     await router.isReady(); // Assurer que la navigation est prête
   });
 
-  it('should listItems from store be defined', async () => {
-    const itemList = useItemList();
-    const { listItems } = storeToRefs(itemList);
-    expect(listItems.value).toBeDefined();
+  it('should lists from store be defined', async () => {
+    const itemList = useLists();
+    const { lists } = storeToRefs(itemList);
+    expect(lists.value).toBeDefined();
   });
 });

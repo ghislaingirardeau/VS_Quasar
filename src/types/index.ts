@@ -2,6 +2,13 @@ export type Item = {
   id: number;
   name: string;
   description: string;
+  created_at: Date;
+};
+
+export type List = {
+  id: number;
+  name: string;
+  updated_at: null | Date;
 };
 
 export type ShoppingItem = {

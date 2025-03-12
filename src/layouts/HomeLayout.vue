@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import LayoutHeader from 'src/components/shopping/LayoutHeader.vue';
+import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
 </script>
 
 <style scoped></style>
