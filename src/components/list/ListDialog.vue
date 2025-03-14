@@ -66,6 +66,7 @@ const form = ref({
   id: 0,
   name: '',
   updated_at: null as null | Date,
+  items: [],
 });
 
 async function onSubmit() {

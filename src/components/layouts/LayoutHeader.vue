@@ -2,7 +2,9 @@
   <q-header elevated class="bg-primary text-white">
     <q-toolbar>
       <HomeWidget />
-      <q-toolbar-title> {{ route.meta.title }} </q-toolbar-title>
+      <q-toolbar-title>
+        {{ title }}
+      </q-toolbar-title>
       <!-- <q-space /> -->
       <div v-if="isShoppingPage">
         <ConnectionWidget />
@@ -12,7 +14,7 @@
         <CleanCartWidget @clean-cart="cleanCart" />
         <ShoppingCartWidget />
       </div>
-      <div v-if="isListPage">
+      <div v-if="isListsPage">
         <addItemWidget @show-dialog-new-list="showDialogNewList" />
       </div>
     </q-toolbar>
@@ -25,7 +27,7 @@ import ShoppingCartWidget from 'src/components/shopping/ShoppingCartWidget.vue';
 import { useShoppingItem } from 'src/stores/shoppingItems';
 import CleanCartWidget from 'src/components/shopping/CleanCartWidget.vue';
 import DownloadWidget from 'src/components/shopping/DownloadWidget.vue';
-import NotificationWidget from 'src/components/shopping/NotificationWidget.vue';
+// import NotificationWidget from 'src/components/shopping/NotificationWidget.vue';
 import ConnectionWidget from 'src/components/shopping/ConnectionWidget.vue';
 import addItemWidget from 'src/components/list/AddItemWidget.vue';
 import { useRoute } from 'vue-router';
@@ -42,12 +44,16 @@ const { emptyCart, cleanCart } = shoppingList;
 
 const { showDialogNewList } = listsStore;
 
+const title = computed(() => {
+  return route.meta.title || 'Liste: ' + window.history.state?.name;
+});
+
 const isShoppingPage = computed(() => {
   return route.name === 'shopping';
 });
 
-const isListPage = computed(() => {
-  return route.name === 'list';
+const isListsPage = computed(() => {
+  return route.name === 'lists';
 });
 </script>
 

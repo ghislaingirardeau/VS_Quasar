@@ -32,6 +32,11 @@ export const useLists = defineStore('lists', () => {
     });
   }
 
+  function findListById(id: number): List | undefined {
+    console.log(id);
+    return lists.value.find((el) => el.id === id);
+  }
+
   function cleanList() {
     lists.value = [];
   }
@@ -52,5 +57,6 @@ export const useLists = defineStore('lists', () => {
     cleanList,
     showDialogNewList,
     hideNewListDialog,
+    findListById,
   };
 });

@@ -2,6 +2,13 @@
   <q-page padding>
     <q-list bordered separator>
       <q-item v-for="list in lists" :key="list.id" v-ripple clickable>
+        <q-item-section avatar>
+          <q-icon
+            color="primary"
+            :name="mdiFolder"
+            @click="goToListId(list.id, list.name)"
+          />
+        </q-item-section>
         <q-item-section>
           <q-item-label>{{ list.name }}</q-item-label>
           <q-popup-edit v-slot="scope" v-model="list.name" auto-save>
@@ -35,12 +42,15 @@
 <script setup lang="ts">
 import { useLists } from 'src/stores/lists';
 import ListDialog from 'src/components/list/ListDialog.vue';
-import { mdiDelete } from '@quasar/extras/mdi-v7';
+import { mdiDelete, mdiFolder } from '@quasar/extras/mdi-v7';
 
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { List } from 'src/types';
 import ListDialogDelete from 'src/components/list/ListDialogDelete.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const listsStore = useLists();
 const { lists } = storeToRefs(listsStore);
@@ -66,6 +76,10 @@ function inputValidation(scope: any) {
 function handleListToDelete(list: List) {
   showDialogListDelete.value = true;
   listSelected.value = list;
+}
+
+function goToListId(id: number, name: string) {
+  router.push({ name: 'list-id', params: { id }, state: { name } });
 }
 </script>
 

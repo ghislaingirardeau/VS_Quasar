@@ -27,8 +27,8 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/tutos/FormPage.vue'),
       },
       {
-        path: 'list',
-        name: 'list',
+        path: 'lists',
+        name: 'lists',
         component: () => import('pages/tutos/ListPage.vue'),
       },
       {
@@ -77,12 +77,18 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/ShoppingListPage.vue'),
       },
       {
-        path: 'list',
-        name: 'list',
+        path: 'lists',
+        name: 'lists',
         meta: {
           title: 'Liste',
         },
-        component: () => import('pages/ListPage.vue'),
+        component: () => import('pages/lists/indexPage.vue'),
+      },
+      {
+        path: 'lists/:id',
+        name: 'list-id',
+        component: () => import('pages/lists/IdPage.vue'),
+        props: (route) => ({ id: route.params.id }),
       },
     ],
   },

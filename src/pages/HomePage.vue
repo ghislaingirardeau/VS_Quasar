@@ -30,7 +30,7 @@ const menus = ref([
   {
     id: 2,
     title: 'Liste simple',
-    pathName: 'list',
+    pathName: 'lists',
     description: 'Votre liste à faire tout simplement',
   },
   {
