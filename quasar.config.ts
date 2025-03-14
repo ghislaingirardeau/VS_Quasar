@@ -68,6 +68,9 @@ export default configure((ctx) => {
       // publicPath: '/',
       // analyze: true,
       env: {
+        // ctx.dev identifie lui meme le mode dans le lequel nous sommes en fonction de la commande qu'on lance
+        // ctx.dev === true => on est en mode dev => npm run dev
+        // ctx.dev === false => on est en mode prod => npm run build
         API: ctx.dev
           ? 'https://jsonplaceholder.typicode.com'
           : 'https://jsonplaceholder.typicode.com',
@@ -78,6 +81,9 @@ export default configure((ctx) => {
         API_URL_WEBAUTH: ctx.dev
           ? 'http://localhost:3000/api/webAuhtn'
           : process.env.API_URL_WEBAUTH,
+        BASE_URL: ctx.dev
+          ? process.env.MY_STAGING_API
+          : process.env.MY_PROD_API,
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

@@ -47,6 +47,8 @@ const isShoppingPage = computed(() => {
 const isListPage = computed(() => {
   return route.name === 'list';
 });
+
+console.log(process.env.BASE_URL);
 </script>
 
 <style scoped></style>

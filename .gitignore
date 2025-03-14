@@ -7,7 +7,7 @@ src-electron
 src-pwa
 src-ssr
 
-.env
+.env*
 
 # Quasar core related directories
 .quasar
