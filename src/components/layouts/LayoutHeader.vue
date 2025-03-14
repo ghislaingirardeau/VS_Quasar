@@ -1,11 +1,12 @@
 <template>
   <q-header elevated class="bg-primary text-white">
     <q-toolbar>
+      <HomeWidget />
       <q-toolbar-title> {{ route.meta.title }} </q-toolbar-title>
       <!-- <q-space /> -->
       <div v-if="isShoppingPage">
         <ConnectionWidget />
-        <NotificationWidget />
+        <!-- <NotificationWidget /> -->
         <DownloadWidget />
         <EmptyCartWidget @empty-cart="emptyCart" />
         <CleanCartWidget @clean-cart="cleanCart" />
@@ -30,6 +31,7 @@ import addItemWidget from 'src/components/list/AddItemWidget.vue';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 import { useLists } from 'src/stores/lists';
+import HomeWidget from './HomeWidget.vue';
 
 const route = useRoute();
 
@@ -47,8 +49,6 @@ const isShoppingPage = computed(() => {
 const isListPage = computed(() => {
   return route.name === 'list';
 });
-
-console.log(process.env.BASE_URL);
 </script>
 
 <style scoped></style>
