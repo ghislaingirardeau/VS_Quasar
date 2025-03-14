@@ -45,7 +45,7 @@ const shoppingList = useShoppingItem();
 const { emptyCart, cleanCart } = shoppingList;
 
 const title = computed(() => {
-  return route.meta.title || 'Liste: ' + window.history.state?.name;
+  return route.meta.title || window.history.state?.name;
 });
 
 const isShoppingPage = computed(() => {

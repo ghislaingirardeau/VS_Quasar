@@ -112,7 +112,7 @@
 
 <script setup lang="ts">
 import draggable from 'vuedraggable';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import type { Ref } from 'vue';
 import { mdiCheck, mdiClose, mdiDelete, mdiMenu } from '@quasar/extras/mdi-v7';
 import { useLocalStorage } from '@vueuse/core';
@@ -122,6 +122,7 @@ import { ShoppingItem } from 'src/types/index';
 import { categories } from 'src/assets/category.json';
 import { useShoppingItem } from 'src/stores/shoppingItems';
 import { storeToRefs } from 'pinia';
+import { dragOptions } from 'src/utils';
 
 const newItem: Ref<ShoppingItem> = ref({
   title: '',
@@ -135,15 +136,6 @@ const itemList = useShoppingItem();
 
 const { shoppingItems } = storeToRefs(itemList);
 const { handleDelete, handlePurchased, addToShoppingList } = itemList;
-
-const dragOptions = computed(() => {
-  return {
-    animation: 200,
-    group: 'description',
-    disabled: false,
-    ghostClass: 'ghost',
-  };
-});
 
 function addNewItem() {
   const isItemInShoppingsData = shoppingsData.value.find(

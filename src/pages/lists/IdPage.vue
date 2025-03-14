@@ -3,7 +3,7 @@
     <draggable
       v-model="itemsInList"
       tag="div"
-      item-key="name"
+      item-key="id"
       v-bind="dragOptions"
     >
       <template #item="{ element }">
@@ -15,7 +15,7 @@
             <template #right> <q-icon :name="mdiDelete" /></template>
             <template #left> <q-icon :name="mdiCheck" /> </template>
             <q-item :key="element.id" class="cursor-grab flex flex-col">
-              <q-item-section class="mb-3">
+              <q-item-section class="mb-3 flex flex-row">
                 <q-item-label class="font-bold italic text-base">
                   {{ element.title }}
                 </q-item-label>
@@ -34,6 +34,8 @@
                     @keyup.enter="scope.set()"
                   />
                 </q-popup-edit>
+                <q-space />
+                <q-icon color="grey-8" size="xs" :name="mdiReorderHorizontal" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>
@@ -76,7 +78,11 @@
 </template>
 
 <script setup lang="ts">
-import { mdiCheck, mdiDelete } from '@quasar/extras/mdi-v7';
+import {
+  mdiCheck,
+  mdiDelete,
+  mdiReorderHorizontal,
+} from '@quasar/extras/mdi-v7';
 import ListDialog from 'src/components/list/ListDialog.vue';
 import ListDialogDelete from 'src/components/list/ListDialogDelete.vue';
 import { useLists } from 'src/stores/lists';
@@ -84,6 +90,7 @@ import { Item } from 'src/types';
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import draggable from 'vuedraggable';
+import { dragOptions } from 'src/utils';
 
 const route = useRoute();
 
@@ -97,15 +104,6 @@ const listId = computed(() => {
 
 const currentList = computed(() => {
   return listsStore.lists.find((list) => list.id === Number(listId.value))!;
-});
-
-const dragOptions = computed(() => {
-  return {
-    animation: 200,
-    group: 'description',
-    disabled: false,
-    ghostClass: 'ghost',
-  };
 });
 
 const itemsInList = computed({

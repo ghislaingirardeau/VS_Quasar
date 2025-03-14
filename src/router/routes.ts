@@ -80,9 +80,9 @@ const routes: RouteRecordRaw[] = [
         path: 'lists',
         name: 'lists',
         meta: {
-          title: 'Liste',
+          title: 'Listes',
         },
-        component: () => import('pages/lists/indexPage.vue'),
+        component: () => import('pages/lists/ListsPage.vue'),
       },
       {
         path: 'lists/:id',

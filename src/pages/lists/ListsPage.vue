@@ -1,36 +1,46 @@
 <template>
   <q-page padding>
-    <q-list bordered separator>
-      <q-item v-for="list in lists" :key="list.id" v-ripple clickable>
-        <q-item-section avatar>
-          <q-icon
-            color="primary"
-            :name="mdiFolder"
-            @click="goToListId(list.id, list.name)"
-          />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ list.name }}</q-item-label>
-          <q-popup-edit v-slot="scope" v-model="list.name" auto-save>
-            <q-input
-              v-model.trim="scope.value"
-              dense
-              autofocus
-              counter
-              :lazy-rules="false"
-              :rules="rules"
-              @keyup.enter="inputValidation(scope)"
-            />
-          </q-popup-edit>
-        </q-item-section>
-        <q-item-section avatar>
-          <q-icon
-            color="primary"
-            :name="mdiDelete"
-            @click="handleListToDelete(list)"
-          />
-        </q-item-section> </q-item
-    ></q-list>
+    <draggable v-model="lists" tag="div" item-key="id" v-bind="dragOptions">
+      <template #item="{ element }">
+        <q-list bordered separator>
+          <q-item :key="element.id" v-ripple clickable>
+            <q-item-section
+              avatar
+              class="flex flex-row flex-center"
+              @click="goToListId(element.id, element.name)"
+            >
+              <q-icon
+                color="grey-8"
+                :name="mdiReorderHorizontal"
+                class="mr-2"
+              />
+
+              <q-icon color="primary" :name="mdiFolder" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ element.name }}</q-item-label>
+              <q-popup-edit v-slot="scope" v-model="element.name" auto-save>
+                <q-input
+                  v-model.trim="scope.value"
+                  dense
+                  autofocus
+                  counter
+                  :lazy-rules="false"
+                  :rules="rules"
+                  @keyup.enter="inputValidation(scope)"
+                />
+              </q-popup-edit>
+            </q-item-section>
+            <q-item-section avatar>
+              <q-icon
+                color="primary"
+                :name="mdiDelete"
+                @click="handleListToDelete(element)"
+              />
+            </q-item-section> </q-item
+        ></q-list>
+      </template>
+    </draggable>
     <ListDialog />
     <ListDialogDelete
       v-model:show-dialog-list-delete="showDialogListDelete"
@@ -43,16 +53,20 @@
 <script setup lang="ts">
 import { useLists } from 'src/stores/lists';
 import ListDialog from 'src/components/list/ListDialog.vue';
-import { mdiDelete, mdiFolder } from '@quasar/extras/mdi-v7';
-
+import {
+  mdiDelete,
+  mdiFolder,
+  mdiReorderHorizontal,
+} from '@quasar/extras/mdi-v7';
+import draggable from 'vuedraggable';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { List } from 'src/types';
 import ListDialogDelete from 'src/components/list/ListDialogDelete.vue';
 import { useRouter } from 'vue-router';
+import { dragOptions } from 'src/utils';
 
 const router = useRouter();
-
 const listsStore = useLists();
 const { lists } = storeToRefs(listsStore);
 const isNameAlreadyExists = ref(false);
