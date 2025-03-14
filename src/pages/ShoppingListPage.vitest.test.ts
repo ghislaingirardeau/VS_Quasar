@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
 import shoppingListPage from 'src/pages/shoppingListPage.vue';
-import LayoutHeader from 'src/components/shopping/LayoutHeader.vue';
+import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
 import EmptyCartWidget from 'src/components/shopping/EmptyCartWidget.vue';
 import CleanCartWidget from 'src/components/shopping/CleanCartWidget.vue';
 

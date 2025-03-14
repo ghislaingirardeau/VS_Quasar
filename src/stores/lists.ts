@@ -11,8 +11,11 @@ export const useLists = defineStore('lists', () => {
     return lists.value.length;
   });
 
-  function deleteItem(id: number) {
-    lists.value = lists.value.filter((el) => el.id !== id);
+  async function deleteList(id: number) {
+    return new Promise((resolve, reject) => {
+      lists.value = lists.value.filter((el) => el.id !== id);
+      resolve({ success: true });
+    });
   }
 
   async function addList(list: List): Promise<{ success: boolean }> {
@@ -44,7 +47,7 @@ export const useLists = defineStore('lists', () => {
     lists,
     isNewListDialogVisible,
     totalItems,
-    deleteItem,
+    deleteList,
     addList,
     cleanList,
     showDialogNewList,
