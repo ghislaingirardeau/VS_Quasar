@@ -34,7 +34,8 @@
     <ListDialog />
     <ListDialogDelete
       v-model:show-dialog-list-delete="showDialogListDelete"
-      :list-selected="listSelected"
+      :element-name="listSelected.name"
+      @delete-element="deleteElement"
     />
   </q-page>
 </template>
@@ -76,6 +77,15 @@ function inputValidation(scope: any) {
 function handleListToDelete(list: List) {
   showDialogListDelete.value = true;
   listSelected.value = list;
+}
+
+async function deleteElement() {
+  try {
+    await listsStore.deleteList(listSelected.value.id);
+    showDialogListDelete.value = false;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function goToListId(id: number, name: string) {

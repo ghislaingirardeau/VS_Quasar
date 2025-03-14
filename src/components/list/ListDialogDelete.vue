@@ -2,43 +2,36 @@
   <q-dialog :model-value="showDialogListDelete">
     <q-card style="width: 400px; max-width: 90vw">
       <q-card-section class="row items-center">
-        <span class="q-ml-sm">Supprimer la liste: {{ listSelected.name }}</span>
+        <span class="q-ml-sm"
+          >Supprimer {{ props.isItemToDelete ? `l'item` : 'la liste' }}:
+          {{ props.elementName }}</span
+        >
       </q-card-section>
 
       <q-card-actions align="right">
         <q-btn flat label="Annuler" color="danger" @click="closeDialog" />
-        <q-btn flat label="Ok" color="primary" @click="deleteList" />
+        <q-btn
+          flat
+          label="Ok"
+          color="primary"
+          @click="$emit('delete-element')"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script setup lang="ts">
-import { useLists } from 'src/stores/lists';
-import { List } from 'src/types';
-import { PropType } from 'vue';
-
-const listsStore = useLists();
-
 const showDialogListDelete = defineModel('showDialogListDelete', {
   type: Boolean,
 });
 
-const props = defineProps({
-  listSelected: {
-    type: Object as PropType<List>,
-    default: () => ({ id: 0, name: '' }),
-  },
-});
+defineEmits(['delete-element']);
 
-async function deleteList() {
-  try {
-    await listsStore.deleteList(props.listSelected.id);
-    showDialogListDelete.value = false;
-  } catch (error) {
-    console.log(error);
-  }
-}
+const props = defineProps({
+  elementName: { type: String, required: true },
+  isItemToDelete: { type: Boolean, default: false },
+});
 
 function closeDialog() {
   showDialogListDelete.value = false;

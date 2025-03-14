@@ -34,7 +34,7 @@ export const useLists = defineStore('lists', () => {
 
   async function addItemInList(item: Item): Promise<{ success: boolean }> {
     return new Promise((resolve, reject) => {
-      const findList = lists.value.find((el) => el.id === item.id);
+      const findList = lists.value.find((el) => el.id === item.list_id);
       if (findList) {
         findList.items.push({ ...item });
         resolve({ success: true });

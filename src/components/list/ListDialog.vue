@@ -118,8 +118,9 @@ async function addNewItem() {
   try {
     const itemForm = {
       title: form.value.title,
-      id: Number(props.newItemInListId),
+      id: Date.now(),
       description: form.value.description,
+      list_id: Number(props.newItemInListId),
       created_at: new Date(),
     };
     const response = await listsStore.addItemInList(itemForm);
