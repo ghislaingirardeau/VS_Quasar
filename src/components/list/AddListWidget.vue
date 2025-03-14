@@ -2,7 +2,7 @@
   <q-btn
     size="sm"
     round
-    :icon="mdiPlusBox"
+    :icon="mdiCardPlus"
     class="q-ml-sm text-white"
     @click="showDialogNewList"
   >
@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { mdiPlusBox } from '@quasar/extras/mdi-v7';
+import { mdiCardPlus } from '@quasar/extras/mdi-v7';
 import { useLists } from 'src/stores/lists';
 const listsStore = useLists();
 const { showDialogNewList } = listsStore;

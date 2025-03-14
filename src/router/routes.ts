@@ -27,8 +27,8 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/tutos/FormPage.vue'),
       },
       {
-        path: 'lists',
-        name: 'lists',
+        path: 'list',
+        name: 'list',
         component: () => import('pages/tutos/ListPage.vue'),
       },
       {

@@ -1,6 +1,6 @@
 import { useLocalStorage } from '@vueuse/core/index.cjs';
 import { defineStore } from 'pinia';
-import { List } from 'src/types';
+import { List, FormList, Item } from 'src/types';
 import { computed, ref, Ref } from 'vue';
 
 export const useLists = defineStore('lists', () => {
@@ -18,7 +18,7 @@ export const useLists = defineStore('lists', () => {
     });
   }
 
-  async function addList(list: List): Promise<{ success: boolean }> {
+  async function addList(list: FormList): Promise<{ success: boolean }> {
     return new Promise((resolve, reject) => {
       const findListWithSameName = lists.value.find(
         (el) => el.name.toLowerCase() === list.name.toLowerCase(),
@@ -26,19 +26,32 @@ export const useLists = defineStore('lists', () => {
       if (findListWithSameName) {
         reject({ success: false, nameAlreadyUsed: findListWithSameName.name });
       } else {
-        lists.value.push({ ...list });
+        lists.value.push({ ...list, items: [] });
         resolve({ success: true });
       }
     });
   }
 
+  async function addItemInList(item: Item): Promise<{ success: boolean }> {
+    return new Promise((resolve, reject) => {
+      const findList = lists.value.find((el) => el.id === item.id);
+      if (findList) {
+        findList.items.push({ ...item });
+        resolve({ success: true });
+      } else {
+        reject({ success: false, message: 'Can not add item to this list' });
+      }
+    });
+  }
+
+  function updateItemInList(listId: number, value: Item[]) {
+    const listToUpdate = lists.value.find((list) => list.id === listId);
+    listToUpdate!.items = value;
+  }
+
   function findListById(id: number): List | undefined {
     console.log(id);
     return lists.value.find((el) => el.id === id);
-  }
-
-  function cleanList() {
-    lists.value = [];
   }
 
   function showDialogNewList() {
@@ -48,13 +61,15 @@ export const useLists = defineStore('lists', () => {
   function hideNewListDialog() {
     isNewListDialogVisible.value = false;
   }
+
   return {
     lists,
     isNewListDialogVisible,
     totalItems,
     deleteList,
     addList,
-    cleanList,
+    updateItemInList,
+    addItemInList,
     showDialogNewList,
     hideNewListDialog,
     findListById,

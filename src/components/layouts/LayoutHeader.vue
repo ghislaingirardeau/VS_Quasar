@@ -15,7 +15,10 @@
         <ShoppingCartWidget />
       </div>
       <div v-if="isListsPage">
-        <addItemWidget @show-dialog-new-list="showDialogNewList" />
+        <AddListWidget />
+      </div>
+      <div v-if="isListPage">
+        <AddItemWidget />
       </div>
     </q-toolbar>
   </q-header>
@@ -34,15 +37,14 @@ import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 import { useLists } from 'src/stores/lists';
 import HomeWidget from './HomeWidget.vue';
+import AddListWidget from '../list/AddListWidget.vue';
+import AddItemWidget from 'src/components/list/AddItemWidget.vue';
 
 const route = useRoute();
 
 const shoppingList = useShoppingItem();
-const listsStore = useLists();
 
 const { emptyCart, cleanCart } = shoppingList;
-
-const { showDialogNewList } = listsStore;
 
 const title = computed(() => {
   return route.meta.title || 'Liste: ' + window.history.state?.name;
@@ -54,6 +56,10 @@ const isShoppingPage = computed(() => {
 
 const isListsPage = computed(() => {
   return route.name === 'lists';
+});
+
+const isListPage = computed(() => {
+  return route.name === 'list-id';
 });
 </script>
 
