@@ -18,7 +18,9 @@
               <q-icon color="primary" :name="mdiFolder" />
             </q-item-section>
             <q-item-section>
-              <q-item-label>{{ element.name }}</q-item-label>
+              <q-item-label class="font-bold italic text-base">{{
+                element.name
+              }}</q-item-label>
               <q-popup-edit v-slot="scope" v-model="element.name" auto-save>
                 <q-input
                   v-model.trim="scope.value"

@@ -54,6 +54,10 @@ export const useLists = defineStore('lists', () => {
     return lists.value.find((el) => el.id === id);
   }
 
+  function reorderList(listId: number) {
+    lists.value = lists.value.sort((a, b) => (a.id === listId ? -1 : null));
+  }
+
   function showDialogNewList() {
     isNewListDialogVisible.value = true;
   }
@@ -68,6 +72,7 @@ export const useLists = defineStore('lists', () => {
     totalItems,
     deleteList,
     addList,
+    reorderList,
     updateItemInList,
     addItemInList,
     showDialogNewList,

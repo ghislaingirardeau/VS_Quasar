@@ -103,6 +103,7 @@ const listId = computed(() => {
 });
 
 const currentList = computed(() => {
+  listsStore.reorderList(Number(listId.value));
   return listsStore.lists.find((list) => list.id === Number(listId.value))!;
 });
 
