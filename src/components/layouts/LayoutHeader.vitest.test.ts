@@ -41,16 +41,16 @@ describe('layout shopping', () => {
       routes,
     });
 
+    // Simuler la navigation vers la route 'shopping'
+    await router.push('/shopping');
+    await router.isReady(); // Assurer que la navigation est prête
+
     // Monter le composant avec le routeur simulé
     wrapper = mount(LayoutHeader, {
       global: {
         plugins: [router],
       },
     });
-
-    // Simuler la navigation vers la route 'shopping'
-    await router.push('/shopping');
-    await router.isReady(); // Assurer que la navigation est prête
   });
 
   it('should mount component properly', async () => {

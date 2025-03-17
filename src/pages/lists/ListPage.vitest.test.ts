@@ -53,6 +53,10 @@ describe('Lists Page should display list of lists', () => {
       routes,
     });
 
+    // Simuler la navigation vers la route 'list'
+    await router.push('/lists');
+    await router.isReady(); // Assurer que la navigation est prête
+
     // Monter le composant avec le routeur simulé
     wrapperLayout = mount(LayoutHeader, {
       global: {
@@ -61,11 +65,11 @@ describe('Lists Page should display list of lists', () => {
     });
 
     // Monter le composant avec le routeur simulé
-    wrapper = mount(ListsPage);
-
-    // Simuler la navigation vers la route 'list'
-    await router.push('/lists');
-    await router.isReady(); // Assurer que la navigation est prête
+    wrapper = mount(ListsPage, {
+      global: {
+        plugins: [router],
+      },
+    });
   });
 
   it('should lists from store be defined', async () => {
@@ -99,15 +103,6 @@ describe('Lists Page should display list of lists', () => {
     await deleteButton.trigger('click');
 
     // Monter le composant de confirmation de suppression
-    // const listDeleteDialog = wrapper.findComponent(ListDialogDelete);
-    // Monter la Dialog avec les props attendus
-    const wrapperListDeleteDialog = mount(ListDialogDelete, {
-      props: {
-        elementName: 'new list',
-      },
-    });
-
-    await nextTick();
     const listDeleteDialog = wrapper.findComponent(ListDialogDelete);
     expect(listDeleteDialog.exists()).toBe(true);
 

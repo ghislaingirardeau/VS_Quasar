@@ -43,17 +43,21 @@ describe('shopping list', () => {
       routes,
     });
 
+    // Simuler la navigation vers la route 'shopping'
+    await router.push('/shopping');
+    await router.isReady(); // Assurer que la navigation est prête
+
     // Monter le composant avec le routeur simulé
     wrapperLayout = mount(LayoutHeader, {
       global: {
         plugins: [router],
       },
     });
-    wrapper = mount(shoppingListPage);
-
-    // Simuler la navigation vers la route 'shopping'
-    await router.push('/shopping');
-    await router.isReady(); // Assurer que la navigation est prête
+    wrapper = mount(shoppingListPage, {
+      global: {
+        plugins: [router],
+      },
+    });
   });
 
   function addItem() {
