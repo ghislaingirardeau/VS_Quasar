@@ -85,7 +85,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/lists/ListsPage.vue'),
       },
       {
-        path: 'lists/:id',
+        path: 'list/:id',
         name: 'list-id',
         component: () => import('pages/lists/IdPage.vue'),
         props: (route) => ({ id: route.params.id }),

@@ -14,6 +14,7 @@
           flat
           label="Ok"
           color="primary"
+          class="confirm-delete"
           @click="$emit('delete-element')"
         />
       </q-card-actions>

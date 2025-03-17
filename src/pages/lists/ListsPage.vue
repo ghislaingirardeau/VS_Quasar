@@ -36,6 +36,7 @@
             <q-item-section avatar>
               <q-icon
                 color="primary"
+                class="icon-delete"
                 :name="mdiDelete"
                 @click="handleListToDelete(element)"
               />

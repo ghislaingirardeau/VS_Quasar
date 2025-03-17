@@ -45,6 +45,7 @@
             v-model="form.name"
             filled
             label="Nom de la liste"
+            class="form-list-name"
             :lazy-rules="false"
             :rules="[
               (val) => (val && val.length > 0) || 'Taper au moins un caractère',
