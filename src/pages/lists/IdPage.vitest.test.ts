@@ -6,11 +6,7 @@ import { setActivePinia, createPinia, storeToRefs } from 'pinia';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
 import { useLists } from 'src/stores/lists';
 import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
-import AddItemWidget from 'src/components/list/AddItemWidget.vue';
-import ListDialog from 'src/components/list/ListDialog.vue';
-import ListDialogDelete from 'src/components/list/ListDialogDelete.vue';
-
-import { nextTick } from 'vue';
+import { openListDialog } from 'test/testUtils';
 
 installQuasarPlugin();
 
@@ -84,27 +80,10 @@ describe('List Id page', () => {
 
   it('should add an item inside list', async () => {
     const listsStore = useLists();
-    const { lists, isNewListDialogVisible } = storeToRefs(listsStore);
-    expect(isNewListDialogVisible.value).toBe(false);
+    const { lists } = storeToRefs(listsStore);
 
-    // Trouver le composant qui ouvre la Dialog
-    const addItemWidget = wrapperLayout.findComponent(AddItemWidget);
-    expect(addItemWidget.exists()).toBe(true);
-
-    // Cliquer sur le bouton pour ouvrir la Dialog
-    await addItemWidget.find('button').trigger('click');
-    // Vérifier que le store met bien à jour la variable
-    expect(isNewListDialogVisible.value).toBe(true);
-
-    // Trouver la Dialog, config des props attendus et attendre son affichage
-    const wrapperListDialog = mount(ListDialog, {
-      props: {
-        isNewItem: true,
-        newItemInListId: '1',
-      },
-    });
-    await nextTick();
-    expect(wrapperListDialog.exists()).toBe(true);
+    // Use utile test for open dialog
+    await openListDialog(wrapperLayout, true, '1');
 
     // Simulate data to enter
     const route = router.currentRoute.value;
@@ -121,5 +100,10 @@ describe('List Id page', () => {
 
     // check if item is added
     expect(lists.value[0].items).toHaveLength(1);
+
+    // check if item is render inside dom
+    const itemLabel = wrapper.find('.q-item__label');
+    expect(itemLabel.exists()).toBe(true);
+    expect(itemLabel.text()).toContain('test add item');
   });
 });

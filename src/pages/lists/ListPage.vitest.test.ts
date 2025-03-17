@@ -6,9 +6,8 @@ import { setActivePinia, createPinia, storeToRefs } from 'pinia';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
 import { useLists } from 'src/stores/lists';
 import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
-import AddListWidget from 'src/components/list/AddListWidget.vue';
-import ListDialog from 'src/components/list/ListDialog.vue';
 import ListDialogDelete from 'src/components/list/ListDialogDelete.vue';
+import { openListDialog } from 'test/testUtils';
 
 import { nextTick } from 'vue';
 
@@ -75,33 +74,23 @@ describe('ListsPage', () => {
 
   it('should create a new list', async () => {
     const listsStore = useLists();
-    const { lists, isNewListDialogVisible } = storeToRefs(listsStore);
+    const { lists } = storeToRefs(listsStore);
+
+    // Use utile test for open dialog
+    const wrapperListDialog = await openListDialog(wrapperLayout, false, '');
+
     expect(lists.value).toHaveLength(0);
-    expect(isNewListDialogVisible.value).toBe(false);
-
-    // Trouver le composant qui ouvre la Dialog
-    const addListWidget = wrapperLayout.findComponent(AddListWidget);
-    expect(addListWidget.exists()).toBe(true);
-
-    // Cliquer sur le bouton pour ouvrir la Dialog
-    await addListWidget.find('button').trigger('click');
-    // Vérifier que le store met bien à jour la variable
-    expect(isNewListDialogVisible.value).toBe(true);
-
-    // Trouver la Dialog et attendre son affichage
-    const listDialog = wrapper.findComponent(ListDialog);
-    expect(listDialog.exists()).toBe(true);
 
     setTimeout(() => {
       // Vérifier si l'input est bien accessible après affichage
-      const listNameInput = listDialog.find('input.form-list-name');
+      const listNameInput = wrapperListDialog.find('input.form-list-name');
       expect(listNameInput.exists()).toBe(true);
 
       // Remplir l'input
       listNameInput.setValue('Liste de course');
 
       // Soumettre le formulaire
-      listDialog.find('button[type=submit]').trigger('click');
+      wrapperListDialog.find('button[type=submit]').trigger('click');
 
       // Vérifier que la liste a bien été ajoutée
       expect(lists.value).toHaveLength(1);
