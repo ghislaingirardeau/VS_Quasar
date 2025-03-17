@@ -22,16 +22,51 @@ const routes = [
 
 async function createList() {
   const listsStore = useLists();
-
-  // Ajouter une liste pour pouvoir la supprimer
-  await listsStore.addList({
-    id: 1,
-    name: 'Liste de course',
-    updated_at: null,
-  });
+  const { lists } = storeToRefs(listsStore);
+  // Vérifier si la liste existe déjà
+  const existingList = lists.value.find(
+    (list) => list.name === 'Liste de course',
+  );
+  if (!existingList) {
+    await listsStore.addList({
+      id: 1,
+      name: 'Liste de course',
+      updated_at: null,
+    });
+  }
 }
 
-describe('List Id page', () => {
+async function addItemInsideList(
+  router: ReturnType<typeof createRouter>,
+  wrapper: ReturnType<typeof mount>,
+) {
+  const listsStore = useLists();
+  const { lists } = storeToRefs(listsStore);
+  // Simulate data to enter
+  const route = router.currentRoute.value;
+  const itemForm = {
+    title: 'test add item',
+    id: Date.now(),
+    description: '',
+    list_id: Number(route.params.id),
+    created_at: new Date(),
+  };
+
+  // add item in list
+  await listsStore.addItemInList(itemForm);
+
+  // check if item is added
+  expect(lists.value[0].items).toHaveLength(1);
+
+  // check if item is render inside dom
+  const itemLabel = wrapper.find('.q-item__label');
+  expect(itemLabel.exists()).toBe(true);
+  expect(itemLabel.text()).toContain('test add item');
+
+  return wrapper;
+}
+
+describe('List Id page', async () => {
   let router: ReturnType<typeof createRouter>;
   let wrapper: ReturnType<typeof mount>;
   let wrapperLayout: ReturnType<typeof mount>;
@@ -66,44 +101,23 @@ describe('List Id page', () => {
     });
   });
 
-  it('should receive the correct route param id', () => {
+  it('should receive the correct route param id', async () => {
     const route = router.currentRoute.value;
     expect(route.params.id).toBe('1');
   });
 
-  it('should store contain on list', () => {
+  it('should store contain on list', async () => {
     const listsStore = useLists();
     const { lists } = storeToRefs(listsStore);
 
     expect(lists.value).toHaveLength(1);
   });
 
-  it('should add an item inside list', async () => {
-    const listsStore = useLists();
-    const { lists } = storeToRefs(listsStore);
-
+  it('should open dialog and add an item inside list', async () => {
     // Use utile test for open dialog
     await openListDialog(wrapperLayout, true, '1');
 
-    // Simulate data to enter
-    const route = router.currentRoute.value;
-    const itemForm = {
-      title: 'test add item',
-      id: Date.now(),
-      description: '',
-      list_id: Number(route.params.id),
-      created_at: new Date(),
-    };
-
-    // add item in list
-    await listsStore.addItemInList(itemForm);
-
-    // check if item is added
-    expect(lists.value[0].items).toHaveLength(1);
-
-    // check if item is render inside dom
-    const itemLabel = wrapper.find('.q-item__label');
-    expect(itemLabel.exists()).toBe(true);
-    expect(itemLabel.text()).toContain('test add item');
+    // Check if item is added inside list
+    await addItemInsideList(router, wrapper);
   });
 });
