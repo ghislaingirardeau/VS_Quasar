@@ -9,8 +9,6 @@ import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
 import ListDialogDelete from 'src/components/list/ListDialogDelete.vue';
 import { openListDialog } from 'test/testUtils';
 
-import { nextTick } from 'vue';
-
 installQuasarPlugin();
 
 // Faire un mock du router => si on utilise useRoute, et notamment des données, j'ai besoin de celui-ci dans mon test
@@ -107,8 +105,6 @@ describe('Lists Page should display list of lists', () => {
     expect(listDeleteDialog.exists()).toBe(true);
 
     listDeleteDialog.vm.$emit('delete-element', 1);
-
-    await nextTick();
 
     // check if list is deleted
     expect(lists.value).toHaveLength(0);
