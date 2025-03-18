@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="isNewListDialogVisible">
+  <q-dialog v-model="isNewListDialogVisible" :full-height="props.isNewItem">
     <q-card style="width: 400px; max-width: 90vw">
       <q-card-section class="row items-center">
         <div class="text-h6">{{ title }}</div>
@@ -30,15 +30,12 @@
               (val) => (val && val.length > 0) || 'Taper au moins un caractère',
             ]"
           />
-          <q-input
-            v-model="form.description"
-            label="Description"
-            filled
-            type="textarea"
-            :lazy-rules="false"
-            :rules="[
-              (val) => (val && val.length > 0) || 'Taper au moins un caractère',
-            ]"
+          <QuillEditor
+            v-model:content="form.description"
+            theme="snow"
+            content-type="html"
+            placeholder="Description"
+            class="quill-editor"
           />
         </q-card-section>
         <q-card-section v-else class="pb-0">
@@ -167,4 +164,10 @@ function onReset() {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss">
+.quill-editor {
+  .ql-editor {
+    height: 45vh;
+  }
+}
+</style>

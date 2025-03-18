@@ -77,6 +77,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/ShoppingListPage.vue'),
       },
       {
+        path: 'wallet',
+        name: 'wallet',
+        meta: {
+          title: 'Carte Fid',
+        },
+        component: () => import('pages/WalletPage.vue'),
+      },
+      {
         path: 'lists',
         name: 'lists',
         meta: {

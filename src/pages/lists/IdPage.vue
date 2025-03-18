@@ -1,3 +1,5 @@
+<!-- eslint-disable vue/no-v-text-v-html-on-component -->
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <q-page padding>
     <draggable
@@ -7,7 +9,7 @@
       v-bind="dragOptions"
     >
       <template #item="{ element }">
-        <q-list separator bordered padding>
+        <q-list separator bordered class="mb-2 bg-slate-400">
           <q-slide-item
             @left="resetLeft"
             @right="({ reset }) => showDeleteItemDialog({ reset }, element)"
@@ -16,7 +18,7 @@
             <template #left> <q-icon :name="mdiCheck" /> </template>
             <q-item :key="element.id" class="cursor-grab flex flex-col">
               <q-item-section class="mb-3 flex flex-row">
-                <q-item-label class="font-bold italic text-base">
+                <q-item-label class="text-h5 font-bold italic">
                   {{ element.title }}
                 </q-item-label>
                 <q-popup-edit v-slot="scope" v-model="element.title" auto-save>
@@ -37,29 +39,34 @@
                 <q-space />
                 <q-icon color="grey-8" size="xs" :name="mdiReorderHorizontal" />
               </q-item-section>
-              <q-item-section>
-                <q-item-label>
-                  {{ element.description }}
+              <q-separator />
+
+              <q-item-section class="py-2">
+                <q-item-label
+                  class="description"
+                  v-html="sanitizeHtml(element.description)"
+                >
                 </q-item-label>
                 <q-popup-edit
                   v-slot="scope"
                   v-model="element.description"
                   auto-save
                 >
-                  <q-input
-                    v-model.trim="scope.value"
-                    type="textarea"
-                    dense
-                    autofocus
-                    counter
-                    :lazy-rules="false"
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) ||
-                        'Taper au moins un caractère',
-                    ]"
-                    @keyup.enter="scope.set()"
+                  <QuillEditor
+                    v-model:content="scope.value"
+                    theme="snow"
+                    content-type="html"
+                    placeholder="Description"
+                    class="quill-editor"
                   />
+                  <div class="flex justify-end">
+                    <q-btn
+                      label="Ok"
+                      class="mt-2"
+                      color="primary"
+                      @click="scope.set()"
+                    />
+                  </div>
                 </q-popup-edit>
               </q-item-section>
             </q-item>
@@ -91,6 +98,7 @@ import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import draggable from 'vuedraggable';
 import { dragOptions } from 'src/utils';
+import sanitizeHtml from 'sanitize-html';
 
 const route = useRoute();
 
@@ -138,4 +146,16 @@ function deleteElement() {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss">
+.description {
+  ul {
+    margin-block: 5px;
+  }
+
+  li {
+    list-style-type: square;
+    list-style-position: inside;
+    padding: 2px 0px 2px 10px;
+  }
+}
+</style>

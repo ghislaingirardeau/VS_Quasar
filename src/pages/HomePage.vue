@@ -35,9 +35,9 @@ const menus = ref([
   },
   {
     id: 3,
-    title: 'Mot de passe',
-    pathName: 'password',
-    description: 'Enregistrer vos mots de passe simple',
+    title: 'Carte fidelité',
+    pathName: 'wallet',
+    description: 'Enregistrer vos cartes fidelités',
   },
 ]);
 

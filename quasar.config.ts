@@ -22,6 +22,7 @@ export default configure((ctx) => {
       'axios',
       'authentification',
       'moment',
+      'quillEditor',
       'libraries' /* , 'unocss' */,
     ],
 
