@@ -6,10 +6,11 @@
         <q-space />
         <q-btn
           icon="close"
+          class="btn-close"
           flat
           round
           dense
-          @click="listsStore.hideNewListDialog"
+          @click="closeDialog"
         />
       </q-card-section>
 
@@ -126,8 +127,7 @@ async function addNewItem() {
     };
     const response = await listsStore.addItemInList(itemForm);
     if (response && response.success) {
-      listsStore.hideNewListDialog();
-      onReset();
+      closeDialog();
     }
   } catch (error) {
     console.log(error);
@@ -144,14 +144,18 @@ async function addNewList() {
     };
     const response = await listsStore.addList(listForm);
     if (response && response.success) {
-      listsStore.hideNewListDialog();
-      onReset();
+      closeDialog();
     }
   } catch (error: unknown) {
     const typedError = error as AddListError;
     isNameAlreadyExists.value = typedError.nameAlreadyUsed;
     await formComponent.value.validate();
   }
+}
+
+function closeDialog() {
+  listsStore.hideNewListDialog();
+  onReset();
 }
 
 function onReset() {

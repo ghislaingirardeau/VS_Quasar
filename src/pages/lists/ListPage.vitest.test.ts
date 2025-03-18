@@ -108,18 +108,5 @@ describe('Lists Page should display list of lists', () => {
 
     // check if list is deleted
     expect(lists.value).toHaveLength(0);
-
-    // Retire le set timeout car cela fait bugger le test
-    /* setTimeout(async () => {
-      // Trouver le bouton de confirmation de suppression et cliquer dessus
-      const confirmDeleteButton = listDeleteDialog.find(
-        'button.confirm-delete',
-      );
-      expect(confirmDeleteButton.exists()).toBe(true);
-      await confirmDeleteButton.trigger('click');
-
-      // Vérifier que la liste a bien été supprimée
-      expect(lists.value).toHaveLength(0);
-    }, 100); */
   });
 });
