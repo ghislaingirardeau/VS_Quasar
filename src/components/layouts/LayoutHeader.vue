@@ -20,6 +20,9 @@
       <div v-if="isListPage">
         <AddItemWidget />
       </div>
+      <div v-if="isWalletPage">
+        <AddCardWidget />
+      </div>
     </q-toolbar>
   </q-header>
 </template>
@@ -37,6 +40,7 @@ import { computed } from 'vue';
 import HomeWidget from './HomeWidget.vue';
 import AddListWidget from '../list/AddListWidget.vue';
 import AddItemWidget from 'src/components/list/AddItemWidget.vue';
+import AddCardWidget from '../cards/AddCardWidget.vue';
 
 const route = useRoute();
 
@@ -58,6 +62,10 @@ const isListsPage = computed(() => {
 
 const isListPage = computed(() => {
   return route.name === 'list-id';
+});
+
+const isWalletPage = computed(() => {
+  return route.name === 'wallet';
 });
 </script>
 

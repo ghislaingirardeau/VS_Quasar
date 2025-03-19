@@ -1,5 +1,6 @@
 <template>
   <q-page class="flex flex-center">
+    <CardDialog />
     <div>
       Barcode Support by browser {{ barCode }}
       <q-input v-model="barcodeValue" label="Code-barres" outlined />
@@ -11,6 +12,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import JsBarcode from 'jsbarcode';
+import CardDialog from 'src/components/cards/CardDialog.vue';
 
 const barCode = 'BarcodeDetector' in window;
 
