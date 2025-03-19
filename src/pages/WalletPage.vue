@@ -1,14 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <div>
-      <pre>{{ description }}</pre>
-      <QuillEditor
-        v-model:content="description"
-        theme="snow"
-        content-type="html"
-      />
-    </div>
-    <div>
+      Barcode Support by browser {{ barCode }}
       <q-input v-model="barcodeValue" label="Code-barres" outlined />
       <svg ref="barcode"></svg>
     </div>
@@ -19,9 +12,10 @@
 import { ref, onMounted } from 'vue';
 import JsBarcode from 'jsbarcode';
 
+const barCode = 'BarcodeDetector' in window;
+
 const barcodeValue = ref('89390009190983');
 const barcode = ref<SVGSVGElement | null>(null);
-const description = ref('');
 
 const generateBarcode = () => {
   if (barcode.value) {
