@@ -78,6 +78,8 @@ describe('shopping list', () => {
     addItem();
     expect((wrapper.vm as any).shoppingItems).toHaveLength(2);
     (wrapper.vm as any).shoppingItems[0].is_purchased = true;
+    const wrapperCleanCard: ReturnType<typeof mount> = mount(CleanCartWidget);
+    (wrapperCleanCard.vm as any).cleanCart();
     wrapperLayout.findComponent(CleanCartWidget).vm.$emit('cleanCart');
     expect((wrapper.vm as any).shoppingItems).toHaveLength(1);
   });
@@ -102,6 +104,8 @@ describe('shopping list', () => {
     const itemList = useShoppingItem();
     const { shoppingItems } = storeToRefs(itemList);
     expect(shoppingItems.value).toHaveLength(4);
+    const wrapperEmptyCard: ReturnType<typeof mount> = mount(EmptyCartWidget);
+    (wrapperEmptyCard.vm as any).emptyCart();
     wrapperLayout.findComponent(EmptyCartWidget).vm.$emit('emptyCart');
     expect(shoppingItems.value).toHaveLength(0);
   });

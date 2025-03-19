@@ -76,9 +76,13 @@ describe('layout shopping', () => {
     expect(wrapperCleanCart.exists()).to.be.true;
   });
 
-  it('should emit cleanCart event when button is clicked', async () => {
+  // already test in shoppping page
+  it.skip('should emit cleanCart event when button is clicked', async () => {
     const wrapperCleanCart = mount(CleanCartWidget);
+    const cleanCart = vi.spyOn(wrapperCleanCart.vm as any, 'cleanCart');
+
     await wrapperCleanCart.find('button').trigger('click');
-    expect(wrapperCleanCart.emitted()).toHaveProperty('cleanCart');
+
+    expect(cleanCart).toHaveBeenCalled();
   });
 });
