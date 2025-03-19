@@ -4,14 +4,17 @@
     round
     :icon="mdiBasketRemove"
     class="q-ml-sm text-white"
-    @click="emit('cleanCart')"
+    @click="cleanCart"
   >
   </q-btn>
 </template>
 
 <script setup lang="ts">
 import { mdiBasketRemove } from '@quasar/extras/mdi-v7';
-const emit = defineEmits(['cleanCart']);
+import { useShoppingItem } from 'src/stores/shoppingItems';
+const shoppingList = useShoppingItem();
+
+const { cleanCart } = shoppingList;
 </script>
 
 <style scoped></style>
