@@ -95,7 +95,7 @@ import { useCards } from 'src/stores/card';
 import { AddPromiseError } from 'src/types';
 import { Card } from 'src/types/cards';
 import { ref } from 'vue';
-import BarCodeRender from './barCodeRender.vue';
+import BarCodeRender from 'src/components/cards/barcodeRender.vue';
 
 const cardStore = useCards();
 const { isDialogCardVisible } = storeToRefs(cardStore);

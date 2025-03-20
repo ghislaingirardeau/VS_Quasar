@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import JsBarcode from 'jsbarcode';
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const barcode = ref<SVGSVGElement | null>(null);
 
@@ -26,7 +26,7 @@ const generateBarcode = () => {
   }
 };
 
-// onMounted(generateBarcode);
+onMounted(generateBarcode);
 
 watch(
   () => props.barcodeValue,
