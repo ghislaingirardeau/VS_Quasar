@@ -37,6 +37,7 @@
                 (val && !isNaN(val) && val.length > 0) ||
                 'Taper au moins un nombre et pas de lettres',
             ]"
+            @blur="barcodePreview"
           />
           <div>
             <q-checkbox
@@ -66,6 +67,13 @@
           </q-input>
         </q-card-section>
 
+        <q-card-section class="flex flex-center">
+          <BarCodeRender
+            v-if="showBarcodePreview && form.barCode.length"
+            :barcode-value="form.barCode"
+          />
+        </q-card-section>
+
         <q-card-actions align="right">
           <q-btn label="Submit" type="submit" color="primary" />
           <q-btn
@@ -87,12 +95,14 @@ import { useCards } from 'src/stores/card';
 import { AddPromiseError } from 'src/types';
 import { Card } from 'src/types/cards';
 import { ref } from 'vue';
+import BarCodeRender from './barCodeRender.vue';
 
 const cardStore = useCards();
 const { isDialogCardVisible } = storeToRefs(cardStore);
 
 const responseError = ref('');
 const isPassword = ref(true);
+const showBarcodePreview = ref(false);
 
 const form = ref<Card>({
   id: 0,
@@ -100,7 +110,7 @@ const form = ref<Card>({
     id: null,
     label: '',
   },
-  barCode: 0,
+  barCode: '',
   isShoppingCard: false,
   isCardCode: false,
   password: '',
@@ -109,7 +119,7 @@ const form = ref<Card>({
 const shops = [
   {
     id: 0,
-    label: 'U',
+    label: 'Marché U',
   },
   {
     id: 1,
@@ -128,6 +138,10 @@ const shops = [
     label: 'Auchan',
   },
 ];
+
+function barcodePreview() {
+  showBarcodePreview.value = true;
+}
 
 async function onSubmit() {
   try {
@@ -155,7 +169,7 @@ function onReset() {
       id: null,
       label: '',
     },
-    barCode: 0,
+    barCode: '',
     isShoppingCard: false,
     isCardCode: false,
     password: '',

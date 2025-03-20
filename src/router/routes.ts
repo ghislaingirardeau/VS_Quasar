@@ -80,7 +80,7 @@ const routes: RouteRecordRaw[] = [
         path: 'wallet',
         name: 'wallet',
         meta: {
-          title: 'Carte Fid',
+          title: 'Carte Fidelité',
         },
         component: () => import('pages/WalletPage.vue'),
       },
