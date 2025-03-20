@@ -7,12 +7,16 @@ export const useCards = defineStore('cards', () => {
   const cards: Ref<Card[]> = useLocalStorage('cards', []);
   const isDialogCardVisible = ref(false);
 
-  function addcard(card: Card) {
-    const cardFound = cards.value.find((el) => el.codeBar === card.codeBar);
-    if (cardFound) {
-      return;
-    }
-    cards.value.push(card);
+  async function addcard(card: Card) {
+    return new Promise((resolve, reject) => {
+      const cardFound = cards.value.find((el) => el.barCode === card.barCode);
+      if (cardFound) {
+        reject({ success: false, cardAlreadyExist: cardFound.shop.label });
+      } else {
+        cards.value.push(card);
+        resolve({ success: true });
+      }
+    });
   }
 
   function removeCard(id: number) {

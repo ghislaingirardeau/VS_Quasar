@@ -40,6 +40,7 @@ const props = withDefaults(
 );
 
 const clickCount = ref(0);
+
 function increment() {
   clickCount.value += 1;
   return clickCount.value;
@@ -51,4 +52,6 @@ function incrementFromChild(payload: number) {
 }
 
 const todoCount = computed(() => props.todos.length);
+
+defineExpose({ increment, clickCount });
 </script>

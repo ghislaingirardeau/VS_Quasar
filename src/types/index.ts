@@ -30,3 +30,9 @@ export interface Category {
   shortcut: string;
   color?: string;
 }
+
+export interface AddPromiseError {
+  nameAlreadyUsed?: string;
+  cardAlreadyExist?: string;
+  success: boolean;
+}

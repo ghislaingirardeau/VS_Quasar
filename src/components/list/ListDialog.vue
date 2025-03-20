@@ -70,12 +70,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useLists } from 'src/stores/lists';
+import { AddPromiseError } from 'src/types';
 import { computed, ref } from 'vue';
-
-interface AddListError {
-  nameAlreadyUsed: string;
-  success: boolean;
-}
 
 const props = defineProps({
   isNewItem: {
@@ -144,8 +140,8 @@ async function addNewList() {
       closeDialog();
     }
   } catch (error: unknown) {
-    const typedError = error as AddListError;
-    isNameAlreadyExists.value = typedError.nameAlreadyUsed;
+    const typedError = error as AddPromiseError;
+    isNameAlreadyExists.value = typedError.nameAlreadyUsed!;
     await formComponent.value.validate();
   }
 }

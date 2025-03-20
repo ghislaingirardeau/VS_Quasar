@@ -1,7 +1,13 @@
+export interface Shop {
+  id: number | null;
+  label: string;
+}
+
 export interface Card {
   id: number;
-  shop: string;
+  shop: Shop;
+  barCode: number;
   isShoppingCard: boolean;
-  codeBar: number;
+  isCardCode: boolean;
   password: string;
 }

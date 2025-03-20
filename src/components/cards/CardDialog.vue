@@ -14,23 +14,56 @@
         />
       </q-card-section>
 
-      <q-form
-        ref="formComponent"
-        class="q-gutter-md"
-        @submit="onSubmit"
-        @reset="onReset"
-      >
+      <q-form class="q-gutter-md" @submit="onSubmit" @reset="onReset">
         <q-card-section class="pb-0">
-          <q-input
+          <q-select
             v-model="form.shop"
+            :options="shops"
+            label="Séléctionne une enseigne"
+            :rules="[
+              (val) =>
+                (val && val.label.length > 0) ||
+                'Une enseigne doit etre selectionné',
+            ]"
+          />
+          <q-input
+            v-model="form.barCode"
             filled
-            label="Nom de la liste"
+            label="Numéro client"
             class="form-list-name"
             :lazy-rules="false"
             :rules="[
-              (val) => (val && val.length > 0) || 'Taper au moins un caractère',
+              (val) =>
+                (val && !isNaN(val) && val.length > 0) ||
+                'Taper au moins un nombre et pas de lettres',
             ]"
           />
+          <div>
+            <q-checkbox
+              v-model="form.isShoppingCard"
+              label="Carte pour les achats en magasin ?"
+            />
+          </div>
+          <div>
+            <q-checkbox
+              v-model="form.isCardCode"
+              label="Associer un code à la carte ?"
+            />
+          </div>
+          <q-input
+            v-if="form.isCardCode"
+            v-model="form.password"
+            :type="isPassword ? 'password' : 'text'"
+            hint="Password with toggle"
+          >
+            <template #append>
+              <q-icon
+                :name="isPassword ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPassword = !isPassword"
+              />
+            </template>
+          </q-input>
         </q-card-section>
 
         <q-card-actions align="right">
@@ -51,20 +84,63 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useCards } from 'src/stores/card';
+import { AddPromiseError } from 'src/types';
+import { Card } from 'src/types/cards';
 import { ref } from 'vue';
 
 const cardStore = useCards();
 const { isDialogCardVisible } = storeToRefs(cardStore);
 
-const formComponent = ref();
-const form = ref({
+const responseError = ref('');
+const isPassword = ref(true);
+
+const form = ref<Card>({
   id: 0,
-  shop: '',
+  shop: {
+    id: null,
+    label: '',
+  },
+  barCode: 0,
+  isShoppingCard: false,
+  isCardCode: false,
+  password: '',
 });
+
+const shops = [
+  {
+    id: 0,
+    label: 'U',
+  },
+  {
+    id: 1,
+    label: 'Leclerc',
+  },
+  {
+    id: 2,
+    label: 'Carrefour',
+  },
+  {
+    id: 3,
+    label: 'Intermarché',
+  },
+  {
+    id: 4,
+    label: 'Auchan',
+  },
+];
 
 async function onSubmit() {
   try {
-  } catch (error: unknown) {}
+    const response = (await cardStore.addcard(form.value)) as {
+      success: boolean;
+    };
+    if (response && response.success) {
+      closeDialog();
+    }
+  } catch (error: unknown) {
+    const typedError = error as AddPromiseError;
+    responseError.value = typedError.cardAlreadyExist!;
+  }
 }
 
 function closeDialog() {
@@ -73,7 +149,17 @@ function closeDialog() {
 }
 
 function onReset() {
-  form.value.shop = '';
+  form.value = {
+    id: 0,
+    shop: {
+      id: null,
+      label: '',
+    },
+    barCode: 0,
+    isShoppingCard: false,
+    isCardCode: false,
+    password: '',
+  };
 }
 </script>
 
