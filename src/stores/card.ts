@@ -9,7 +9,7 @@ export const useCards = defineStore('cards', () => {
 
   async function addcard(card: Card) {
     return new Promise((resolve, reject) => {
-      const cardFound = cards.value.find((el) => el.barCode === card.barCode);
+      const cardFound = cards.value.find((el) => el.barcode === card.barcode);
       if (cardFound) {
         reject({ success: false, cardAlreadyExist: cardFound.shop.label });
       } else {

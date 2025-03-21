@@ -8,3 +8,15 @@ export const dragOptions = {
   disabled: false,
   ghostClass: 'ghost',
 };
+
+export const colors = [
+  'red',
+  'green',
+  'blue',
+  'yellow',
+  'purple',
+  'indigo',
+  'pink',
+  'purple',
+  'slate',
+];

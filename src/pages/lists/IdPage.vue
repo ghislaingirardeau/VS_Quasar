@@ -37,7 +37,7 @@
                   />
                 </q-popup-edit>
                 <q-space />
-                <q-icon color="grey-8" size="xs" :name="mdiReorderHorizontal" />
+                <q-icon color="grey-8" size="sm" :name="mdiReorderHorizontal" />
               </q-item-section>
               <q-separator />
 

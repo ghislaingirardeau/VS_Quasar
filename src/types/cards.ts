@@ -6,7 +6,7 @@ export interface Shop {
 export interface Card {
   id: number;
   shop: Shop;
-  barCode: string;
+  barcode: string;
   isShoppingCard: boolean;
   isCardCode: boolean;
   password: string;

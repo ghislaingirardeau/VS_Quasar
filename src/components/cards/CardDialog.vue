@@ -27,7 +27,7 @@
             ]"
           />
           <q-input
-            v-model="form.barCode"
+            v-model="form.barcode"
             filled
             label="Numéro client"
             class="form-list-name"
@@ -69,8 +69,8 @@
 
         <q-card-section class="flex flex-center">
           <BarCodeRender
-            v-if="showBarcodePreview && form.barCode.length"
-            :barcode-value="form.barCode"
+            v-if="showBarcodePreview && form.barcode.length"
+            :barcode-value="form.barcode"
           />
         </q-card-section>
 
@@ -110,7 +110,7 @@ const form = ref<Card>({
     id: null,
     label: '',
   },
-  barCode: '',
+  barcode: '',
   isShoppingCard: false,
   isCardCode: false,
   password: '',
@@ -145,6 +145,7 @@ function barcodePreview() {
 
 async function onSubmit() {
   try {
+    form.value.id = Date.now();
     const response = (await cardStore.addcard(form.value)) as {
       success: boolean;
     };
@@ -169,7 +170,7 @@ function onReset() {
       id: null,
       label: '',
     },
-    barCode: '',
+    barcode: '',
     isShoppingCard: false,
     isCardCode: false,
     password: '',

@@ -82,13 +82,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: 'Carte Fidelité',
         },
-        component: () => import('pages/wallet/WalletPage.vue'),
-      },
-      {
-        path: 'wallet/:id',
-        name: 'wallet-id',
-        component: () => import('pages/wallet/IdPage.vue'),
-        props: (route) => ({ id: route.params.id }),
+        component: () => import('pages/WalletPage.vue'),
       },
       {
         path: 'lists',
