@@ -1,0 +1,7 @@
+/_nuxt/*
+  Content-Type: application/javascript
+/_nuxt/*.js
+  Content-Type: application/javascript
+/_nuxt/*.css
+  Content-Type: text/css
+
