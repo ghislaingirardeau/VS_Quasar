@@ -17,23 +17,25 @@
               }}</q-item-label>
             </q-item-section>
             <q-item-section avatar class="flex flex-row flex-center">
-              <q-icon color="primary" :name="mdiPencil" class="mr-4" />
-              <q-popup-edit
-                v-slot="scope"
-                v-model="element.name"
-                auto-save
-                class="w-2/3"
-              >
-                <q-input
-                  v-model.trim="scope.value"
-                  dense
-                  autofocus
-                  counter
-                  :lazy-rules="false"
-                  :rules="rules"
-                  @keyup.enter="inputValidation(scope)"
-                />
-              </q-popup-edit>
+              <q-icon color="primary" :name="mdiPencil" class="mr-4">
+                <q-popup-edit
+                  v-slot="scope"
+                  v-model="element.name"
+                  auto-save
+                  class="w-2/3"
+                >
+                  <q-input
+                    v-model.trim="scope.value"
+                    dense
+                    autofocus
+                    counter
+                    :lazy-rules="false"
+                    :rules="rules"
+                    @keyup.enter="inputValidation(scope)"
+                  />
+                </q-popup-edit>
+              </q-icon>
+
               <q-icon
                 color="primary"
                 class="icon-delete"
