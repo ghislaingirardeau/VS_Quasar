@@ -51,6 +51,7 @@ export default configure((ctx) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
+      extractCSS: true,
       target: {
         browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
         node: 'node20',
@@ -66,7 +67,7 @@ export default configure((ctx) => {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: './',
       // analyze: true,
       env: {
         // ctx.dev identifie lui meme le mode dans le lequel nous sommes en fonction de la commande qu'on lance
@@ -212,6 +213,7 @@ export default configure((ctx) => {
      */
     pwa: {
       workboxMode: 'InjectManifest', // 'GenerateSW' or 'InjectManifest'
+      cleanupOutdatedCaches: true,
       swFilename: 'sw.js',
       manifestFilename: 'manifest.json',
       // extendManifestJson (json) {},
@@ -220,7 +222,6 @@ export default configure((ctx) => {
       // extendPWACustomSWConf (esbuildConf) {},
       // extendGenerateSWOptions (cfg) {},
       extendInjectManifestOptions(cfg) {},
-      cleanupOutdatedCaches: true,
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-cordova-apps/configuring-cordova
