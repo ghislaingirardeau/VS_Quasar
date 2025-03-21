@@ -6,7 +6,7 @@ import { setActivePinia, createPinia, storeToRefs } from 'pinia';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
 import { useLists } from 'src/stores/lists';
 import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
-import ListDialogDelete from 'src/components/list/ListDialogDelete.vue';
+import deleteDialog from 'src/components/deleteDialog.vue';
 import { openListDialog } from 'test/testUtils';
 
 installQuasarPlugin();
@@ -101,7 +101,7 @@ describe('Lists Page should display list of lists', () => {
     await deleteButton.trigger('click');
 
     // Monter le composant de confirmation de suppression
-    const listDeleteDialog = wrapper.findComponent(ListDialogDelete);
+    const listDeleteDialog = wrapper.findComponent(deleteDialog);
     expect(listDeleteDialog.exists()).toBe(true);
 
     listDeleteDialog.vm.$emit('delete-element', 1);

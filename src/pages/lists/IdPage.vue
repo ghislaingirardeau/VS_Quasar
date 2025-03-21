@@ -75,10 +75,11 @@
       </template>
     </draggable>
     <ListDialog :is-new-item="true" :new-item-in-list-id="listId" />
-    <ListDialogDelete
-      v-model:show-dialog-list-delete="showDialogListDelete"
+    <DeleteDialog
+      v-if="selectedItem"
+      v-model:show-dialog-delete="isDialogDeleteVisible"
       :element-name="selectedItem.title"
-      :is-item-to-delete="true"
+      element-type="l'item"
       @delete-element="deleteElement"
     />
   </q-page>
@@ -91,20 +92,23 @@ import {
   mdiReorderHorizontal,
 } from '@quasar/extras/mdi-v7';
 import ListDialog from 'src/components/list/ListDialog.vue';
-import ListDialogDelete from 'src/components/list/ListDialogDelete.vue';
 import { useLists } from 'src/stores/lists';
 import { Item } from 'src/types';
-import { computed, ref } from 'vue';
+import { computed, Ref, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import draggable from 'vuedraggable';
 import { dragOptions } from 'src/utils';
 import sanitizeHtml from 'sanitize-html';
+import DeleteDialog from 'src/components/deleteDialog.vue';
+import { useGlobal } from 'src/stores/global';
+import { storeToRefs } from 'pinia';
 
 const route = useRoute();
 
 const listsStore = useLists();
-const showDialogListDelete = ref(false);
-const selectedItem = ref({ id: 0, title: '' });
+const globalStore = useGlobal();
+const { isDialogDeleteVisible } = storeToRefs(globalStore);
+const selectedItem = ref<Ref<Item> | null>(null);
 
 const listId = computed(() => {
   return route.params.id as string;
@@ -133,16 +137,18 @@ function resetLeft({ reset }: { reset: () => void }) {
 
 function showDeleteItemDialog({ reset }: { reset: () => void }, item: Item) {
   selectedItem.value = item;
-  showDialogListDelete.value = true;
+  globalStore.showDeleteDialog();
   reset();
 }
 
 function deleteElement() {
   // comme itemsInList est un computed, je peux lui attribuer une nouvelle valeur sans avoir à passer par une mutation
-  itemsInList.value = itemsInList.value.filter(
-    (item) => item.id !== selectedItem.value.id,
-  );
-  showDialogListDelete.value = false;
+  if (selectedItem.value) {
+    itemsInList.value = itemsInList.value.filter(
+      (item) => item.id !== selectedItem.value!.id,
+    );
+    globalStore.hideDeleteDialog();
+  }
 }
 </script>
 

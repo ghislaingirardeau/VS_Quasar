@@ -38,7 +38,7 @@
       v-if="selectedCard"
       v-model:show-dialog-delete="isDialogDeleteVisible"
       :element-name="selectedCard!.shop.label"
-      element-type="carte"
+      element-type="la carte"
       @delete-element="deleteElement"
     />
   </q-page>
@@ -59,8 +59,8 @@ import DeleteDialog from 'src/components/deleteDialog.vue';
 import { Ref, ref } from 'vue';
 
 const cardsStore = useCards();
-const globalStore = useGlobal();
 const { cards } = storeToRefs(cardsStore);
+const globalStore = useGlobal();
 const { isDialogDeleteVisible } = storeToRefs(globalStore);
 
 const selectedCard = ref<Ref<Card> | null>(null);

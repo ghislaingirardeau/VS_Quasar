@@ -45,9 +45,12 @@
       </template>
     </draggable>
     <ListDialog />
-    <ListDialogDelete
-      v-model:show-dialog-list-delete="showDialogListDelete"
+
+    <DeleteDialog
+      v-if="listSelected"
+      v-model:show-dialog-delete="isDialogDeleteVisible"
       :element-name="listSelected.name"
+      element-type="la liste"
       @delete-element="deleteElement"
     />
   </q-page>
@@ -63,18 +66,20 @@ import {
 } from '@quasar/extras/mdi-v7';
 import draggable from 'vuedraggable';
 import { storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed, Ref, ref } from 'vue';
 import { List } from 'src/types';
-import ListDialogDelete from 'src/components/list/ListDialogDelete.vue';
 import { useRouter } from 'vue-router';
 import { dragOptions } from 'src/utils';
+import { useGlobal } from 'src/stores/global';
+import DeleteDialog from 'src/components/deleteDialog.vue';
 
 const router = useRouter();
 const listsStore = useLists();
 const { lists } = storeToRefs(listsStore);
 const isNameAlreadyExists = ref(false);
-const showDialogListDelete = ref(false);
-const listSelected = ref({ id: 0, name: '', updated_at: null } as List);
+const globalStore = useGlobal();
+const { isDialogDeleteVisible } = storeToRefs(globalStore);
+const listSelected = ref<Ref<List> | null>(null);
 
 const rules = computed(() => [
   (val: string) => (val && val.length > 0) || 'Taper au moins un caractère',
@@ -92,14 +97,15 @@ function inputValidation(scope: any) {
 }
 
 function handleListToDelete(list: List) {
-  showDialogListDelete.value = true;
   listSelected.value = list;
+  globalStore.showDeleteDialog();
 }
 
 async function deleteElement() {
   try {
+    if (!listSelected.value) return;
     await listsStore.deleteList(listSelected.value.id);
-    showDialogListDelete.value = false;
+    globalStore.hideDeleteDialog();
   } catch (error) {
     console.log(error);
   }

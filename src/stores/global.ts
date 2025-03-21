@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, Ref } from 'vue';
+import { ref } from 'vue';
 
 export const useGlobal = defineStore('globalStore', () => {
   const isDialogDeleteVisible = ref(false);
