@@ -4,24 +4,26 @@
       <template #item="{ element }">
         <q-list bordered separator>
           <q-item :key="element.id" v-ripple clickable>
-            <q-item-section
-              avatar
-              class="flex flex-row flex-center"
-              @click="goToListId(element.id, element.name)"
-            >
+            <q-item-section avatar>
               <q-icon
                 color="grey-8"
                 :name="mdiReorderHorizontal"
                 class="mr-2"
               />
-
-              <q-icon color="primary" :name="mdiFolder" />
             </q-item-section>
-            <q-item-section>
+            <q-item-section @click="goToListId(element.id, element.name)">
               <q-item-label class="font-bold italic text-base">{{
                 element.name
               }}</q-item-label>
-              <q-popup-edit v-slot="scope" v-model="element.name" auto-save>
+            </q-item-section>
+            <q-item-section avatar class="flex flex-row flex-center">
+              <q-icon color="primary" :name="mdiPencil" class="mr-4" />
+              <q-popup-edit
+                v-slot="scope"
+                v-model="element.name"
+                auto-save
+                class="w-2/3"
+              >
                 <q-input
                   v-model.trim="scope.value"
                   dense
@@ -32,8 +34,6 @@
                   @keyup.enter="inputValidation(scope)"
                 />
               </q-popup-edit>
-            </q-item-section>
-            <q-item-section avatar>
               <q-icon
                 color="primary"
                 class="icon-delete"
@@ -61,7 +61,7 @@ import { useLists } from 'src/stores/lists';
 import ListDialog from 'src/components/list/ListDialog.vue';
 import {
   mdiDelete,
-  mdiFolder,
+  mdiPencil,
   mdiReorderHorizontal,
 } from '@quasar/extras/mdi-v7';
 import draggable from 'vuedraggable';

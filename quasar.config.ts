@@ -220,6 +220,7 @@ export default configure((ctx) => {
       // extendPWACustomSWConf (esbuildConf) {},
       // extendGenerateSWOptions (cfg) {},
       extendInjectManifestOptions(cfg) {},
+      cleanupOutdatedCaches: true,
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-cordova-apps/configuring-cordova

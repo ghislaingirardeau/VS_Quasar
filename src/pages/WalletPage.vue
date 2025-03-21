@@ -14,17 +14,12 @@
             <q-space />
             <q-icon
               color="primary"
-              class="icon-delete mr-2"
+              class="icon-delete mr-4"
               size="sm"
               :name="mdiDelete"
               @click="handleCardToDelete(element)"
             />
-            <q-icon
-              color="grey-8"
-              size="sm"
-              :name="mdiReorderHorizontal"
-              class="mr-2"
-            />
+            <q-icon color="grey-8" size="sm" :name="mdiReorderHorizontal" />
           </q-card-section>
           <q-separator />
           <q-card-section>
