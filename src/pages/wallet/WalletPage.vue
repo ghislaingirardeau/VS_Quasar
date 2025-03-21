@@ -4,14 +4,14 @@
       <template #item="{ element }">
         <q-list bordered separator>
           <q-item :key="element.id" v-ripple clickable>
-            <q-item-section avatar @click="goToCArd(element)">
+            <q-item-section avatar>
               <q-icon
                 color="grey-8"
                 :name="mdiReorderHorizontal"
                 class="mr-2"
               />
             </q-item-section>
-            <q-item-section>
+            <q-item-section @click="goToCArd(element)">
               <q-item-label class="font-bold italic text-base">{{
                 element.shop.label
               }}</q-item-label>
@@ -32,7 +32,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
 import CardDialog from 'src/components/cards/CardDialog.vue';
 import { useCards } from 'src/stores/card';
 import { storeToRefs } from 'pinia';
