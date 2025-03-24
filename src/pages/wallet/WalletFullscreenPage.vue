@@ -17,13 +17,24 @@
 import { storeToRefs } from 'pinia';
 import BarcodeRender from 'src/components/cards/barcodeRender.vue';
 import { useCards } from 'src/stores/card';
-import { computed } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
+
+declare global {
+  interface Window {
+    Brightness: {
+      getBrightness: (callback: (value: number) => void) => void;
+      setBrightness: (value: number) => void;
+    };
+  }
+}
 
 const cardsStore = useCards();
 const { cards } = storeToRefs(cardsStore);
 
 const route = useRoute();
+let previousBrightness: number | null = null;
+const isCordova = () => !!window.cordova;
 
 const cardId = computed(() => {
   return route.params.id as string;
@@ -31,6 +42,24 @@ const cardId = computed(() => {
 
 const currentCard = computed(() => {
   return cards.value.find((list) => list.id === Number(cardId.value))!;
+});
+
+onMounted(() => {
+  if (isCordova()) {
+    window.Brightness.getBrightness((value: number) => {
+      previousBrightness = value; // Sauvegarde la luminosité actuelle
+    });
+
+    // Met la luminosité à 100%
+    window.Brightness.setBrightness(1.0);
+  }
+});
+
+onUnmounted(() => {
+  if (isCordova() && previousBrightness !== null) {
+    // Rétablir la luminosité initiale
+    window.Brightness.setBrightness(previousBrightness);
+  }
 });
 </script>
 
