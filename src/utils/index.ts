@@ -19,4 +19,6 @@ export const colors = [
   'pink',
   'purple',
   'slate',
+  'teal',
+  'orange',
 ];
