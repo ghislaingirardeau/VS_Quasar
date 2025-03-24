@@ -8,9 +8,7 @@
           :class="setBorderCardColor(index)"
         >
           <q-card-section class="mb-3 flex flex-row">
-            <q-item-label class="text-h5 font-bold italic"
-              >{{ element.shop.label }}
-            </q-item-label>
+            <div class="text-h5 font-bold italic">{{ element.shop.label }}</div>
             <q-space />
             <q-icon
               color="primary"

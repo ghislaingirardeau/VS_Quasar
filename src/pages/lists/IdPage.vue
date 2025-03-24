@@ -9,69 +9,74 @@
       v-bind="dragOptions"
     >
       <template #item="{ element }">
-        <q-list separator bordered class="mb-2 bg-slate-400">
-          <q-slide-item
-            @left="resetLeft"
-            @right="({ reset }) => showDeleteItemDialog({ reset }, element)"
-          >
-            <template #right> <q-icon :name="mdiDelete" /></template>
-            <template #left> <q-icon :name="mdiCheck" /> </template>
-            <q-item :key="element.id" class="cursor-grab flex flex-col">
-              <q-item-section class="mb-3 flex flex-row">
-                <q-item-label class="text-h5 font-bold italic">
-                  {{ element.title }}
-                </q-item-label>
-                <q-popup-edit v-slot="scope" v-model="element.title" auto-save>
-                  <q-input
-                    v-model.trim="scope.value"
-                    dense
-                    autofocus
-                    counter
-                    :lazy-rules="false"
-                    :rules="[
-                      (val) =>
-                        (val && val.length > 0) ||
-                        'Taper au moins un caractère',
-                    ]"
-                    @keyup.enter="scope.set()"
-                  />
-                </q-popup-edit>
-                <q-space />
-                <q-icon color="grey-8" size="sm" :name="mdiReorderHorizontal" />
-              </q-item-section>
-              <q-separator />
+        <q-card :key="element.id" class="cursor-grab flex flex-col">
+          <q-card-section class="flex flex-row">
+            <div class="text-h5 font-bold italic">
+              {{ element.title }}
+            </div>
 
-              <q-item-section class="py-2">
-                <q-item-label
-                  class="description"
-                  v-html="sanitizeHtml(element.description)"
-                >
-                </q-item-label>
-                <q-popup-edit
-                  v-slot="scope"
-                  v-model="element.description"
-                  auto-save
-                >
-                  <QuillEditor
-                    v-model:content="scope.value"
-                    theme="snow"
-                    content-type="html"
-                    placeholder="Description"
-                    class="quill-editor"
-                  />
-                  <div class="flex justify-end">
-                    <q-btn
-                      label="Ok"
-                      class="mt-2"
-                      color="primary"
-                      @click="scope.set()"
-                    />
-                  </div>
-                </q-popup-edit>
-              </q-item-section>
-            </q-item>
-          </q-slide-item>
-        </q-list>
+            <q-space />
+
+            <q-icon color="primary" :name="mdiPencil" size="sm" class="mr-4">
+              <q-popup-edit
+                v-slot="scope"
+                v-model="element.title"
+                auto-save
+                class="w-2/3"
+              >
+                <q-input
+                  v-model.trim="scope.value"
+                  dense
+                  autofocus
+                  counter
+                  :lazy-rules="false"
+                  :rules="[
+                    (val) =>
+                      (val && val.length > 0) || 'Taper au moins un caractère',
+                  ]"
+                  @keyup.enter="scope.set()"
+                />
+              </q-popup-edit>
+            </q-icon>
+            <q-icon
+              color="primary"
+              class="icon-delete mr-4"
+              size="sm"
+              :name="mdiDelete"
+              @click="showDeleteItemDialog(element)"
+            />
+            <q-icon color="grey-8" size="sm" :name="mdiReorderHorizontal" />
+          </q-card-section>
+          <q-separator />
+
+          <q-card-section class="py-2">
+            <div
+              class="description"
+              v-html="sanitizeHtml(element.description)"
+            ></div>
+            <q-popup-edit
+              v-slot="scope"
+              v-model="element.description"
+              auto-save
+            >
+              <QuillEditor
+                v-model:content="scope.value"
+                theme="snow"
+                content-type="html"
+                placeholder="Description"
+                class="quill-editor"
+              />
+              <div class="flex justify-end">
+                <q-btn
+                  label="Ok"
+                  class="mt-2"
+                  color="primary"
+                  @click="scope.set()"
+                />
+              </div>
+            </q-popup-edit>
+          </q-card-section>
+        </q-card>
       </template>
     </draggable>
     <ListDialog :is-new-item="true" :new-item-in-list-id="listId" />
@@ -89,6 +94,7 @@
 import {
   mdiCheck,
   mdiDelete,
+  mdiPencil,
   mdiReorderHorizontal,
 } from '@quasar/extras/mdi-v7';
 import ListDialog from 'src/components/list/ListDialog.vue';
@@ -129,16 +135,9 @@ const itemsInList = computed({
   },
 });
 
-function resetLeft({ reset }: { reset: () => void }) {
-  setTimeout(() => {
-    reset();
-  }, 1000);
-}
-
-function showDeleteItemDialog({ reset }: { reset: () => void }, item: Item) {
+function showDeleteItemDialog(item: Item) {
   selectedItem.value = item;
   globalStore.showDeleteDialog();
-  reset();
 }
 
 function deleteElement() {
@@ -147,8 +146,8 @@ function deleteElement() {
     itemsInList.value = itemsInList.value.filter(
       (item) => item.id !== selectedItem.value!.id,
     );
-    globalStore.hideDeleteDialog();
   }
+  globalStore.hideDeleteDialog();
 }
 </script>
 

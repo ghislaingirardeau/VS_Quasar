@@ -4,13 +4,6 @@
       <template #item="{ element }">
         <q-list bordered separator>
           <q-item :key="element.id" v-ripple clickable>
-            <q-item-section avatar>
-              <q-icon
-                color="grey-8"
-                :name="mdiReorderHorizontal"
-                class="mr-2"
-              />
-            </q-item-section>
             <q-item-section @click="goToListId(element.id, element.name)">
               <q-item-label class="font-bold italic text-base">{{
                 element.name
@@ -38,10 +31,11 @@
 
               <q-icon
                 color="primary"
-                class="icon-delete"
+                class="icon-delete mr-4"
                 :name="mdiDelete"
                 @click="handleListToDelete(element)"
               />
+              <q-icon color="grey-8" :name="mdiReorderHorizontal" />
             </q-item-section> </q-item
         ></q-list>
       </template>
