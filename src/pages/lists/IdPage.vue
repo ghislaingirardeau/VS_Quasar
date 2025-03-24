@@ -92,7 +92,6 @@
 
 <script setup lang="ts">
 import {
-  mdiCheck,
   mdiDelete,
   mdiPencil,
   mdiReorderHorizontal,
