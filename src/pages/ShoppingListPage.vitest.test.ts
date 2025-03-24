@@ -2,14 +2,14 @@ import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-v
 import { mount } from '@vue/test-utils';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
-import shoppingListPage from 'src/pages/shoppingListPage.vue';
+import shoppingListPage from 'src/pages/ShoppingListPage.vue';
 import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
 import EmptyCartWidget from 'src/components/shopping/EmptyCartWidget.vue';
 import CleanCartWidget from 'src/components/shopping/CleanCartWidget.vue';
 
 import { setActivePinia, createPinia, storeToRefs } from 'pinia';
 import { useShoppingItem } from 'src/stores/shoppingItems';
-import ShoppingListPage from 'src/pages/shoppingListPage.vue';
+import ShoppingListPage from 'src/pages/ShoppingListPage.vue';
 import { createRouter, createMemoryHistory } from 'vue-router';
 
 installQuasarPlugin();

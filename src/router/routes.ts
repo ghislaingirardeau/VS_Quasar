@@ -85,6 +85,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/WalletPage.vue'),
       },
       {
+        path: 'wallet/:id',
+        name: 'wallet-id',
+        component: () => import('pages/wallet/WalletFullscreenPage.vue'),
+        props: (route) => ({ id: route.params.id }),
+      },
+      {
         path: 'lists',
         name: 'lists',
         meta: {

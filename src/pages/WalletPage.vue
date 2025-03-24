@@ -6,6 +6,7 @@
           :key="element.id"
           class="mb-4"
           :class="setBorderCardColor(index)"
+          @click="goToWallet(element.id)"
         >
           <q-card-section class="mb-3 flex flex-row">
             <div class="text-h5 font-bold italic">{{ element.shop.label }}</div>
@@ -50,11 +51,13 @@ import { colors } from 'src/utils/index';
 import { useGlobal } from 'src/stores/global';
 import DeleteDialog from 'src/components/deleteDialog.vue';
 import { Ref, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const cardsStore = useCards();
 const { cards } = storeToRefs(cardsStore);
 const globalStore = useGlobal();
 const { isDialogDeleteVisible } = storeToRefs(globalStore);
+const router = useRouter();
 
 const selectedCard = ref<Ref<Card> | null>(null);
 
@@ -68,6 +71,10 @@ function deleteElement() {
     cardsStore.removeCard(selectedCard.value.id);
     globalStore.hideDeleteDialog();
   }
+}
+
+function goToWallet(id: string) {
+  router.push({ name: 'wallet-id', params: { id } });
 }
 
 function setBorderCardColor(index: number) {
