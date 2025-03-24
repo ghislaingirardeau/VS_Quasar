@@ -3,6 +3,7 @@
     <q-card style="width: 400px; max-width: 90vw">
       <q-card-section class="row items-center">
         <div class="text-h6">Ajouter une carte</div>
+        <div>barcode detector : {{ barCodeDetector }}</div>
         <q-space />
         <q-btn
           icon="close"
@@ -104,6 +105,8 @@ const { isDialogCardVisible, cards } = storeToRefs(cardStore);
 const responseError = ref('');
 const isPassword = ref(true);
 const showBarcodePreview = ref(false);
+
+const barCodeDetector = 'BarcodeDetector' in globalThis;
 
 const form = ref<Card>({
   id: 0,
