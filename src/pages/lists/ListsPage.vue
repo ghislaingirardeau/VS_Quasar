@@ -63,7 +63,7 @@ import {
 import draggable from 'vuedraggable';
 import { storeToRefs } from 'pinia';
 import { computed, Ref, ref } from 'vue';
-import { List } from 'src/types';
+import { List } from 'src/types/lists';
 import { useRouter } from 'vue-router';
 import { dragOptions } from 'src/utils';
 import { useGlobal } from 'src/stores/global';

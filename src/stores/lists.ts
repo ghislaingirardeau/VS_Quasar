@@ -1,6 +1,6 @@
 import { useLocalStorage } from '@vueuse/core/index.cjs';
 import { defineStore } from 'pinia';
-import { List, FormList, Item } from 'src/types';
+import { List, FormList, Item } from 'src/types/lists';
 import { computed, ref, Ref } from 'vue';
 
 export const useLists = defineStore('lists', () => {

@@ -1,12 +1,12 @@
 <template>
   <q-page :key="'wallet' + cards.length" padding>
     <draggable v-model="cards" tag="div" item-key="id" v-bind="dragOptions">
-      <template #item="{ element, index }">
+      <template #item="{ element }">
         <q-card
           :key="element.id"
           class="mb-4"
-          :class="setBorderCardColor(index)"
-          @click="goToWallet(element.id)"
+          :class="setBorderCardColor(element.color)"
+          @click="goToWallet(element.id, element.shop.label)"
         >
           <q-card-section class="mb-3 flex flex-row">
             <div class="text-h5 font-bold italic">{{ element.shop.label }}</div>
@@ -16,12 +16,12 @@
               class="icon-delete mr-4"
               size="sm"
               :name="mdiDelete"
-              @click="handleCardToDelete(element)"
+              @click.stop="handleCardToDelete(element)"
             />
             <q-icon color="grey-8" size="sm" :name="mdiReorderHorizontal" />
           </q-card-section>
           <q-separator />
-          <q-card-section>
+          <q-card-section class="flex flex-center">
             <BarcodeRender :barcode-value="element.barcode" />
           </q-card-section>
         </q-card>
@@ -47,7 +47,6 @@ import { dragOptions } from 'src/utils';
 import { mdiDelete, mdiReorderHorizontal } from '@quasar/extras/mdi-v7';
 import { Card } from 'src/types/cards';
 import BarcodeRender from 'src/components/cards/barcodeRender.vue';
-import { colors } from 'src/utils/index';
 import { useGlobal } from 'src/stores/global';
 import DeleteDialog from 'src/components/deleteDialog.vue';
 import { Ref, ref } from 'vue';
@@ -73,20 +72,11 @@ function deleteElement() {
   }
 }
 
-function goToWallet(id: string) {
-  router.push({ name: 'wallet-id', params: { id } });
+function goToWallet(id: string, label: string) {
+  router.push({ name: 'wallet-id', params: { id }, state: { name: label } });
 }
 
-function setBorderCardColor(index: number) {
-  if (index >= colors.length) {
-    let total = index - colors.length;
-    if (total >= colors.length) {
-      setBorderCardColor(total);
-    } else {
-      return `bg-${colors[total]}-200`;
-    }
-  } else {
-    return `bg-${colors[index]}-200`;
-  }
+function setBorderCardColor(color: string) {
+  return `bg-${color}-200`;
 }
 </script>

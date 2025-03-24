@@ -1,6 +1,6 @@
 import { useLocalStorage } from '@vueuse/core/index.cjs';
 import { defineStore } from 'pinia';
-import { ShoppingItem } from 'src/types';
+import { ShoppingItem } from 'src/types/shopping';
 import { computed, Ref } from 'vue';
 
 export const useShoppingItem = defineStore('shoppingItem', () => {

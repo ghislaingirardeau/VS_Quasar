@@ -99,7 +99,7 @@ import {
 } from '@quasar/extras/mdi-v7';
 import ListDialog from 'src/components/list/ListDialog.vue';
 import { useLists } from 'src/stores/lists';
-import { Item } from 'src/types';
+import { Item } from 'src/types/lists';
 import { computed, Ref, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import draggable from 'vuedraggable';

@@ -96,9 +96,10 @@ import { AddPromiseError } from 'src/types';
 import { Card } from 'src/types/cards';
 import { ref } from 'vue';
 import BarCodeRender from 'src/components/cards/barcodeRender.vue';
+import { colors } from 'utils/index';
 
 const cardStore = useCards();
-const { isDialogCardVisible } = storeToRefs(cardStore);
+const { isDialogCardVisible, cards } = storeToRefs(cardStore);
 
 const responseError = ref('');
 const isPassword = ref(true);
@@ -114,6 +115,7 @@ const form = ref<Card>({
   isShoppingCard: false,
   isCardCode: false,
   password: '',
+  color: null,
 });
 
 const shops = [
@@ -146,6 +148,7 @@ function barcodePreview() {
 async function onSubmit() {
   try {
     form.value.id = Date.now();
+    form.value.color = setCardColor();
     const response = (await cardStore.addcard(form.value)) as {
       success: boolean;
     };
@@ -174,7 +177,21 @@ function onReset() {
     isShoppingCard: false,
     isCardCode: false,
     password: '',
+    color: null,
   };
+}
+
+function setCardColor(index?: number): string {
+  let cardsLength = index || cards.value.length;
+  if (cardsLength >= colors.length) {
+    let total = cardsLength - colors.length;
+    if (total >= colors.length) {
+      setCardColor(total);
+    } else {
+      return colors[total];
+    }
+  }
+  return colors[cardsLength];
 }
 </script>
 

@@ -10,4 +10,5 @@ export interface Card {
   isShoppingCard: boolean;
   isCardCode: boolean;
   password: string;
+  color: string | null;
 }

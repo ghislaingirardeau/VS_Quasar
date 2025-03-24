@@ -1,8 +1,8 @@
 {
-  "name": "quasar-list",
+  "name": "shop-tools",
   "version": "0.0.1",
   "description": "My Shopping List",
-  "productName": "My Shop List",
+  "productName": "My Shop Tools",
   "author": "ghislaingirardeau <g.girardeaupro@sfr.fr>",
   "type": "module",
   "private": true,
