@@ -3,6 +3,7 @@
     <q-card style="width: 400px; max-width: 90vw">
       <q-card-section class="row items-center">
         <div class="text-h6">Ajouter une carte</div>
+        <p>{{ bartest }}</p>
         <q-space />
         <q-btn
           icon="close"
@@ -100,6 +101,7 @@ import { colors } from 'utils/index';
 
 const cardStore = useCards();
 const { isDialogCardVisible, cards } = storeToRefs(cardStore);
+const bartest = 'BarcodeDetector' in globalThis;
 
 const responseError = ref('');
 const isPassword = ref(true);
