@@ -1,5 +1,5 @@
 <template>
-  <q-dialog :model-value="showDialogDelete">
+  <q-dialog :model-value="showDialogDelete" @hide="closeDialog">
     <q-card style="width: 400px; max-width: 90vw">
       <q-card-section class="row items-center">
         <span class="q-ml-sm"
