@@ -14,3 +14,5 @@ Dans package.json
 > Commit le dossier dist/pwa dans le remote "gh-pages" qui a la branche main
 
 Il faut donc ajouter le repo (utiliser pour le deploiement) comme repo dans ce meme projet > 1 remote 'origin' + 1 remote 'gh-pages'
+
+**Si bug sur Android, ajouter dans dist/pwa un fichier .nojekyll**
