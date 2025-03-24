@@ -7,6 +7,7 @@ import { configure } from 'quasar/wrappers';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import 'dotenv/config';
+import fs from 'fs';
 
 export default configure((ctx) => {
   return {
@@ -131,6 +132,12 @@ export default configure((ctx) => {
           { server: false },
         ],
       ],
+      afterBuild: function (buildConfig) {
+        if (buildConfig.quasarConf.pwa) {
+          fs.writeFileSync('dist/pwa/.nojekyll', '');
+          console.log('✓ .nojekyll file has been created');
+        }
+      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
