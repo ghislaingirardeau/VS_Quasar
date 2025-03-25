@@ -97,7 +97,7 @@ const detectBarcode = async (imageElement: HTMLImageElement) => {
     });
     const barcodes = await barcodeDetector.detect(imageElement);
     if (barcodes.length > 0) {
-      barcodeDetected.value = barcodes[0].rawValue;
+      barcodeDetected.value = barcodes;
       codeBarMessage.value.push('Code-barres détecté ');
 
       console.log('Code-barres détecté :', barcodeDetected.value);
