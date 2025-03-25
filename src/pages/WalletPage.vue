@@ -73,20 +73,12 @@ const codeBarMessage = ref<string[]>([]);
 
 onMounted(() => {
   const imageEl = document.createElement('img');
-  imageEl.src = 'src/assets/codeBarTest.jpg';
-  // Attendre que l'image soit complètement chargée
-  imageEl.onload = () => {
-    detectBarcode(imageEl);
-  };
+  imageEl.src = '/codeBarTest.jpg';
   // Attendre que l'image soit complètement chargée
   imageEl.onload = () => {
     detectBarcode(imageEl);
   };
 
-  imageEl.onerror = () => {
-    console.error("Impossible de charger l'image");
-    codeBarMessage.value.push("Erreur de chargement de l'image");
-  };
   imageEl.onerror = () => {
     console.error("Impossible de charger l'image");
     codeBarMessage.value.push("Erreur de chargement de l'image");
