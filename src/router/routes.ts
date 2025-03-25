@@ -74,7 +74,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: 'Liste de course',
         },
-        component: () => import('pages/ShoppingListPage.vue'),
+        component: () => import('pages/ShoppingPage.vue'),
       },
       {
         path: 'wallet',

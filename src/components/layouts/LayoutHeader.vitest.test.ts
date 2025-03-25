@@ -8,7 +8,7 @@ import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
 
 import { setActivePinia, createPinia } from 'pinia';
 import { createRouter, createMemoryHistory } from 'vue-router';
-import ShoppingListPage from 'src/pages/ShoppingListPage.vue';
+import ShoppingListPage from 'src/pages/ShoppingPage.vue';
 
 installQuasarPlugin();
 
