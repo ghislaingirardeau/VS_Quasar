@@ -15,4 +15,13 @@ Dans package.json
 
 Il faut donc ajouter le repo (utiliser pour le deploiement) comme repo dans ce meme projet > 1 remote 'origin' + 1 remote 'gh-pages'
 
+### nojekyll
+
 **Si bug sur Android, ajouter dans dist/pwa un fichier .nojekyll**
+=> jekyll est utilisé par github
+Jekyll ignore tous les fichiers et dossiers commençant par un underscore \_, ce qui peut poser problème si ton projet contient des fichiers comme \_nuxt/, \_assets/
+Or Quasar peut générer ce type de dossier lors du build
+
+### SW
+
+une fois `npm run deploy:pwa` dans le terminal taper `echo "" >> dist/pwa/sw.js` pour forcer la MAJ de sw.js

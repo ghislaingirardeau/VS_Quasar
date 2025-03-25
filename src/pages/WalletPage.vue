@@ -1,8 +1,6 @@
 <template>
   <q-page :key="'wallet' + cards.length" padding>
     <pre>{{ barcodeDetected }}</pre>
-    <pre>{{ codeBarMessage }}</pre>
-    <img id="barcode-image" src="/codeBarTest.jpg" alt="Code-barres" />
     <draggable v-model="cards" tag="div" item-key="id" v-bind="dragOptions">
       <template #item="{ element }">
         <q-card
@@ -55,6 +53,11 @@ import DeleteDialog from 'src/components/deleteDialog.vue';
 import { onMounted, Ref, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+interface BarcodeDetected {
+  code: string;
+  format: string;
+}
+
 const cardsStore = useCards();
 const { cards } = storeToRefs(cardsStore);
 const globalStore = useGlobal();
@@ -64,11 +67,8 @@ const router = useRouter();
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 const BarcodeDetector = window.BarcodeDetector || class {};
-// const barcodeDetector = new BarcodeDetector({
-//   formats: ['code_39', 'codabar', 'ean_13', 'code_128'],
-// });
 
-const barcodeDetected = ref(null);
+const barcodeDetected = ref<BarcodeDetected | null>(null);
 const codeBarMessage = ref<string[]>([]);
 
 onMounted(() => {
@@ -97,7 +97,10 @@ const detectBarcode = async (imageElement: HTMLImageElement) => {
     });
     const barcodes = await barcodeDetector.detect(imageElement);
     if (barcodes.length > 0) {
-      barcodeDetected.value = barcodes;
+      barcodeDetected.value = {
+        code: barcodes[0].rawValue,
+        format: barcodes[0].format,
+      };
       codeBarMessage.value.push('Code-barres détecté ');
 
       console.log('Code-barres détecté :', barcodeDetected.value);

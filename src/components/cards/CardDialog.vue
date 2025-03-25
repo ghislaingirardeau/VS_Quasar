@@ -15,6 +15,7 @@
       </q-card-section>
 
       <q-form class="q-gutter-md" @submit="onSubmit" @reset="onReset">
+        <BarcodeDetection />
         <q-card-section class="pb-0">
           <q-select
             v-model="form.shop"
@@ -97,6 +98,7 @@ import { Card } from 'src/types/cards';
 import { ref } from 'vue';
 import BarCodeRender from 'src/components/cards/barcodeRender.vue';
 import { colors } from 'utils/index';
+import BarcodeDetection from './BarcodeDetection.vue';
 
 const cardStore = useCards();
 const { isDialogCardVisible, cards } = storeToRefs(cardStore);
