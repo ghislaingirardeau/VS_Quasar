@@ -2,11 +2,7 @@
   <q-page :key="'wallet' + cards.length" padding>
     <pre>{{ barcodeDetected }}</pre>
     <pre>{{ codeBarMessage }}</pre>
-    <img
-      id="barcode-image"
-      src="/src/assets/codeBarTest.jpg"
-      alt="Code-barres"
-    />
+    <img id="barcode-image" src="/codeBarTest.jpg" alt="Code-barres" />
     <draggable v-model="cards" tag="div" item-key="id" v-bind="dragOptions">
       <template #item="{ element }">
         <q-card
@@ -100,7 +96,7 @@ const detectBarcode = async (imageElement: HTMLImageElement) => {
     }
   } catch (error) {
     console.error('Erreur lors de la détection :', error);
-    codeBarMessage.value.push('Ereur lors de la détection');
+    codeBarMessage.value.push(`Ereur lors de la détection: ${error}`);
   }
 };
 
