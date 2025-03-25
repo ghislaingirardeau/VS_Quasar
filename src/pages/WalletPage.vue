@@ -1,5 +1,6 @@
 <template>
   <q-page :key="'wallet' + cards.length" padding>
+    <pre>{{ barCodeValue }}</pre>
     <draggable v-model="cards" tag="div" item-key="id" v-bind="dragOptions">
       <template #item="{ element }">
         <q-card
@@ -49,7 +50,7 @@ import { Card } from 'src/types/cards';
 import BarcodeRender from 'src/components/cards/barcodeRender.vue';
 import { useGlobal } from 'src/stores/global';
 import DeleteDialog from 'src/components/deleteDialog.vue';
-import { Ref, ref } from 'vue';
+import { onMounted, Ref, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const cardsStore = useCards();
@@ -57,6 +58,30 @@ const { cards } = storeToRefs(cardsStore);
 const globalStore = useGlobal();
 const { isDialogDeleteVisible } = storeToRefs(globalStore);
 const router = useRouter();
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+const BarcodeDetector = window.BarcodeDetector || class {};
+const barcodeDetector = new BarcodeDetector({
+  formats: ['code_39', 'codabar', 'ean_13', 'code_128'],
+});
+const imageEl = document.createElement('img');
+imageEl.src = 'src/assets/codeBarTest.jpg';
+const barCodeValue = ref(null);
+
+onMounted(() => {
+  console.log(imageEl);
+  barcodeDetector
+    .detect(imageEl)
+    .then((barcodes: { rawValue: string }[]) => {
+      barcodes.forEach(
+        (barcode: any) => (barCodeValue.value = barcode.rawValue),
+      );
+    })
+    .catch((err: any) => {
+      console.log(err);
+    });
+});
 
 const selectedCard = ref<Ref<Card> | null>(null);
 
