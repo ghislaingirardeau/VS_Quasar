@@ -74,7 +74,23 @@ const codeBarMessage = ref<string[]>([]);
 onMounted(() => {
   const imageEl = document.createElement('img');
   imageEl.src = 'src/assets/codeBarTest.jpg';
-  if (imageEl) detectBarcode(imageEl);
+  // Attendre que l'image soit complètement chargée
+  imageEl.onload = () => {
+    detectBarcode(imageEl);
+  };
+  // Attendre que l'image soit complètement chargée
+  imageEl.onload = () => {
+    detectBarcode(imageEl);
+  };
+
+  imageEl.onerror = () => {
+    console.error("Impossible de charger l'image");
+    codeBarMessage.value.push("Erreur de chargement de l'image");
+  };
+  imageEl.onerror = () => {
+    console.error("Impossible de charger l'image");
+    codeBarMessage.value.push("Erreur de chargement de l'image");
+  };
 });
 
 const detectBarcode = async (imageElement: HTMLImageElement) => {
@@ -93,6 +109,8 @@ const detectBarcode = async (imageElement: HTMLImageElement) => {
       codeBarMessage.value.push('Code-barres détecté ');
 
       console.log('Code-barres détecté :', barcodeDetected.value);
+    } else {
+      codeBarMessage.value.push('Aucun code-barres détecté');
     }
   } catch (error) {
     console.error('Erreur lors de la détection :', error);
