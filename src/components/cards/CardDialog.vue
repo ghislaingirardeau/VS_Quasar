@@ -41,7 +41,7 @@
               icon="create_new_folder"
               :done="step > 2"
             >
-              <BarcodeDetection />
+              <BarcodeDetection v-model:form="form" />
               <q-stepper-navigation>
                 <p
                   v-if="!form.barcode.code.length"

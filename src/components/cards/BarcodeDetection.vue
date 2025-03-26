@@ -1,7 +1,9 @@
 <template>
-  <div class="flex flex-center">
-    <video ref="videoElement" class="w-2/3"></video>
-    <q-img
+  <div class="flex flex-center my-2">
+    <video ref="videoElement"></video>
+    <p class="mt-2 font-bold italic">{{ codeBarMessage }}</p>
+    <!-- Pour DEBUG -->
+    <!-- <q-img
       v-if="imagePreview"
       :src="imagePreview"
       spinner-color="white"
@@ -13,14 +15,19 @@
         {{ codeBarMessage }}
         {{ barcodeDetected }}
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useIntervalFn } from '@vueuse/core';
-import { Barcode } from 'src/types/cards';
+import { Barcode, Card } from 'src/types/cards';
+
+const form = defineModel('form', {
+  type: Object as () => Card,
+  required: true,
+});
 
 /* 
 - Ouvir si user veut scanner un code
@@ -135,7 +142,9 @@ const detectBarcode = async (imageElement: HTMLImageElement) => {
         code: barcodes[0].rawValue,
         format: barcodes[0].format,
       };
-      codeBarMessage.value = 'Code-barre détecté';
+      codeBarMessage.value = 'Code-barre détecté !';
+
+      form.value.barcode = barcodeDetected.value;
 
       // si il y a un code bar detecté, on stop la camera et l'interval
       stopCamera();
