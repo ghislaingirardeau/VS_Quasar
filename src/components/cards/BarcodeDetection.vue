@@ -29,15 +29,7 @@ const form = defineModel('form', {
   required: true,
 });
 
-/* 
-- Ouvir si user veut scanner un code
-- Ouvre ce composant avec acces à la camera
-- Option a tester userMediaDevices: 
-    - si code bar detect during video
-    - sinon code bar detect during image => doit alors prendre une photo
-- Une fois la détection fait, rempli le form pour ajouter le type de format et le numero client => par un emit ? ou v-model ?
-- Une fois le emit fait, ferme le composant
-*/
+const emit = defineEmits(['detection-error']);
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
@@ -116,7 +108,11 @@ function extractPictureFromVideo() {
 // Fonction pour détecter un code-barres dans une image
 const detectBarcode = async (imageElement: HTMLImageElement) => {
   if (!('BarcodeDetector' in window) || !window.BarcodeDetector) {
-    codeBarMessage.value = 'BarcodeDetector pas dispo sur ce browers';
+    stopCamera();
+    emit('detection-error', {
+      message:
+        'BarcodeDetector ne fonctionne pas sur ce navigateur, merci de saisir manuellement le code barre',
+    });
     return;
   }
   try {
@@ -144,7 +140,8 @@ const detectBarcode = async (imageElement: HTMLImageElement) => {
       };
       codeBarMessage.value = 'Code-barre détecté !';
 
-      form.value.barcode = barcodeDetected.value;
+      form.value.barcode.code = barcodeDetected.value.code;
+      form.value.barcode.format = barcodeDetected.value.format;
 
       // si il y a un code bar detecté, on stop la camera et l'interval
       stopCamera();

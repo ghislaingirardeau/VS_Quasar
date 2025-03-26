@@ -41,17 +41,27 @@
               icon="create_new_folder"
               :done="step > 2"
             >
-              <BarcodeDetection v-model:form="form" />
+              <q-checkbox
+                v-if="!barcodeDetectionErrorMessage"
+                v-model="isCameraAllowed"
+                class="mb-4"
+                label="Utiliser la caméra pour scanner le code barre"
+              />
+              <p class="mb-2 italic">{{ barcodeDetectionErrorMessage }}</p>
+              <q-checkbox
+                v-if="!isCameraAllowed"
+                v-model="isBarcodeManual"
+                :label="`${!barcodeDetectionErrorMessage ? 'Ou saisir' : 'Saisir'} manuellement le code`"
+                @click="step = 3"
+              />
+              <BarcodeDetection
+                v-if="isCameraAllowed"
+                v-model:form="form"
+                @detection-error="handleBarcodeDetectionError"
+              />
               <q-stepper-navigation>
-                <p
-                  v-if="!form.barcode.code.length"
-                  class="text-primary underline cursor-pointer ml-6"
-                  @click="step = 3"
-                >
-                  Saisir manuellement le code ?
-                </p>
                 <q-btn
-                  v-else
+                  v-if="form.barcode.code.length"
                   color="primary"
                   label="Continue"
                   @click="step = 4"
@@ -126,6 +136,8 @@
                 :barcode-value="form.barcode"
               />
 
+              {{ form }}
+
               <q-stepper-navigation>
                 <q-btn color="primary" label="Enregistrer" type="submit" />
                 <q-btn
@@ -149,7 +161,7 @@ import { storeToRefs } from 'pinia';
 import { useCards } from 'src/stores/card';
 import { AddPromiseError } from 'src/types';
 import { Card } from 'src/types/cards';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import BarCodeRender from 'src/components/cards/barcodeRender.vue';
 import { colors } from 'utils/index';
 import BarcodeDetection from './BarcodeDetection.vue';
@@ -163,6 +175,8 @@ const { isDialogCardVisible, cards } = storeToRefs(cardStore);
 const responseError = ref('');
 const showBarcodePreview = ref(false);
 const isBarcodeManual = ref(false);
+const isCameraAllowed = ref(false);
+const barcodeDetectionErrorMessage = ref('');
 
 const step = ref(1);
 
@@ -208,6 +222,9 @@ function closeDialog() {
 }
 
 function onReset() {
+  isBarcodeManual.value = false;
+  isCameraAllowed.value = false;
+  barcodeDetectionErrorMessage.value = '';
   step.value = 1;
   form.value = {
     id: 0,
@@ -226,6 +243,11 @@ function onReset() {
   };
 }
 
+function handleBarcodeDetectionError(payload: { message: string }) {
+  isCameraAllowed.value = false;
+  barcodeDetectionErrorMessage.value = payload.message;
+}
+
 function setCardColor(index?: number): string {
   let cardsLength = index || cards.value.length;
   if (cardsLength >= colors.length) {
@@ -238,6 +260,13 @@ function setCardColor(index?: number): string {
   }
   return colors[cardsLength];
 }
+
+watch(step, (newValue) => {
+  if (newValue === 2) {
+    isBarcodeManual.value = false;
+    isCameraAllowed.value = false;
+  }
+});
 </script>
 
 <style lang="scss"></style>
