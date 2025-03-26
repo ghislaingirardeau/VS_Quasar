@@ -136,8 +136,6 @@
                 :barcode-value="form.barcode"
               />
 
-              {{ form }}
-
               <q-stepper-navigation>
                 <q-btn color="primary" label="Enregistrer" type="submit" />
                 <q-btn
