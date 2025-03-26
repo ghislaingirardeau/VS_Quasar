@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useIntervalFn } from '@vueuse/core';
 import { Barcode, Card } from 'src/types/cards';
 
