@@ -19,7 +19,7 @@ const props = defineProps({
 const generateBarcode = () => {
   if (barcode.value) {
     JsBarcode(barcode.value, props.barcodeValue.code, {
-      format: props.barcodeValue.format || 'CODE128',
+      format: props.barcodeValue.format,
       width: 2,
       height: 80,
       displayValue: true,

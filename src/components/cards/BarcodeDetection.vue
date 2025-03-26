@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useIntervalFn } from '@vueuse/core';
 import { Barcode, Card } from 'src/types/cards';
 
@@ -136,12 +136,11 @@ const detectBarcode = async (imageElement: HTMLImageElement) => {
     if (barcodes.length > 0) {
       barcodeDetected.value = {
         code: barcodes[0].rawValue,
-        format: barcodes[0].format,
+        format: formatBarcodeFormat(barcodes[0].format),
       };
       codeBarMessage.value = 'Code-barre détecté !';
 
-      form.value.barcode.code = barcodeDetected.value.code;
-      form.value.barcode.format = barcodeDetected.value.format;
+      form.value.barcode = barcodeDetected.value;
 
       // si il y a un code bar detecté, on stop la camera et l'interval
       stopCamera();
@@ -157,6 +156,19 @@ const detectBarcode = async (imageElement: HTMLImageElement) => {
     codeBarMessage.value = 'Erreur lors de la détection';
   }
 };
+
+function formatBarcodeFormat(format: string) {
+  let formatedCode: string[] = [];
+  if (format.includes('code')) {
+    formatedCode = format.split('_');
+    return formatedCode.join('').toUpperCase();
+  }
+  if (format.includes('ean')) {
+    formatedCode = format.split('_');
+    return formatedCode.join('-').toUpperCase();
+  }
+  return 'CODE128';
+}
 
 onMounted(() => {
   startCamera();
