@@ -41,7 +41,7 @@ interface BarcodeDetected {
 const BarcodeDetector = window.BarcodeDetector || class {};
 
 const barcodeDetected = ref<BarcodeDetected | null>(null);
-const codeBarMessage = ref<string[]>([]);
+const codeBarMessage = ref<string | null>();
 
 const videoElement = ref<HTMLVideoElement | null>(null);
 const imagePreview = ref<string | null>(null);
@@ -49,14 +49,18 @@ const imagePreview = ref<string | null>(null);
 async function startCamera() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
+      video: {
+        facingMode: 'environment',
+      },
       audio: false,
     });
     if (videoElement.value) {
       videoElement.value.srcObject = stream;
       videoElement.value.onloadedmetadata = () => {
         videoElement.value?.play();
-        // getBarcodeFromVideoInterval.resume();
+        setTimeout(() => {
+          stopCamera();
+        }, 12000);
       };
       console.dir(videoElement.value);
     }
@@ -71,12 +75,14 @@ function stopCamera() {
     .forEach((track) => {
       track.stop();
     });
+
+  getBarcodeFromVideoInterval.pause();
 }
 
-// Toutes les 5s, on extrait une image de la vidéo
+// Toutes les 3s, on extrait une image de la vidéo
 const getBarcodeFromVideoInterval = useIntervalFn(() => {
   extractPictureFromVideo();
-}, 5000);
+}, 3000);
 
 // Fonction pour extraire une image de la vidéo
 // Une fois l'image construite, la passer à la détection de code-barres
@@ -98,7 +104,7 @@ function extractPictureFromVideo() {
       };
       imageEl.onerror = () => {
         console.error("Impossible de charger l'image");
-        codeBarMessage.value.push("Erreur de chargement de l'image");
+        codeBarMessage.value = "Erreur de chargement de l'image";
       };
     }
   }
@@ -107,13 +113,25 @@ function extractPictureFromVideo() {
 // Fonction pour détecter un code-barres dans une image
 const detectBarcode = async (imageElement: HTMLImageElement) => {
   if (!('BarcodeDetector' in window) || !window.BarcodeDetector) {
-    codeBarMessage.value.push('BarcodeDetector pas dispo sur ce browers');
+    codeBarMessage.value = 'BarcodeDetector pas dispo sur ce browers';
     return;
   }
-  codeBarMessage.value.push('Détection en cours...');
   try {
+    codeBarMessage.value =
+      "Détection en cours..., garder l'image stable pendant 3s";
     const barcodeDetector = new BarcodeDetector({
-      formats: ['qr_code', 'code_128', 'ean_13'],
+      formats: [
+        'qr_code',
+        'code_128',
+        'ean_13',
+        'code_39',
+        'code_93',
+        'codabar',
+        'ean_8',
+        'itf',
+        'upc_a',
+        'upc_e',
+      ],
     });
     const barcodes = await barcodeDetector.detect(imageElement);
     if (barcodes.length > 0) {
@@ -121,18 +139,20 @@ const detectBarcode = async (imageElement: HTMLImageElement) => {
         code: barcodes[0].rawValue,
         format: barcodes[0].format,
       };
-      codeBarMessage.value.push('Code-barres détecté ');
+      codeBarMessage.value = 'Code-barre détecté';
 
       // si il y a un code bar detecté, on stop la camera et l'interval
       stopCamera();
-      getBarcodeFromVideoInterval.pause();
     } else {
       // sinon on continue la detection tant que le composant est ouvert
-      codeBarMessage.value.push('Aucun code-barres détecté');
+      codeBarMessage.value =
+        'Aucun code-barres détecté... continuer la détection';
     }
   } catch (error) {
     console.error('Erreur lors de la détection :', error);
-    codeBarMessage.value.push(`Ereur lors de la détection: ${error}`);
+    // si il y a erreur on stop la camera et l'interval
+    stopCamera();
+    codeBarMessage.value = 'Erreur lors de la détection';
   }
 };
 
@@ -142,7 +162,6 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   stopCamera();
-  getBarcodeFromVideoInterval.pause();
 });
 </script>
 
