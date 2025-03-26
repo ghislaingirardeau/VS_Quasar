@@ -42,15 +42,9 @@ const componentsToLoad = computed(() => {
     case 'wallet':
       return [AddCardWidget];
     case 'shopping':
-      return [
-        DownloadWidget,
-        EmptyCartWidget,
-        CleanCartWidget,
-        ShoppingCartWidget,
-      ];
-
+      return [EmptyCartWidget, CleanCartWidget, ShoppingCartWidget];
     default:
-      return [];
+      return [DownloadWidget];
   }
 });
 </script>
