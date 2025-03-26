@@ -20,11 +20,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useIntervalFn } from '@vueuse/core';
-
-interface BarcodeDetected {
-  code: string;
-  format: string;
-}
+import { Barcode } from 'src/types/cards';
 
 /* 
 - Ouvir si user veut scanner un code
@@ -40,7 +36,7 @@ interface BarcodeDetected {
 // @ts-expect-error
 const BarcodeDetector = window.BarcodeDetector || class {};
 
-const barcodeDetected = ref<BarcodeDetected | null>(null);
+const barcodeDetected = ref<Barcode | null>(null);
 const codeBarMessage = ref<string | null>();
 
 const videoElement = ref<HTMLVideoElement | null>(null);
