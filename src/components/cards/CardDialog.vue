@@ -23,16 +23,7 @@
               icon="settings"
               :done="step > 1"
             >
-              <q-select
-                v-model="form.shop"
-                :options="shops"
-                label="Séléctionne une enseigne"
-                :rules="[
-                  (val) =>
-                    (val && val.label.length > 0) ||
-                    'Une enseigne doit etre selectionné',
-                ]"
-              />
+              <ShopOptions v-model:form="form" />
 
               <q-stepper-navigation>
                 <q-btn color="primary" label="Continue" @click="step = 2" />
@@ -169,6 +160,7 @@ import { ref } from 'vue';
 import BarCodeRender from 'src/components/cards/barcodeRender.vue';
 import { colors } from 'utils/index';
 import BarcodeDetection from './BarcodeDetection.vue';
+import ShopOptions from './ShopOptions.vue';
 
 const cardStore = useCards();
 const { isDialogCardVisible, cards } = storeToRefs(cardStore);
@@ -194,29 +186,6 @@ const form = ref<Card>({
   password: '',
   color: null,
 });
-
-const shops = [
-  {
-    id: 0,
-    label: 'Marché U',
-  },
-  {
-    id: 1,
-    label: 'Leclerc',
-  },
-  {
-    id: 2,
-    label: 'Carrefour',
-  },
-  {
-    id: 3,
-    label: 'Intermarché',
-  },
-  {
-    id: 4,
-    label: 'Auchan',
-  },
-];
 
 function barcodePreview() {
   showBarcodePreview.value = true;
