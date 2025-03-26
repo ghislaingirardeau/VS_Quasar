@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="isDialogCardVisible">
+  <q-dialog v-model="isDialogCardVisible" @hide="onReset">
     <q-card style="width: 400px; max-width: 90vw">
       <q-card-section class="row items-center">
         <div class="text-h6">Ajouter une carte</div>
@@ -26,7 +26,12 @@
               <ShopOptions v-model:form="form" />
 
               <q-stepper-navigation>
-                <q-btn color="primary" label="Continue" @click="step = 2" />
+                <q-btn
+                  color="primary"
+                  :disable="!form.shop.label.length"
+                  label="Continue"
+                  @click="step = 2"
+                />
               </q-stepper-navigation>
             </q-step>
 
@@ -36,11 +41,21 @@
               icon="create_new_folder"
               :done="step > 2"
             >
-              An ad group contains one or more ads which target a shared set of
-              keywords.
-
+              <BarcodeDetection />
               <q-stepper-navigation>
-                <q-btn color="primary" label="Continue" @click="step = 3" />
+                <p
+                  v-if="!form.barcode.code.length"
+                  class="text-primary underline cursor-pointer ml-6"
+                  @click="step = 3"
+                >
+                  Saisir manuellement le code ?
+                </p>
+                <q-btn
+                  v-else
+                  color="primary"
+                  label="Continue"
+                  @click="step = 4"
+                />
                 <q-btn
                   flat
                   color="primary"
@@ -53,26 +68,24 @@
 
             <q-step
               :name="3"
-              title="Saisie du code barre"
+              title="Saisie manuelle du code barre"
+              caption="Optionnel"
+              :disable="!isBarcodeManual"
               icon="assignment"
-              :disable="false"
               :done="step > 2"
             >
-              <q-input
-                v-model="form.barcode.code"
-                filled
-                label="Numéro client"
-                class="form-list-name"
-                :lazy-rules="false"
-                :rules="[
-                  (val) =>
-                    (val && !isNaN(val) && val.length > 0) ||
-                    'Taper au moins un nombre et pas de lettres',
-                ]"
-                @blur="barcodePreview"
+              <BarcodeInput
+                v-model:form="form"
+                @barcode-preview="barcodePreview"
               />
+
               <q-stepper-navigation>
-                <q-btn color="primary" label="Continue" @click="step = 4" />
+                <q-btn
+                  color="primary"
+                  label="Continue"
+                  :disable="!form.barcode.code.length"
+                  @click="step = 4"
+                />
                 <q-btn
                   flat
                   color="primary"
@@ -89,35 +102,15 @@
               icon="add_comment"
               :done="step > 3"
             >
-              <div>
-                <q-checkbox
-                  v-model="form.isShoppingCard"
-                  label="Carte pour les achats en magasin ?"
-                />
-              </div>
-              <div>
-                <q-checkbox
-                  v-model="form.isCardCode"
-                  label="Associer un code à la carte ?"
-                />
-              </div>
-              <q-input
-                v-if="form.isCardCode"
-                v-model="form.password"
-                :type="isPassword ? 'password' : 'text'"
-                hint="Password with toggle"
-              >
-                <template #append>
-                  <q-icon
-                    :name="isPassword ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPassword = !isPassword"
-                  />
-                </template>
-              </q-input>
+              <CardOptions v-model:form="form" />
 
               <q-stepper-navigation>
-                <q-btn color="primary" label="Aperçu" @click="step = 5" />
+                <q-btn
+                  color="primary"
+                  :disable="form.isCardCode && !form.password.length"
+                  label="Aperçu"
+                  @click="step = 5"
+                />
                 <q-btn
                   flat
                   color="primary"
@@ -161,13 +154,15 @@ import BarCodeRender from 'src/components/cards/barcodeRender.vue';
 import { colors } from 'utils/index';
 import BarcodeDetection from './BarcodeDetection.vue';
 import ShopOptions from './ShopOptions.vue';
+import BarcodeInput from './BarcodeInput.vue';
+import CardOptions from './CardOptions.vue';
 
 const cardStore = useCards();
 const { isDialogCardVisible, cards } = storeToRefs(cardStore);
 
 const responseError = ref('');
-const isPassword = ref(true);
 const showBarcodePreview = ref(false);
+const isBarcodeManual = ref(false);
 
 const step = ref(1);
 
