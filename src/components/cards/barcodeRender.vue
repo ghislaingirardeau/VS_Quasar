@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import JsBarcode from 'jsbarcode';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { Barcode } from 'src/types/cards';
 
 const barcode = ref<SVGSVGElement | null>(null);
@@ -28,6 +28,15 @@ const generateBarcode = () => {
 };
 
 onMounted(generateBarcode);
+
+watch(
+  () => props.barcodeValue.code,
+  (newValue) => {
+    if (newValue.length) {
+      generateBarcode();
+    }
+  },
+);
 </script>
 
 <style scoped></style>
