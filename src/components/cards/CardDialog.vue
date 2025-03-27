@@ -30,7 +30,7 @@
                   color="primary"
                   :disable="!form.shop.label.length"
                   label="Continue"
-                  @click="step = 2"
+                  @click="goToStep(2)"
                 />
               </q-stepper-navigation>
             </q-step>
@@ -64,14 +64,14 @@
                   v-if="form.barcode.code.length"
                   color="primary"
                   label="Continue"
-                  @click="step = 4"
+                  @click="goToStep(4)"
                 />
                 <q-btn
                   flat
                   color="primary"
                   label="Back"
                   class="q-ml-sm"
-                  @click="step = 1"
+                  @click="goToStep(1)"
                 />
               </q-stepper-navigation>
             </q-step>
@@ -94,14 +94,14 @@
                   color="primary"
                   label="Continue"
                   :disable="!form.barcode.code.length"
-                  @click="step = 4"
+                  @click="goToStep(4)"
                 />
                 <q-btn
                   flat
                   color="primary"
                   label="Back"
                   class="q-ml-sm"
-                  @click="step = 2"
+                  @click="goToStep(2)"
                 />
               </q-stepper-navigation>
             </q-step>
@@ -119,14 +119,14 @@
                   color="primary"
                   :disable="form.isCardCode && !form.password.length"
                   label="Aperçu"
-                  @click="step = 5"
+                  @click="goToStep(5)"
                 />
                 <q-btn
                   flat
                   color="primary"
                   label="Back"
                   class="q-ml-sm"
-                  @click="step = 3"
+                  @click="goToStep(3)"
                 />
               </q-stepper-navigation>
             </q-step>
@@ -143,7 +143,7 @@
                   color="primary"
                   label="Back"
                   class="q-ml-sm"
-                  @click="step = 4"
+                  @click="goToStep(4)"
                 />
               </q-stepper-navigation>
             </q-step>
@@ -193,6 +193,14 @@ const form = ref<Card>({
   password: '',
   color: null,
 });
+
+function goToStep(index: number) {
+  if (index === 4 && (step.value === 3 || step.value === 2)) {
+    barcodePreview();
+  }
+
+  step.value = index;
+}
 
 function barcodePreview() {
   showBarcodePreview.value = true;

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-center my-2">
-    <video ref="videoElement"></video>
+    <video v-show="!barcodeDetected" ref="videoElement"></video>
     <p class="mt-2 font-bold italic">{{ codeBarMessage }}</p>
     <!-- Pour DEBUG -->
     <!-- <q-img

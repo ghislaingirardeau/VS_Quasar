@@ -30,9 +30,9 @@ const generateBarcode = () => {
 onMounted(generateBarcode);
 
 watch(
-  () => props.barcodeValue.code,
+  () => props.barcodeValue,
   (newValue) => {
-    if (newValue.length) {
+    if (newValue.code.length) {
       generateBarcode();
     }
   },
