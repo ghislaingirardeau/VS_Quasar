@@ -1,5 +1,5 @@
 <template>
-  <svg ref="barcode"></svg>
+  <svg ref="barcode" class="rounded-md"></svg>
 </template>
 
 <script setup lang="ts">
@@ -14,13 +14,17 @@ const props = defineProps({
     type: Object as () => Barcode,
     required: true,
   },
+  barcodeWidth: {
+    type: Number,
+    default: 2,
+  },
 });
 
 const generateBarcode = () => {
   if (barcode.value) {
     JsBarcode(barcode.value, props.barcodeValue.code, {
       format: props.barcodeValue.format,
-      width: 2,
+      width: props.barcodeWidth,
       height: 80,
       displayValue: true,
     });

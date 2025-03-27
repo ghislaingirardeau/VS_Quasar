@@ -131,10 +131,13 @@
               </q-stepper-navigation>
             </q-step>
             <q-step :name="5" title="Aperçu" icon="add_comment">
-              <BarCodeRender
-                v-if="showBarcodePreview && form.barcode.code.length"
-                :barcode-value="form.barcode"
-              />
+              <div>
+                <BarCodeRender
+                  v-if="showBarcodePreview && form.barcode.code.length"
+                  :barcode-value="form.barcode"
+                  :barcode-width="1.3"
+                />
+              </div>
 
               <q-stepper-navigation>
                 <q-btn color="primary" label="Enregistrer" type="submit" />
