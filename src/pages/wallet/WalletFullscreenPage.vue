@@ -6,20 +6,7 @@
       </q-card-section>
 
       <q-card-section v-if="currentCard.isCardCode" class="flex flex-center">
-        <q-input
-          v-model="currentCard.password"
-          readonly
-          :type="isPassword ? 'password' : 'text'"
-          hint="Montrer/Masquer le mot de passe"
-        >
-          <template #append>
-            <q-icon
-              :name="isPassword ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPassword = !isPassword"
-            />
-          </template>
-        </q-input>
+        <PasswordInput v-model:password="currentCard.password" />
       </q-card-section>
     </q-card>
   </q-page>
@@ -28,8 +15,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import BarcodeRender from 'src/components/cards/barcodeRender.vue';
+import PasswordInput from 'src/components/cards/passwordInput.vue';
 import { useCards } from 'src/stores/card';
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 declare global {
@@ -47,7 +35,6 @@ const { cards } = storeToRefs(cardsStore);
 const route = useRoute();
 let previousBrightness: number | null = null;
 const isCordova = () => !!window.cordova;
-const isPassword = ref(true);
 
 const cardId = computed(() => {
   return route.params.id as string;
