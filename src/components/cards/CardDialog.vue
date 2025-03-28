@@ -20,7 +20,7 @@
             <q-step
               :name="1"
               title="Choix de l'enseigne"
-              icon="settings"
+              :icon="mdiStoreSearch"
               :done="step > 1"
             >
               <ShopOptions v-model:form="form" />
@@ -38,7 +38,7 @@
             <q-step
               :name="2"
               title="Capture du code barre"
-              icon="create_new_folder"
+              :icon="mdiBarcodeScan"
               :done="step > 2"
             >
               <q-checkbox
@@ -81,7 +81,7 @@
               title="Saisie manuelle du code barre"
               caption="Optionnel"
               :disable="!isBarcodeManual"
-              icon="assignment"
+              :icon="mdiBarcodeOff"
               :done="step > 2"
             >
               <BarcodeInput
@@ -109,7 +109,7 @@
             <q-step
               :name="4"
               title="Ajout Options"
-              icon="add_comment"
+              :icon="mdiListBoxOutline"
               :done="step > 3"
             >
               <CardOptions v-model:form="form" />
@@ -130,7 +130,7 @@
                 />
               </q-stepper-navigation>
             </q-step>
-            <q-step :name="5" title="Aperçu" icon="add_comment">
+            <q-step :name="5" title="Aperçu" :icon="mdiBarcode">
               <div>
                 <BarCodeRender
                   v-if="showBarcodePreview && form.barcode.code.length"
@@ -169,6 +169,13 @@ import BarcodeDetection from './BarcodeDetection.vue';
 import ShopOptions from './ShopOptions.vue';
 import BarcodeInput from './BarcodeInput.vue';
 import CardOptions from './CardOptions.vue';
+import {
+  mdiBarcode,
+  mdiBarcodeOff,
+  mdiBarcodeScan,
+  mdiListBoxOutline,
+  mdiStoreSearch,
+} from '@quasar/extras/mdi-v7';
 
 const cardStore = useCards();
 const { isDialogCardVisible, cards } = storeToRefs(cardStore);

@@ -34,6 +34,9 @@ describe('example Component', () => {
     expect(wrapper.text()).toContain('Hello');
     expect(wrapper.text()).toContain('Hallo');
 
+    //! Pas d'erreur sur wrapper.vm.XXX car dans le composant, on expose ces propriétés
+    expect(wrapper.vm.isPassword).toBe(true);
+
     expect(wrapper.vm.clickCount).toBe(0);
 
     // Appeler directement la méthode

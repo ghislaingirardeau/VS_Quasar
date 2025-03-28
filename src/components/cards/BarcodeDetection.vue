@@ -171,7 +171,7 @@ function formatBarcodeFormat(format: string) {
     formatedCode = format.split('_');
     return formatedCode.join('-').toUpperCase();
   }
-  return 'CODE128';
+  return format.length ? 'CODE128' : format.toUpperCase();
 }
 
 onMounted(() => {

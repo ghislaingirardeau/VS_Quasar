@@ -11,6 +11,7 @@
     <p>Count: {{ todoCount }} / {{ meta.totalCount }}</p>
     <p>Active: {{ active ? 'yes' : 'no' }}</p>
     <p>Clicks on todos: {{ clickCount }}</p>
+    <p>{{ isPassword }}</p>
   </div>
 </template>
 
@@ -39,19 +40,26 @@ const props = withDefaults(
   },
 );
 
-const clickCount = ref(0);
+const clickCount = ref<number | null>(1);
+const isPassword = ref(true);
 
 function increment() {
+  if (clickCount.value === null) {
+    clickCount.value = 0;
+  }
   clickCount.value += 1;
   return clickCount.value;
 }
 
 function incrementFromChild(payload: number) {
+  if (clickCount.value === null) {
+    clickCount.value = 0;
+  }
   clickCount.value += 2;
   return clickCount.value;
 }
 
 const todoCount = computed(() => props.todos.length);
 
-defineExpose({ increment, clickCount });
+defineExpose({ increment, clickCount, isPassword });
 </script>
