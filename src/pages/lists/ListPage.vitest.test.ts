@@ -8,6 +8,7 @@ import { useLists } from 'src/stores/lists';
 import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
 import deleteDialog from 'src/components/deleteDialog.vue';
 import { openListDialog } from 'test/testUtils';
+import { QuillEditor } from '@vueup/vue-quill';
 
 installQuasarPlugin();
 
@@ -66,6 +67,7 @@ describe('Lists Page should display list of lists', () => {
     wrapper = mount(ListsPage, {
       global: {
         plugins: [router],
+        components: { QuillEditor },
       },
     });
   });

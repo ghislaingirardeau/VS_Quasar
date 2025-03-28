@@ -17,7 +17,10 @@ export default defineConfig({
   },
   plugins: [
     vue({
-      template: { transformAssetUrls },
+      template: {
+        transformAssetUrls,
+        compilerOptions: { isCustomElement: (tag) => tag === 'quill-editor' },
+      },
     }),
     quasar({
       sassVariables: 'src/quasar-variables.scss',

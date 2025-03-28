@@ -189,7 +189,7 @@ const form = ref<Card>({
   },
   barcode: {
     code: '',
-    format: '',
+    format: 'CODE128',
   },
   isShoppingCard: false,
   isCardCode: false,
@@ -243,7 +243,7 @@ function onReset() {
     },
     barcode: {
       code: '',
-      format: '',
+      format: 'CODE128',
     },
     isShoppingCard: false,
     isCardCode: false,

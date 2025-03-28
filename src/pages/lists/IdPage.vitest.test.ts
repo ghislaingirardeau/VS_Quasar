@@ -7,6 +7,7 @@ import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-v
 import { useLists } from 'src/stores/lists';
 import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
 import { openListDialog } from 'test/testUtils';
+import { QuillEditor } from '@vueup/vue-quill';
 
 installQuasarPlugin();
 
@@ -59,7 +60,7 @@ async function addItemInsideList(
   expect(lists.value[0].items).toHaveLength(1);
 
   // check if item is render inside dom
-  const itemLabel = wrapper.find('.q-item__label');
+  const itemLabel = wrapper.find('.q-card .q-card__section .text-h5');
   expect(itemLabel.exists()).toBe(true);
   expect(itemLabel.text()).toContain('test add item');
 
@@ -74,7 +75,7 @@ describe('List Id page', async () => {
   beforeEach(async () => {
     setActivePinia(createPinia());
 
-    // Créer une liste pour pouvoir naviguer vers la route 'list'
+    // Créer une liste pour pouvoir naviguer vers route 'list'
     await createList();
 
     router = createRouter({
@@ -97,6 +98,7 @@ describe('List Id page', async () => {
     wrapper = mount(IdPage, {
       global: {
         plugins: [router],
+        components: { QuillEditor },
       },
     });
   });
@@ -113,10 +115,12 @@ describe('List Id page', async () => {
     expect(lists.value).toHaveLength(1);
   });
 
-  it('should open dialog and add an item inside list', async () => {
-    // Use utile test for open dialog
+  it('should open dialog', async () => {
+    // Use utile test for open dialo
     await openListDialog(wrapperLayout, true, '1');
+  });
 
+  it('add an item inside list', async () => {
     // Check if item is added inside list
     await addItemInsideList(router, wrapper);
   });

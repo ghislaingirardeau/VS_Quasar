@@ -4,7 +4,7 @@ import { nextTick } from 'vue';
 import { useLists } from 'src/stores/lists';
 import AddItemWidget from 'src/components/list/AddItemWidget.vue';
 import AddListWidget from 'src/components/list/AddListWidget.vue';
-
+import { QuillEditor } from '@vueup/vue-quill';
 import ListDialog from 'src/components/list/ListDialog.vue';
 import { expect } from 'vitest';
 
@@ -38,6 +38,9 @@ export async function openListDialog(
     props: {
       isNewItem,
       newItemInListId,
+    },
+    global: {
+      components: { QuillEditor },
     },
   });
 
