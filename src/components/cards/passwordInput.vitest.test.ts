@@ -2,7 +2,6 @@ import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-v
 import { mount } from '@vue/test-utils';
 import passwordInput from './passwordInput.vue';
 import { describe, expect, it } from 'vitest';
-import { nextTick } from 'vue';
 
 installQuasarPlugin();
 
