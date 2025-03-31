@@ -62,7 +62,6 @@ function createShops(
 }
 
 function resetModel() {
-  console.log('reset form');
   form.value.shop = {
     label: '',
     id: 0,
