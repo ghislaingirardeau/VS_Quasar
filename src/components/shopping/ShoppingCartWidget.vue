@@ -1,5 +1,13 @@
 <template>
-  <q-icon size="md" flat :name="mdiCart" class="q-ml-lg text-white">
+  <q-icon
+    size="md"
+    flat
+    :name="mdiCart"
+    class="q-ml-lg text-white"
+    @click="
+      $router.push({ name: 'wallet', query: { showShoppingCard: 'true' } })
+    "
+  >
     <q-badge rounded color="red" floating>{{ totalItems }}</q-badge>
   </q-icon>
 </template>

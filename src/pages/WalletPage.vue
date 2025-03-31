@@ -1,6 +1,11 @@
 <template>
-  <q-page :key="'wallet' + cards.length" padding>
-    <draggable v-model="cards" tag="div" item-key="id" v-bind="dragOptions">
+  <q-page :key="'wallet' + cards.length + showShoppingCard" padding>
+    <draggable
+      v-model="cardsToDisplay"
+      tag="div"
+      item-key="id"
+      v-bind="dragOptions"
+    >
       <template #item="{ element }">
         <q-card
           :key="element.id"
@@ -12,6 +17,7 @@
             <div class="text-h5 font-bold italic">{{ element.shop.label }}</div>
             <q-space />
             <q-icon
+              v-if="!showShoppingCard"
               color="primary"
               class="icon-delete mr-4"
               size="sm"
@@ -49,16 +55,30 @@ import { Card } from 'src/types/cards';
 import BarcodeRender from 'src/components/cards/barcodeRender.vue';
 import { useGlobal } from 'src/stores/global';
 import DeleteDialog from 'src/components/deleteDialog.vue';
-import { Ref, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, onMounted, Ref, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const cardsStore = useCards();
-const { cards } = storeToRefs(cardsStore);
+const { cards, cardsForShopping } = storeToRefs(cardsStore);
 const globalStore = useGlobal();
 const { isDialogDeleteVisible } = storeToRefs(globalStore);
 const router = useRouter();
+const route = useRoute();
+const cardsToDisplay = ref<Ref<Card[]> | []>([]);
 
 const selectedCard = ref<Ref<Card> | null>(null);
+
+const showShoppingCard = computed(() => {
+  return !!route.query.showShoppingCard;
+});
+
+onMounted(() => {
+  if (showShoppingCard.value) {
+    cardsToDisplay.value = cardsForShopping.value;
+  } else {
+    cardsToDisplay.value = cards.value;
+  }
+});
 
 function handleCardToDelete(card: Card) {
   selectedCard.value = card;

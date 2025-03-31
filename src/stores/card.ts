@@ -1,11 +1,17 @@
 import { useLocalStorage } from '@vueuse/core/index.cjs';
 import { defineStore } from 'pinia';
 import { Card } from 'src/types/cards';
-import { ref, Ref } from 'vue';
+import { computed, ref, Ref } from 'vue';
 
 export const useCards = defineStore('cards', () => {
   const cards: Ref<Card[]> = useLocalStorage('cards', []);
   const isDialogCardVisible = ref(false);
+
+  const cardsForShopping = computed((): Card[] => {
+    return cards.value.length
+      ? cards.value.filter((card) => card.isShoppingCard)
+      : [];
+  });
 
   async function addcard(card: Card) {
     return new Promise((resolve, reject) => {
@@ -46,5 +52,6 @@ export const useCards = defineStore('cards', () => {
     editCard,
     showDialogCard,
     hideDialogCard,
+    cardsForShopping,
   };
 });
