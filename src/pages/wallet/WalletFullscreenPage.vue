@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <q-card :class="setBorderCardColor(currentCard.color)">
+    <q-card :style="{ backgroundColor: currentCard.color }">
       <q-card-section class="flex flex-center">
         <BarcodeRender :barcode-value="currentCard.barcode" />
       </q-card-section>
@@ -43,10 +43,6 @@ const cardId = computed(() => {
 const currentCard = computed(() => {
   return cards.value.find((list) => list.id === Number(cardId.value))!;
 });
-
-function setBorderCardColor(color: string | null) {
-  return `bg-${color ? color : 'red'}-200`;
-}
 
 onMounted(() => {
   if (isCordova()) {

@@ -9,18 +9,35 @@
       <template #item="{ element }">
         <q-card
           :key="element.id"
-          class="mb-4"
-          :class="setBorderCardColor(element.color)"
+          class="mb-4 border-1 border-gray-500 border-opacity-25"
+          :style="{ backgroundColor: element.color }"
           @click="goToWallet(element.id, element.shop.label)"
         >
-          <q-card-section class="mb-3 flex flex-row">
+          <q-card-section class="mb-1 flex flex-row">
             <div class="text-h5 font-bold italic">{{ element.shop.label }}</div>
             <q-space />
+
             <q-icon
               v-if="!showShoppingCard"
-              color="primary"
-              class="icon-delete mr-4"
+              name="palette"
               size="sm"
+              color="grey-8"
+              class="cursor-pointer"
+              @click.stop
+            >
+              <q-popup-proxy
+                ref="colorPicker"
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-color v-model="element.color" no-header no-footer />
+              </q-popup-proxy>
+            </q-icon>
+            <q-icon
+              v-if="!showShoppingCard"
+              class="icon-delete mx-4"
+              size="sm"
+              color="grey-8"
               :name="mdiDelete"
               @click.stop="handleCardToDelete(element)"
             />
@@ -65,6 +82,7 @@ const { isDialogDeleteVisible } = storeToRefs(globalStore);
 const router = useRouter();
 const route = useRoute();
 const cardsToDisplay = ref<Ref<Card[]> | []>([]);
+const colorPicker = ref();
 
 const selectedCard = ref<Ref<Card> | null>(null);
 
@@ -95,8 +113,6 @@ function deleteElement() {
 function goToWallet(id: string, label: string) {
   router.push({ name: 'wallet-id', params: { id }, state: { name: label } });
 }
-
-function setBorderCardColor(color: string) {
-  return `bg-${color}-200`;
-}
 </script>
+
+<style lang="scss"></style>
