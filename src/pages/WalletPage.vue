@@ -1,5 +1,5 @@
 <template>
-  <q-page :key="'wallet' + cards.length + showShoppingCard" padding>
+  <q-page :key="'wallet' + cardsToDisplay.length" padding>
     <draggable
       v-model="cardsToDisplay"
       tag="div"
@@ -107,6 +107,7 @@ function deleteElement() {
   if (selectedCard.value) {
     cardsStore.removeCard(selectedCard.value.id);
     globalStore.hideDeleteDialog();
+    cardsToDisplay.value = cards.value;
   }
 }
 
