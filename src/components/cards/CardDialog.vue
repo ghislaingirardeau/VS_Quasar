@@ -14,144 +14,142 @@
         />
       </q-card-section>
 
-      <q-form class="q-gutter-md" @submit="onSubmit" @reset="onReset">
-        <q-card-section>
-          <q-stepper v-model="step" vertical color="primary" animated>
-            <q-step
-              :name="1"
-              title="Choix de l'enseigne"
-              :icon="mdiStoreSearch"
-              :done="step > 1"
-            >
-              <ShopOptions v-model:form="form" />
+      <q-form @submit="onSubmit" @reset="onReset">
+        <q-stepper v-model="step" vertical color="primary" animated>
+          <q-step
+            :name="1"
+            title="Choix de l'enseigne"
+            :icon="mdiStoreSearch"
+            :done="step > 1"
+          >
+            <ShopOptions v-model:form="form" />
 
-              <q-stepper-navigation>
-                <q-btn
-                  color="primary"
-                  :disable="!form.shop.label.length"
-                  label="Continue"
-                  @click="goToStep(2)"
-                />
-              </q-stepper-navigation>
-            </q-step>
-
-            <q-step
-              :name="2"
-              title="Capture du code barre"
-              :icon="mdiBarcodeScan"
-              :done="step > 2"
-            >
-              <q-checkbox
-                v-if="!barcodeDetectionErrorMessage"
-                v-model="isCameraAllowed"
-                class="mb-4"
-                label="Utiliser la caméra pour scanner le code barre"
+            <q-stepper-navigation>
+              <q-btn
+                color="primary"
+                :disable="!form.shop.label.length"
+                label="Continue"
+                @click="goToStep(2)"
               />
-              <p class="mb-2 italic">{{ barcodeDetectionErrorMessage }}</p>
-              <q-checkbox
-                v-if="!isCameraAllowed"
-                v-model="isBarcodeManual"
-                :label="`${!barcodeDetectionErrorMessage ? 'Ou saisir' : 'Saisir'} manuellement le code`"
-                @click="step = 3"
+            </q-stepper-navigation>
+          </q-step>
+
+          <q-step
+            :name="2"
+            title="Capture du code barre"
+            :icon="mdiBarcodeScan"
+            :done="step > 2"
+          >
+            <q-checkbox
+              v-if="!barcodeDetectionErrorMessage"
+              v-model="isCameraAllowed"
+              class="mb-4"
+              label="Utiliser la caméra pour scanner le code barre"
+            />
+            <p class="mb-2 italic">{{ barcodeDetectionErrorMessage }}</p>
+            <q-checkbox
+              v-if="!isCameraAllowed"
+              v-model="isBarcodeManual"
+              :label="`${!barcodeDetectionErrorMessage ? 'Ou saisir' : 'Saisir'} manuellement le code`"
+              @click="step = 3"
+            />
+            <BarcodeDetection
+              v-if="isCameraAllowed"
+              v-model:form="form"
+              @detection-error="handleBarcodeDetectionError"
+            />
+            <q-stepper-navigation>
+              <q-btn
+                v-if="form.barcode.code.length"
+                color="primary"
+                label="Continue"
+                @click="goToStep(4)"
               />
-              <BarcodeDetection
-                v-if="isCameraAllowed"
-                v-model:form="form"
-                @detection-error="handleBarcodeDetectionError"
+              <q-btn
+                flat
+                color="primary"
+                label="Back"
+                class="q-ml-sm"
+                @click="goToStep(1)"
               />
-              <q-stepper-navigation>
-                <q-btn
-                  v-if="form.barcode.code.length"
-                  color="primary"
-                  label="Continue"
-                  @click="goToStep(4)"
-                />
-                <q-btn
-                  flat
-                  color="primary"
-                  label="Back"
-                  class="q-ml-sm"
-                  @click="goToStep(1)"
-                />
-              </q-stepper-navigation>
-            </q-step>
+            </q-stepper-navigation>
+          </q-step>
 
-            <q-step
-              :name="3"
-              title="Saisie manuelle du code barre"
-              caption="Optionnel"
-              :disable="!isBarcodeManual"
-              :icon="mdiBarcodeOff"
-              :done="step > 2"
-            >
-              <BarcodeInput
-                v-model:form="form"
-                @barcode-preview="barcodePreview"
+          <q-step
+            :name="3"
+            title="Saisie manuelle du code barre"
+            caption="Optionnel"
+            :disable="!isBarcodeManual"
+            :icon="mdiBarcodeOff"
+            :done="step > 2"
+          >
+            <BarcodeInput
+              v-model:form="form"
+              @barcode-preview="barcodePreview"
+            />
+
+            <q-stepper-navigation>
+              <q-btn
+                color="primary"
+                label="Continue"
+                :disable="!form.barcode.code.length"
+                @click="goToStep(4)"
               />
+              <q-btn
+                flat
+                color="primary"
+                label="Back"
+                class="q-ml-sm"
+                @click="goToStep(2)"
+              />
+            </q-stepper-navigation>
+          </q-step>
 
-              <q-stepper-navigation>
-                <q-btn
-                  color="primary"
-                  label="Continue"
-                  :disable="!form.barcode.code.length"
-                  @click="goToStep(4)"
-                />
-                <q-btn
-                  flat
-                  color="primary"
-                  label="Back"
-                  class="q-ml-sm"
-                  @click="goToStep(2)"
-                />
-              </q-stepper-navigation>
-            </q-step>
+          <q-step
+            :name="4"
+            title="Ajout Options"
+            :icon="mdiListBoxOutline"
+            :done="step > 3"
+          >
+            <CardOptions v-model:form="form" />
 
-            <q-step
-              :name="4"
-              title="Ajout Options"
-              :icon="mdiListBoxOutline"
-              :done="step > 3"
-            >
-              <CardOptions v-model:form="form" />
+            <q-stepper-navigation>
+              <q-btn
+                color="primary"
+                :disable="form.isCardCode && !form.password.length"
+                label="Aperçu"
+                @click="goToStep(5)"
+              />
+              <q-btn
+                flat
+                color="primary"
+                label="Back"
+                class="q-ml-sm"
+                @click="goToStep(3)"
+              />
+            </q-stepper-navigation>
+          </q-step>
+          <q-step :name="5" title="Aperçu" :icon="mdiBarcode">
+            <div>
+              <BarCodeRender
+                v-if="showBarcodePreview && form.barcode.code.length"
+                :barcode-value="form.barcode"
+                :barcode-width="1.3"
+              />
+            </div>
 
-              <q-stepper-navigation>
-                <q-btn
-                  color="primary"
-                  :disable="form.isCardCode && !form.password.length"
-                  label="Aperçu"
-                  @click="goToStep(5)"
-                />
-                <q-btn
-                  flat
-                  color="primary"
-                  label="Back"
-                  class="q-ml-sm"
-                  @click="goToStep(3)"
-                />
-              </q-stepper-navigation>
-            </q-step>
-            <q-step :name="5" title="Aperçu" :icon="mdiBarcode">
-              <div>
-                <BarCodeRender
-                  v-if="showBarcodePreview && form.barcode.code.length"
-                  :barcode-value="form.barcode"
-                  :barcode-width="1.3"
-                />
-              </div>
-
-              <q-stepper-navigation>
-                <q-btn color="primary" label="Enregistrer" type="submit" />
-                <q-btn
-                  flat
-                  color="primary"
-                  label="Back"
-                  class="q-ml-sm"
-                  @click="goToStep(4)"
-                />
-              </q-stepper-navigation>
-            </q-step>
-          </q-stepper>
-        </q-card-section>
+            <q-stepper-navigation>
+              <q-btn color="primary" label="Enregistrer" type="submit" />
+              <q-btn
+                flat
+                color="primary"
+                label="Back"
+                class="q-ml-sm"
+                @click="goToStep(4)"
+              />
+            </q-stepper-navigation>
+          </q-step>
+        </q-stepper>
       </q-form>
     </q-card>
   </q-dialog>
@@ -285,4 +283,11 @@ watch(step, (newValue) => {
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.q-stepper--vertical .q-stepper__tab {
+  padding: 12px 10px;
+}
+.q-stepper--vertical .q-stepper__step-inner {
+  padding: 0 24px 32px 35px;
+}
+</style>
