@@ -5,7 +5,7 @@ import { ref } from 'vue';
 // On utilise ici l'auth sur app.vue mais on pourrait aussi l'utiliser dans boot file OU routes !
 // en SSR, il faudrait utiliser prefetch
 
-export const useAuthTuto = defineStore('auth', () => {
+export const useAuthTuto = defineStore('authTuto', () => {
   const logging = ref(false);
   const loggedIn = useLocalStorage('auth.loggedIn', false);
   const loggedOut = ref(true);

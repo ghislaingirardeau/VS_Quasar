@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ userName }}
     <q-btn
       size="sm"
       round
@@ -11,7 +12,6 @@
     <q-btn
       size="sm"
       round
-      :loading="loading"
       :icon="mdiLogin"
       class="q-ml-sm text-white"
       @click="logout"
@@ -64,11 +64,19 @@ import {
   mdiLogout,
   mdiTrashCanOutline,
 } from '@quasar/extras/mdi-v7';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { signInWithGoogle, logout } from 'src/boot/firebase';
+import { useAuth } from 'src/stores/auth';
+import { storeToRefs } from 'pinia';
 
 const dialogSign = ref(false);
 const dialogInformationMessage = ref('');
+const auth = useAuth();
+const { user } = storeToRefs(auth);
+
+const userName = computed(() => {
+  return user.value ? user.value.displayName : '';
+});
 </script>
 
 <style scoped></style>

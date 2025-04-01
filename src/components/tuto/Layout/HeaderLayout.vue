@@ -42,7 +42,7 @@ import {
   mdiSunAngle,
 } from '@quasar/extras/mdi-v7';
 import { Dark } from 'quasar';
-import { useAuth } from 'src/stores/authTuto';
+import { useAuthTuto } from 'src/stores/authTuto';
 import { useRouter } from 'vue-router';
 import { gsap } from 'src/boot/libraries';
 
@@ -86,7 +86,7 @@ function toggleLeftDrawer() {
 
 const router = useRouter();
 
-const auth = useAuth();
+const auth = useAuthTuto();
 
 async function handleLogout() {
   await auth.logout();
