@@ -24,6 +24,7 @@ export default configure((ctx) => {
       'authentification',
       'moment',
       'quillEditor',
+      'firebase',
       'libraries' /* , 'unocss' */,
     ],
 

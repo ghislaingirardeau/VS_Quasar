@@ -1,5 +1,5 @@
 import { boot } from 'quasar/wrappers';
-import { useAuth } from '../stores/auth';
+import { useAuthTuto } from '../stores/authTuto';
 
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
@@ -11,7 +11,7 @@ Pourquoi ? parce que pas de fichier mains.js Vue 3. Donc si on veut ajouter des 
 
 export default boot(({ app, router, redirect }) => {
   router.beforeEach((to, from, next) => {
-    const auth = useAuth();
+    const auth = useAuthTuto();
     // dans routes.js, sur les routes ayant besoin d'une auth, on rajoute une prop qui est un boolean à true
     if (!auth.loggedIn && to.matched.some((route) => route.meta.requiresAuth)) {
       redirect('/login');

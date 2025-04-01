@@ -42,7 +42,7 @@ import {
   mdiSunAngle,
 } from '@quasar/extras/mdi-v7';
 import { Dark } from 'quasar';
-import { useAuth } from 'src/stores/auth';
+import { useAuth } from 'src/stores/authTuto';
 import { useRouter } from 'vue-router';
 import { gsap } from 'src/boot/libraries';
 

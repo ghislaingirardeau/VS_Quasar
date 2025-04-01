@@ -27,6 +27,7 @@
     "axios": "^1.2.1",
     "cordova-plugin-brightness": "^0.2.0",
     "dotenv": "^16.4.7",
+    "firebase": "^11.6.0",
     "gsap": "^3.12.5",
     "jsbarcode": "^3.11.6",
     "moment": "^2.30.1",

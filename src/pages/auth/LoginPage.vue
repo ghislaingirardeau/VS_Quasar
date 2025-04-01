@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import { mdiLogin, mdiWindowClose } from '@quasar/extras/mdi-v7';
-import { useAuth } from '../../stores/auth';
+import { useAuth } from '../../stores/authTuto';
 import { useRouter } from 'vue-router';
 import { mdiLoginVariant } from '@quasar/extras/mdi-v4';
 import { ref } from 'vue';

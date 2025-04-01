@@ -3,12 +3,21 @@
     <q-btn
       size="sm"
       round
-      :loading="loading"
       :icon="mdiAccountPlus"
       class="q-ml-sm text-white"
-      @click="dialogSign = true"
+      @click="signInWithGoogle"
     >
     </q-btn>
+    <q-btn
+      size="sm"
+      round
+      :loading="loading"
+      :icon="mdiLogin"
+      class="q-ml-sm text-white"
+      @click="logout"
+    >
+    </q-btn>
+
     <!-- <q-btn
       v-if="authenticateButton"
       size="sm"
@@ -56,6 +65,7 @@ import {
   mdiTrashCanOutline,
 } from '@quasar/extras/mdi-v7';
 import { onMounted, ref } from 'vue';
+import { signInWithGoogle, logout } from 'src/boot/firebase';
 
 const dialogSign = ref(false);
 const dialogInformationMessage = ref('');
