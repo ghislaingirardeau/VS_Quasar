@@ -5,6 +5,7 @@ import { createPinia, setActivePinia, storeToRefs } from 'pinia';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
 import { useLists } from 'src/stores/lists';
 import { nextTick } from 'vue';
+import { QuillEditor } from '@vueup/vue-quill';
 
 installQuasarPlugin();
 
@@ -29,6 +30,7 @@ describe('ListDialog action', () => {
           teleport: true, // Désactive les téléportations
           /* Cela est dû au fait que Quasar utilise les téléportations Vue (<teleport>) pour rendre les dialogues. Une téléportation déplace le contenu du composant vers un autre endroit dans le DOM (généralement à la fin du body), ce qui le rend difficile à tester avec les méthodes standard de Vue Test Utils. */
         },
+        components: { QuillEditor },
       },
     });
   });

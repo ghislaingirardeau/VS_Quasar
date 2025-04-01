@@ -1,7 +1,6 @@
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
 import { mount } from '@vue/test-utils';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import ShoppingCartWidget from 'src/components/shopping/ShoppingCartWidget.vue';
 import EmptyCartWidget from 'src/components/shopping/EmptyCartWidget.vue';
 import CleanCartWidget from 'src/components/shopping/CleanCartWidget.vue';
 import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
@@ -61,8 +60,6 @@ describe('layout shopping', () => {
   });
 
   it('should mount cart widget', () => {
-    const wrapperWidget = mount(ShoppingCartWidget);
-    expect((wrapperWidget.vm as any).totalItems).toBe(0);
     expect(wrapper.exists()).to.be.true;
   });
 
@@ -73,6 +70,7 @@ describe('layout shopping', () => {
 
   it('mount clean cart widget', () => {
     const wrapperCleanCart = mount(CleanCartWidget);
+    expect((wrapperCleanCart.vm as any).totalItems).toBe(0);
     expect(wrapperCleanCart.exists()).to.be.true;
   });
 

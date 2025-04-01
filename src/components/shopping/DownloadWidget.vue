@@ -11,6 +11,7 @@
 </template>
 
 <script setup lang="ts">
+import { Notify } from 'quasar';
 import { mdiDownload } from '@quasar/extras/mdi-v7';
 import { onMounted, Ref, ref } from 'vue';
 
@@ -39,6 +40,21 @@ onMounted(() => {
     console.log('beforeinstallprompt event triggered.');
     e.preventDefault();
     deferredPrompt.value = e;
+    Notify.create({
+      message: "Télécharger l'application sur votre mobile ?",
+      color: 'primary',
+      icon: 'download',
+      timeout: 5000,
+      actions: [
+        {
+          label: 'Télécharger',
+          color: 'white',
+          handler: () => {
+            handlePromptInstall();
+          },
+        },
+      ],
+    });
   });
 
   window.addEventListener('appinstalled', () => {
