@@ -2,6 +2,26 @@ import { useLocalStorage } from '@vueuse/core/index.cjs';
 import { defineStore } from 'pinia';
 import { List, FormList, Item } from 'src/types/lists';
 import { computed, ref, Ref } from 'vue';
+import { updateDataFirestore } from 'src/utils/firestore';
+// import {
+//   getFirestore,
+//   doc,
+//   getDoc,
+//   setDoc,
+//   updateDoc,
+// } from 'firebase/firestore';
+// import { useAuth } from './auth';
+
+// // Initialiser Firestore
+// const db = getFirestore();
+// const authStore = useAuth();
+
+// async function updateListsFirebase(lists: List[]) {
+//   if (authStore.user && authStore.user?.uid) {
+//     const userDocRef = doc(db, 'users', authStore.user.uid);
+//     await updateDoc(userDocRef, { lists });
+//   }
+// }
 
 export const useLists = defineStore('lists', () => {
   const lists: Ref<List[]> = useLocalStorage('lists', []);
@@ -12,14 +32,16 @@ export const useLists = defineStore('lists', () => {
   });
 
   async function deleteList(id: number) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       lists.value = lists.value.filter((el) => el.id !== id);
+      // Mets à jour firestore
+      await updateDataFirestore(lists.value, 'lists');
       resolve({ success: true });
     });
   }
 
   async function addList(list: FormList): Promise<{ success: boolean }> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const findListWithSameName = lists.value.find(
         (el) => el.name.toLowerCase() === list.name.toLowerCase(),
       );
@@ -27,16 +49,21 @@ export const useLists = defineStore('lists', () => {
         reject({ success: false, nameAlreadyUsed: findListWithSameName.name });
       } else {
         lists.value.push({ ...list, items: [] });
+        // Mets à jour firestore
+        await updateDataFirestore(lists.value, 'lists');
+        // send response
         resolve({ success: true });
       }
     });
   }
 
   async function addItemInList(item: Item): Promise<{ success: boolean }> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const findList = lists.value.find((el) => el.id === item.list_id);
       if (findList) {
         findList.items.push({ ...item });
+        // Mets à jour firestore
+        await updateDataFirestore(lists.value, 'lists');
         resolve({ success: true });
       } else {
         reject({ success: false, message: 'Can not add item to this list' });
@@ -44,13 +71,14 @@ export const useLists = defineStore('lists', () => {
     });
   }
 
-  function updateItemInList(listId: number, value: Item[]) {
+  async function updateItemInList(listId: number, value: Item[]) {
     const listToUpdate = lists.value.find((list) => list.id === listId);
     listToUpdate!.items = value;
+    // Mets à jour firestore
+    await updateDataFirestore(lists.value, 'lists');
   }
 
   function findListById(id: number): List | undefined {
-    console.log(id);
     return lists.value.find((el) => el.id === id);
   }
 

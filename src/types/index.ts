@@ -3,3 +3,5 @@ export interface AddPromiseError {
   cardAlreadyExist?: string;
   success: boolean;
 }
+
+export type DataProperty = 'lists' | 'cards' | 'shoppingList';
