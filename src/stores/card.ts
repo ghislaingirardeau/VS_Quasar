@@ -4,26 +4,6 @@ import { Card } from 'src/types/cards';
 import { computed, ref, Ref } from 'vue';
 import { updateDataFirestore } from 'src/utils/firestore';
 
-// import {
-//   getFirestore,
-//   doc,
-//   getDoc,
-//   setDoc,
-//   updateDoc,
-// } from 'firebase/firestore';
-// import { useAuth } from './auth';
-
-// // Initialiser Firestore
-// const db = getFirestore();
-// const authStore = useAuth();
-
-// async function updateCardsFirebase(cards: Card[]) {
-//   if (authStore.user && authStore.user?.uid) {
-//     const userDocRef = doc(db, 'users', authStore.user.uid);
-//     await updateDoc(userDocRef, { cards });
-//   }
-// }
-
 export const useCards = defineStore('cards', () => {
   const cards: Ref<Card[]> = useLocalStorage('cards', []);
   const isDialogCardVisible = ref(false);
@@ -59,6 +39,7 @@ export const useCards = defineStore('cards', () => {
     const cardFound = cards.value.find((el) => el.id === card.id);
     if (cardFound) {
       Object.assign(cardFound, card);
+      console.log('updated card');
       // Mets à jour firestore
       await updateDataFirestore(cards.value, 'cards');
     }

@@ -21,7 +21,7 @@ export async function updateDataFirestore(
   if (authStore.user && authStore.user?.uid) {
     const userDocRef = doc(db, 'users', authStore.user.uid);
     // Vérification du type basée sur les propriétés distinctives
-    const isCardArray = element.length > 0 && 'barcode' in element[0];
+    console.log('firestore is updating...');
     if (type === 'cards') {
       await updateDoc(userDocRef, { cards: element });
       return;
