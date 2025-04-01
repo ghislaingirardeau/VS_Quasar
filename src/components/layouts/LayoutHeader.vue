@@ -18,7 +18,8 @@
 import EmptyCartWidget from 'src/components/shopping/EmptyCartWidget.vue';
 import ShoppingCartWidget from 'src/components/shopping/ShoppingCartWidget.vue';
 import CleanCartWidget from 'src/components/shopping/CleanCartWidget.vue';
-import DownloadWidget from 'src/components/shopping/DownloadWidget.vue';
+import DownloadWidget from 'src/components/home/DownloadWidget.vue';
+import AuthentificationWidget from 'src/components/home/AuthentificationWidget.vue';
 // import NotificationWidget from 'src/components/shopping/NotificationWidget.vue';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
@@ -44,7 +45,7 @@ const componentsToLoad = computed(() => {
     case 'shopping':
       return [EmptyCartWidget, CleanCartWidget, ShoppingCartWidget];
     default:
-      return [DownloadWidget];
+      return [DownloadWidget, AuthentificationWidget];
   }
 });
 </script>

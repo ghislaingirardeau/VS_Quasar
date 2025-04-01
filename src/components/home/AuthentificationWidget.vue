@@ -1,0 +1,64 @@
+<template>
+  <div>
+    <q-btn
+      size="sm"
+      round
+      :loading="loading"
+      :icon="mdiAccountPlus"
+      class="q-ml-sm text-white"
+      @click="dialogSign = true"
+    >
+    </q-btn>
+    <!-- <q-btn
+      v-if="authenticateButton"
+      size="sm"
+      round
+      :loading="loading"
+      :icon="mdiLogin"
+      class="q-ml-sm text-white"
+      @click="handleAuthenticate"
+    >
+    </q-btn>
+    <q-btn
+      v-if="deleteButton"
+      size="sm"
+      round
+      :loading="loading"
+      color="red-5"
+      :icon="mdiTrashCanOutline"
+      class="q-ml-sm text-white"
+      @click="removeCredential"
+    >
+    </q-btn> -->
+    <q-dialog v-model="dialogSign">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Authentification</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          {{ dialogInformationMessage }}
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat label="OK" color="primary" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+  </div>
+</template>
+
+<script setup>
+import {
+  mdiAccountPlus,
+  mdiLogin,
+  mdiLogout,
+  mdiTrashCanOutline,
+} from '@quasar/extras/mdi-v7';
+import { onMounted, ref } from 'vue';
+
+const dialogSign = ref(false);
+const dialogInformationMessage = ref('');
+</script>
+
+<style scoped></style>
