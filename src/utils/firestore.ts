@@ -1,8 +1,5 @@
 import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 import { useAuth } from 'src/stores/auth';
-// import { useCards } from 'src/stores/card';
-// import { useLists } from 'src/stores/lists';
-// import { useShoppingItem } from 'src/stores/shoppingItems';
 import { DataProperty } from 'src/types';
 import { Card } from 'src/types/cards';
 import { List } from 'src/types/lists';
@@ -41,11 +38,16 @@ export async function updateDataFirestore(
 }
 
 export async function updateDataFirestoreOnClose(data: {
-  userId: string;
-  status: string;
+  lists: List[];
+  cards: Card[];
+  currentShopping: ShoppingItem[];
+  userUid: string;
 }) {
-  const userDocRef = doc(db, 'users', 'ikySwLfqboQpBh4eDZQeGc87k0F3');
+  const userDocRef = doc(db, 'users', data.userUid);
+
   await updateDoc(userDocRef, {
-    currentShopping: data,
+    lists: data.lists,
+    cards: data.cards,
+    currentShopping: data.currentShopping,
   });
 }

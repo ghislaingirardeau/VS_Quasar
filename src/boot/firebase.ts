@@ -8,6 +8,10 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
+import { useCards } from 'src/stores/card';
+import { useLists } from 'src/stores/lists';
+import { useShoppingItem } from 'src/stores/shoppingItems';
+import { useAuth } from 'src/stores/auth';
 
 const firebaseConfig = {
   apiKey: process.env.APIKEY,
@@ -53,11 +57,18 @@ export { auth, signInWithGoogle, logout };
 export default boot(() => {
   window.addEventListener('beforeunload', () => {
     if (navigator.serviceWorker.controller) {
+      const listsStore = useLists();
+      const cardsStore = useCards();
+      const shoppingStore = useShoppingItem();
+      const auth = useAuth();
+
       navigator.serviceWorker.controller.postMessage({
         type: 'SAVE_TO_FIRESTORE',
         payload: {
-          userId: '123ABC',
-          status: 'offline',
+          lists: listsStore.lists,
+          cards: cardsStore.cards,
+          currentShopping: shoppingStore.shoppingItems,
+          userUid: auth.user?.uid,
         },
       });
     }
