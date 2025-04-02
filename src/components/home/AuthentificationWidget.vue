@@ -59,10 +59,13 @@
 
 <script setup lang="ts">
 import { mdiAccountPlus, mdiLogin } from '@quasar/extras/mdi-v7';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { signInWithGoogle, logout } from 'src/boot/firebase';
-import { useAuth } from 'src/stores/auth';
 import { storeToRefs } from 'pinia';
+import { useCards } from 'src/stores/card';
+import { useLists } from 'src/stores/lists';
+import { useShoppingItem } from 'src/stores/shoppingItems';
+import { useAuth } from 'src/stores/auth';
 
 const dialogSign = ref(false);
 const dialogInformationMessage = ref('');
@@ -71,6 +74,29 @@ const { user } = storeToRefs(auth);
 
 const userName = computed(() => {
   return user.value ? user.value.displayName : '';
+});
+
+onMounted(() => {
+  if (user.value) {
+    window.addEventListener('beforeunload', () => {
+      if (navigator.serviceWorker.controller) {
+        const listsStore = useLists();
+        const cardsStore = useCards();
+        const shoppingStore = useShoppingItem();
+        if (navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage({
+            type: 'SAVE_TO_FIRESTORE',
+            payload: {
+              lists: listsStore.lists,
+              cards: cardsStore.cards,
+              currentShopping: shoppingStore.shoppingItems,
+              userUid: auth.user?.uid,
+            },
+          });
+        }
+      }
+    });
+  }
 });
 </script>
 

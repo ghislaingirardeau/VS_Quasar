@@ -8,10 +8,6 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
-import { useCards } from 'src/stores/card';
-import { useLists } from 'src/stores/lists';
-import { useShoppingItem } from 'src/stores/shoppingItems';
-import { useAuth } from 'src/stores/auth';
 
 const firebaseConfig = {
   apiKey: process.env.APIKEY,
@@ -54,23 +50,4 @@ const logout = async () => {
 
 // export ce que l'on veut pouvoir réutiliser par la suite dans l'app
 export { auth, signInWithGoogle, logout };
-export default boot(() => {
-  window.addEventListener('beforeunload', () => {
-    if (navigator.serviceWorker.controller) {
-      const listsStore = useLists();
-      const cardsStore = useCards();
-      const shoppingStore = useShoppingItem();
-      const auth = useAuth();
-
-      navigator.serviceWorker.controller.postMessage({
-        type: 'SAVE_TO_FIRESTORE',
-        payload: {
-          lists: listsStore.lists,
-          cards: cardsStore.cards,
-          currentShopping: shoppingStore.shoppingItems,
-          userUid: auth.user?.uid,
-        },
-      });
-    }
-  });
-});
+export default boot(() => {});
