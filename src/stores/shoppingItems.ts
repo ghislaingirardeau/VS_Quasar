@@ -9,6 +9,11 @@ export const useShoppingItem = defineStore('shoppingItem', () => {
     [],
   );
 
+  const shoppingsData: Ref<ShoppingItem[]> = useLocalStorage(
+    'shoppingsData',
+    [],
+  );
+
   const totalItems = computed(() => {
     return shoppingItems.value.filter((el) => !el.is_purchased).length;
   });
@@ -46,5 +51,6 @@ export const useShoppingItem = defineStore('shoppingItem', () => {
     addToShoppingList,
     emptyCart,
     cleanCart,
+    shoppingsData,
   };
 });

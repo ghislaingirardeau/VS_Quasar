@@ -70,12 +70,14 @@
 
 <script setup lang="ts">
 import { mdiPlus, mdiShapeOutline } from '@quasar/extras/mdi-v7';
-import { useLocalStorage } from '@vueuse/core';
-import { computed, Ref, ref } from 'vue';
-import { ShoppingItem, Category } from 'src/types/shopping';
+import { computed, ref } from 'vue';
+import { Category } from 'src/types/shopping';
 import { categories } from 'src/assets/category.json';
+import { useShoppingItem } from 'src/stores/shoppingItems';
+import { storeToRefs } from 'pinia';
 
-const shoppingsData: Ref<ShoppingItem[]> = useLocalStorage('shoppingsData', []);
+const shoppingStore = useShoppingItem();
+const { shoppingsData } = storeToRefs(shoppingStore);
 
 const newItem = defineModel('newItem', { type: Object });
 const emit = defineEmits(['addNewItem']);

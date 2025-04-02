@@ -1,7 +1,7 @@
 import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 import { useAuth } from 'src/stores/auth';
-import { useCards } from 'src/stores/card';
-import { useLists } from 'src/stores/lists';
+// import { useCards } from 'src/stores/card';
+// import { useLists } from 'src/stores/lists';
 import { useShoppingItem } from 'src/stores/shoppingItems';
 import { DataProperty } from 'src/types';
 import { Card } from 'src/types/cards';
@@ -40,18 +40,21 @@ export async function updateDataFirestore(
 }
 
 export async function updateDataFirestoreOnClose() {
-  const cardsStore = useCards();
-  const listsStore = useLists();
+  // const cardsStore = useCards();
+  // const listsStore = useLists();
   const shoppingStore = useShoppingItem();
 
   if (authStore.user && authStore.user?.uid) {
     const userDocRef = doc(db, 'users', authStore.user.uid);
-    Promise.all([
-      await updateDoc(userDocRef, { cards: cardsStore.cards }),
-      await updateDoc(userDocRef, { lists: listsStore.lists }),
-      await updateDoc(userDocRef, {
-        currentShopping: shoppingStore.shoppingItems,
-      }),
-    ]);
+    await updateDoc(userDocRef, {
+      currentShopping: shoppingStore.shoppingItems,
+    });
+    // Promise.all([
+    //   await updateDoc(userDocRef, { cards: cardsStore.cards }),
+    //   await updateDoc(userDocRef, { lists: listsStore.lists }),
+    //   await updateDoc(userDocRef, {
+    //     currentShopping: shoppingStore.shoppingItems,
+    //   }),
+    // ]);
   }
 }

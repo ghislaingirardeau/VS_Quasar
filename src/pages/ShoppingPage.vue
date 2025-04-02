@@ -115,7 +115,6 @@ import draggable from 'vuedraggable';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import { mdiCheck, mdiClose, mdiDelete, mdiMenu } from '@quasar/extras/mdi-v7';
-import { useLocalStorage } from '@vueuse/core';
 import { uid } from 'quasar';
 import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
 import { ShoppingItem } from 'src/types/shopping';
@@ -130,7 +129,8 @@ const newItem: Ref<ShoppingItem> = ref({
   category: categories[0],
 });
 
-const shoppingsData: Ref<ShoppingItem[]> = useLocalStorage('shoppingsData', []);
+const shoppingStore = useShoppingItem();
+const { shoppingsData } = storeToRefs(shoppingStore);
 
 const itemList = useShoppingItem();
 
