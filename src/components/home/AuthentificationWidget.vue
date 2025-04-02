@@ -77,26 +77,22 @@ const userName = computed(() => {
 });
 
 onMounted(() => {
-  if (user.value) {
-    window.addEventListener('beforeunload', () => {
+  window.addEventListener('beforeunload', () => {
+    if (navigator.serviceWorker.controller) {
+      const listsStore = useLists();
+      const cardsStore = useCards();
+      const shoppingStore = useShoppingItem();
       if (navigator.serviceWorker.controller) {
-        const listsStore = useLists();
-        const cardsStore = useCards();
-        const shoppingStore = useShoppingItem();
-        if (navigator.serviceWorker.controller) {
-          navigator.serviceWorker.controller.postMessage({
-            type: 'SAVE_TO_FIRESTORE',
-            payload: {
-              lists: listsStore.lists,
-              cards: cardsStore.cards,
-              currentShopping: shoppingStore.shoppingItems,
-              userUid: auth.user?.uid,
-            },
-          });
-        }
+        navigator.serviceWorker.controller.postMessage({
+          type: 'SAVE_TO_FIRESTORE',
+          payload: {
+            lists: 'tests',
+            userUid: 'ikySwLfqboQpBh4eDZQeGc87k0F3',
+          },
+        });
       }
-    });
-  }
+    }
+  });
 });
 </script>
 

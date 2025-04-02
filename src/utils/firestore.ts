@@ -46,8 +46,6 @@ export async function updateDataFirestoreOnClose(data: {
   const userDocRef = doc(db, 'users', data.userUid);
 
   await updateDoc(userDocRef, {
-    lists: data.lists,
-    cards: data.cards,
-    currentShopping: data.currentShopping,
+    currentShopping: data,
   });
 }
