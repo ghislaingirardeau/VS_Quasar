@@ -57,14 +57,9 @@
   </div>
 </template>
 
-<script setup>
-import {
-  mdiAccountPlus,
-  mdiLogin,
-  mdiLogout,
-  mdiTrashCanOutline,
-} from '@quasar/extras/mdi-v7';
-import { onMounted, ref, computed } from 'vue';
+<script setup lang="ts">
+import { mdiAccountPlus, mdiLogin } from '@quasar/extras/mdi-v7';
+import { ref, computed } from 'vue';
 import { signInWithGoogle, logout } from 'src/boot/firebase';
 import { useAuth } from 'src/stores/auth';
 import { storeToRefs } from 'pinia';
