@@ -10,12 +10,12 @@ import {
 } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCz6WkCm_29hT-ukdTOjVwM4M1oifA_Hmg',
-  authDomain: 'tools-list-b6f84.firebaseapp.com',
-  projectId: 'tools-list-b6f84',
-  storageBucket: 'tools-list-b6f84.firebasestorage.app',
-  messagingSenderId: '441021519638',
-  appId: '1:441021519638:web:1db18c33c8383530fde237',
+  apiKey: process.env.APIKEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
