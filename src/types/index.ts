@@ -4,4 +4,8 @@ export interface AddPromiseError {
   success: boolean;
 }
 
-export type DataProperty = 'lists' | 'cards' | 'shoppingList';
+export type DataProperty =
+  | 'lists'
+  | 'cards'
+  | 'currentShopping'
+  | 'shoppingList';
