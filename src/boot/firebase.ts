@@ -50,4 +50,16 @@ const logout = async () => {
 
 // export ce que l'on veut pouvoir réutiliser par la suite dans l'app
 export { auth, signInWithGoogle, logout };
-export default boot(() => {});
+export default boot(() => {
+  window.addEventListener('beforeunload', () => {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: 'SAVE_TO_FIRESTORE',
+        payload: {
+          userId: '123ABC',
+          status: 'offline',
+        },
+      });
+    }
+  });
+});

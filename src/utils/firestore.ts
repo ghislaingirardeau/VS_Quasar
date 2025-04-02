@@ -1,10 +1,4 @@
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from 'firebase/firestore';
+import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 import { useAuth } from 'src/stores/auth';
 import { DataProperty } from 'src/types';
 import { Card } from 'src/types/cards';
