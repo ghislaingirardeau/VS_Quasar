@@ -63,7 +63,7 @@ import { ref, computed, onMounted } from 'vue';
 import { signInWithGoogle, logout } from 'src/boot/firebase';
 import { storeToRefs } from 'pinia';
 // import { useCards } from 'src/stores/card';
-// import { useLists } from 'src/stores/lists';
+import { useLists } from 'src/stores/lists';
 // import { useShoppingItem } from 'src/stores/shoppingItems';
 import { useAuth } from 'src/stores/auth';
 
@@ -79,14 +79,21 @@ const userName = computed(() => {
 onMounted(() => {
   window.addEventListener('beforeunload', () => {
     if (navigator.serviceWorker.controller) {
-      // const listsStore = useLists();
+      const listsStore = useLists();
       // const cardsStore = useCards();
       // const shoppingStore = useShoppingItem();
+
+      // NE FONCTIONNE PAS SI ENVOIE LE STORE !!!!!!!!!!
+
+      /* TODO: 
+      test pour envoyer le store au service worker
+      - si ne fonctionne pas envoyer les données une par une
+      */
       if (navigator.serviceWorker.controller) {
         navigator.serviceWorker.controller.postMessage({
           type: 'SAVE_TO_FIRESTORE',
           payload: {
-            lists: 'tests',
+            lists: JSON.parse(JSON.stringify(listsStore.lists)),
             userUid: 'ikySwLfqboQpBh4eDZQeGc87k0F3',
           },
         });
