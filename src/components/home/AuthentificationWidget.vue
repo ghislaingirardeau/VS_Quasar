@@ -59,12 +59,9 @@
 
 <script setup lang="ts">
 import { mdiAccountPlus, mdiLogin } from '@quasar/extras/mdi-v7';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { signInWithGoogle, logout } from 'src/boot/firebase';
 import { storeToRefs } from 'pinia';
-// import { useCards } from 'src/stores/card';
-import { useLists } from 'src/stores/lists';
-// import { useShoppingItem } from 'src/stores/shoppingItems';
 import { useAuth } from 'src/stores/auth';
 
 const dialogSign = ref(false);
@@ -76,19 +73,13 @@ const userName = computed(() => {
   return user.value ? user.value.displayName : '';
 });
 
-onMounted(() => {
+/* onMounted(() => {
   window.addEventListener('beforeunload', () => {
     if (navigator.serviceWorker.controller) {
       const listsStore = useLists();
       // const cardsStore = useCards();
       // const shoppingStore = useShoppingItem();
 
-      // NE FONCTIONNE PAS SI ENVOIE LE STORE !!!!!!!!!!
-
-      /* TODO: 
-      test pour envoyer le store au service worker
-      - si ne fonctionne pas envoyer les données une par une
-      */
       if (navigator.serviceWorker.controller) {
         navigator.serviceWorker.controller.postMessage({
           type: 'SAVE_TO_FIRESTORE',
@@ -100,7 +91,7 @@ onMounted(() => {
       }
     }
   });
-});
+}); */
 </script>
 
 <style scoped></style>

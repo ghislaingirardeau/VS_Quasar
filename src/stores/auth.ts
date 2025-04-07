@@ -3,11 +3,6 @@ import { ref } from 'vue';
 import { auth } from 'src/boot/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
 
-/* TODO: 
-- if no local storage => auth & fetch data
-- if close app => save data ?? better than saving each time because used localstorage ChatGPT erreur pwa
-*/
-
 export const useAuth = defineStore('auth', () => {
   const user = ref<Partial<User> | null>(null);
   const loggedIn = ref(false);
