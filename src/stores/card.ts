@@ -15,18 +15,16 @@ export const useCards = defineStore('cards', () => {
   });
 
   async function addcard(card: Card) {
-    return new Promise(async (resolve, reject) => {
-      const cardFound = cards.value.find((el) => el.barcode === card.barcode);
-      if (cardFound) {
-        reject({ success: false, cardAlreadyExist: cardFound.shop.label });
-      } else {
-        cards.value.push(card);
-        // Mets à jour firestore
-        await updateDataFirestore(cards.value, 'cards');
-        // send response
-        resolve({ success: true });
-      }
-    });
+    const cardFound = cards.value.find(
+      (el) => el.barcode.code === card.barcode.code,
+    );
+    if (cardFound) {
+      throw new Error('Card already exists');
+    } else {
+      cards.value.push(card);
+      // Mets à jour firestore
+      await updateDataFirestore(cards.value, 'cards');
+    }
   }
 
   async function removeCard(id: number) {

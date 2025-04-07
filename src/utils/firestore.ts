@@ -14,26 +14,13 @@ export async function updateDataFirestore(
 ) {
   const authStore = useAuth();
 
+  console.log('firestore check auth...');
+
   if (authStore.user && authStore.user?.uid) {
     const userDocRef = doc(db, 'users', authStore.user.uid);
     // Vérification du type basée sur les propriétés distinctives
     console.log('firestore is updating...');
-    if (type === 'cards') {
-      await updateDoc(userDocRef, { cards: element });
-      return;
-    }
-    if (type === 'lists') {
-      await updateDoc(userDocRef, { lists: element });
-      return;
-    }
-    if (type === 'currentShopping') {
-      await updateDoc(userDocRef, { currentShopping: element });
-      return;
-    }
-    if (type === 'shoppingList') {
-      await updateDoc(userDocRef, { shoppingList: element });
-      return;
-    }
+    await updateDoc(userDocRef, { [type]: element });
   }
 }
 

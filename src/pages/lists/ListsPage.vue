@@ -45,6 +45,7 @@
     <DeleteDialog
       v-if="listSelected"
       v-model:show-dialog-delete="isDialogDeleteVisible"
+      v-model:is-deleting="isDeleting"
       :element-name="listSelected.name"
       element-type="la liste"
       @delete-element="deleteElement"
@@ -68,6 +69,7 @@ import { useRouter } from 'vue-router';
 import { dragOptions } from 'src/utils';
 import { useGlobal } from 'src/stores/global';
 import DeleteDialog from 'src/components/deleteDialog.vue';
+import { updateDataFirestore } from 'src/utils/firestore';
 
 const router = useRouter();
 const listsStore = useLists();
@@ -76,6 +78,7 @@ const isNameAlreadyExists = ref(false);
 const globalStore = useGlobal();
 const { isDialogDeleteVisible } = storeToRefs(globalStore);
 const listSelected = ref<Ref<List> | null>(null);
+const isDeleting = ref(false);
 
 const rules = computed(() => [
   (val: string) => (val && val.length > 0) || 'Taper au moins un caractère',
@@ -88,8 +91,10 @@ function isNameUnique(val: string) {
   return isNameAlreadyExists.value;
 }
 
-function inputValidation(scope: any) {
+async function inputValidation(scope: any) {
   isNameAlreadyExists.value ? scope.set() : scope.cancel();
+  // mets à jour la db firestore
+  await updateDataFirestore(lists.value, 'lists');
 }
 
 function handleListToDelete(list: List) {
@@ -99,11 +104,14 @@ function handleListToDelete(list: List) {
 
 async function deleteElement() {
   try {
+    isDeleting.value = true;
     if (!listSelected.value) return;
     await listsStore.deleteList(listSelected.value.id);
     globalStore.hideDeleteDialog();
+    isDeleting.value = false;
   } catch (error) {
     console.log(error);
+    isDeleting.value = false;
   }
 }
 

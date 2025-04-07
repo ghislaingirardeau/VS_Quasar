@@ -10,6 +10,7 @@
       <q-card-actions align="right">
         <q-btn flat label="Annuler" color="danger" @click="closeDialog" />
         <q-btn
+          :loading="isDeleting"
           flat
           label="Ok"
           color="primary"
@@ -23,6 +24,9 @@
 
 <script setup lang="ts">
 const showDialogDelete = defineModel('showDialogDelete', {
+  type: Boolean,
+});
+const isDeleting = defineModel('isDeleting', {
   type: Boolean,
 });
 

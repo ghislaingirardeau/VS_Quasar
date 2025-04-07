@@ -1,6 +1,7 @@
 export interface AddPromiseError {
   nameAlreadyUsed?: string;
   cardAlreadyExist?: string;
+  message: string;
   success: boolean;
 }
 

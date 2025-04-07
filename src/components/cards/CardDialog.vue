@@ -14,7 +14,7 @@
         />
       </q-card-section>
 
-      <q-form @submit="onSubmit" @reset="onReset">
+      <q-form @submit.prevent="onSubmit" @reset="onReset">
         <q-stepper v-model="step" vertical color="primary" animated>
           <q-step
             :name="1"
@@ -137,9 +137,17 @@
                 :barcode-width="1.3"
               />
             </div>
+            <p v-if="responseError" class="text-sm italic text-red-400">
+              {{ responseError }}
+            </p>
 
             <q-stepper-navigation>
-              <q-btn color="primary" label="Enregistrer" type="submit" />
+              <q-btn
+                color="primary"
+                label="Enregistrer"
+                type="submit"
+                :loading="isSaving"
+              />
               <q-btn
                 flat
                 color="primary"
@@ -183,6 +191,7 @@ const showBarcodePreview = ref(false);
 const isBarcodeManual = ref(false);
 const isCameraAllowed = ref(false);
 const barcodeDetectionErrorMessage = ref('');
+const isSaving = ref(false);
 
 const step = ref(1);
 
@@ -216,17 +225,16 @@ function barcodePreview() {
 
 async function onSubmit() {
   try {
+    isSaving.value = true;
     form.value.id = Date.now();
     form.value.color = setCardColor();
-    const response = (await cardStore.addcard(form.value)) as {
-      success: boolean;
-    };
-    if (response && response.success) {
-      closeDialog();
-    }
+    await cardStore.addcard(form.value);
+    closeDialog();
+    isSaving.value = false;
   } catch (error: unknown) {
     const typedError = error as AddPromiseError;
-    responseError.value = typedError.cardAlreadyExist!;
+    responseError.value = typedError.message;
+    isSaving.value = false;
   }
 }
 

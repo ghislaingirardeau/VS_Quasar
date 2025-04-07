@@ -54,6 +54,7 @@
     <DeleteDialog
       v-if="selectedCard"
       v-model:show-dialog-delete="isDialogDeleteVisible"
+      v-model:is-deleting="isDeleting"
       :element-name="selectedCard!.shop.label"
       element-type="la carte"
       @delete-element="deleteElement"
@@ -83,6 +84,7 @@ const router = useRouter();
 const route = useRoute();
 const cardsToDisplay = ref<Ref<Card[]> | []>([]);
 const colorPicker = ref();
+const isDeleting = ref(false);
 
 const selectedCard = ref<Ref<Card> | null>(null);
 
@@ -103,11 +105,13 @@ function handleCardToDelete(card: Card) {
   globalStore.showDeleteDialog();
 }
 
-function deleteElement() {
+async function deleteElement() {
   if (selectedCard.value) {
-    cardsStore.removeCard(selectedCard.value.id);
+    isDeleting.value = true;
+    await cardsStore.removeCard(selectedCard.value.id);
     globalStore.hideDeleteDialog();
     cardsToDisplay.value = cards.value;
+    isDeleting.value = false;
   }
 }
 

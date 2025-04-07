@@ -53,9 +53,14 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn label="Submit" type="submit" color="primary" />
           <q-btn
-            label="Reset"
+            label="Créer"
+            type="submit"
+            color="primary"
+            :loading="isSaving"
+          />
+          <q-btn
+            label="Effacer"
             type="reset"
             color="primary"
             flat
@@ -88,6 +93,7 @@ const listsStore = useLists();
 const { isNewListDialogVisible } = storeToRefs(listsStore);
 
 const formComponent = ref();
+const isSaving = ref(false);
 const isNameAlreadyExists = ref('');
 const form = ref({
   id: 0,
@@ -102,11 +108,13 @@ const title = computed(() => {
 });
 
 async function onSubmit() {
+  isSaving.value = true;
   if (props.isNewItem) {
     await addNewItem();
   } else {
     await addNewList();
   }
+  isSaving.value = false;
 }
 
 async function addNewItem() {

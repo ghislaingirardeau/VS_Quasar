@@ -83,6 +83,7 @@
     <DeleteDialog
       v-if="selectedItem"
       v-model:show-dialog-delete="isDialogDeleteVisible"
+      v-model:is-deleting="isDeleting"
       :element-name="selectedItem.title"
       element-type="l'item"
       @delete-element="deleteElement"
@@ -107,13 +108,16 @@ import sanitizeHtml from 'sanitize-html';
 import DeleteDialog from 'src/components/deleteDialog.vue';
 import { useGlobal } from 'src/stores/global';
 import { storeToRefs } from 'pinia';
+import { updateDataFirestore } from 'src/utils/firestore';
 
 const route = useRoute();
 
 const listsStore = useLists();
+const { lists } = storeToRefs(listsStore);
 const globalStore = useGlobal();
 const { isDialogDeleteVisible } = storeToRefs(globalStore);
 const selectedItem = ref<Ref<Item> | null>(null);
+const isDeleting = ref(false);
 
 const listId = computed(() => {
   return route.params.id as string;
@@ -139,14 +143,17 @@ function showDeleteItemDialog(item: Item) {
   globalStore.showDeleteDialog();
 }
 
-function deleteElement() {
-  // comme itemsInList est un computed, je peux lui attribuer une nouvelle valeur sans avoir à passer par une mutation
+async function deleteElement() {
+  isDeleting.value = true;
+  // comme itemsInList est un computed avec un set, je peux lui attribuer une nouvelle valeur sans avoir à passer par une mutation
   if (selectedItem.value) {
     itemsInList.value = itemsInList.value.filter(
       (item) => item.id !== selectedItem.value!.id,
     );
+    await updateDataFirestore(lists.value, 'lists');
   }
   globalStore.hideDeleteDialog();
+  isDeleting.value = false;
 }
 </script>
 
