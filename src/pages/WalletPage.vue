@@ -1,5 +1,5 @@
 <template>
-  <q-page :key="'wallet' + cardsToDisplay.length" padding>
+  <q-page :key="'wallet'" padding>
     <draggable
       v-model="cardsToDisplay"
       tag="div"

@@ -170,7 +170,6 @@ import { AddPromiseError } from 'src/types';
 import { Card } from 'src/types/cards';
 import { ref, watch } from 'vue';
 import BarCodeRender from 'src/components/cards/barcodeRender.vue';
-import { colors } from 'utils/index';
 import BarcodeDetection from './BarcodeDetection.vue';
 import ShopOptions from './ShopOptions.vue';
 import BarcodeInput from './BarcodeInput.vue';
@@ -184,7 +183,7 @@ import {
 } from '@quasar/extras/mdi-v7';
 
 const cardStore = useCards();
-const { isDialogCardVisible, cards } = storeToRefs(cardStore);
+const { isDialogCardVisible } = storeToRefs(cardStore);
 
 const responseError = ref('');
 const showBarcodePreview = ref(false);
@@ -202,13 +201,13 @@ const form = ref<Card>({
     label: '',
   },
   barcode: {
-    code: '',
+    code: '123',
     format: 'CODE128',
   },
   isShoppingCard: false,
   isCardCode: false,
   password: '',
-  color: null,
+  color: 'rgb(232,149,149)',
 });
 
 function goToStep(index: number) {
@@ -227,7 +226,6 @@ async function onSubmit() {
   try {
     isSaving.value = true;
     form.value.id = Date.now();
-    form.value.color = setCardColor();
     await cardStore.addcard(form.value);
     closeDialog();
     isSaving.value = false;
@@ -268,19 +266,6 @@ function onReset() {
 function handleBarcodeDetectionError(payload: { message: string }) {
   isCameraAllowed.value = false;
   barcodeDetectionErrorMessage.value = payload.message;
-}
-
-function setCardColor(index?: number): string {
-  let cardsLength = index || cards.value.length;
-  if (cardsLength >= colors.length) {
-    let total = cardsLength - colors.length;
-    if (total >= colors.length) {
-      setCardColor(total);
-    } else {
-      return colors[total];
-    }
-  }
-  return colors[cardsLength];
 }
 
 watch(step, (newValue) => {
