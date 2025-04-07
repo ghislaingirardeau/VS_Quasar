@@ -42,7 +42,6 @@ const menus = ref([
 ]);
 
 function goToPage(path: string) {
-  console.log(path);
   router.push({ name: path });
 }
 </script>

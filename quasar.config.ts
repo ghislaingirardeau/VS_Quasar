@@ -70,7 +70,7 @@ export default configure((ctx) => {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      publicPath: './',
+      publicPath: ctx.dev ? '' : './',
       // analyze: true,
       env: {
         // ctx.dev identifie lui meme le mode dans le lequel nous sommes en fonction de la commande qu'on lance
@@ -236,7 +236,10 @@ export default configure((ctx) => {
       // injectPwaMetaTags: true,
       // extendPWACustomSWConf (esbuildConf) {},
       // extendGenerateSWOptions (cfg) {},
-      extendInjectManifestOptions(cfg) {},
+      extendInjectManifestOptions(cfg) {
+        cfg.swSrc = 'src-pwa/custom-service-worker.ts'; // FORCER le bon fichier SW
+      },
+      fallback: { 'index.html': 'index.html' },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-cordova-apps/configuring-cordova
