@@ -1,20 +1,23 @@
 <template>
   <div>
     {{ userName }}
+
     <q-btn
+      v-if="isConnected"
+      size="sm"
+      round
+      :icon="mdiLogout"
+      class="q-ml-sm text-white"
+      @click="logout"
+    >
+    </q-btn>
+    <q-btn
+      v-else
       size="sm"
       round
       :icon="mdiAccountPlus"
       class="q-ml-sm text-white"
       @click="signInWithGoogle"
-    >
-    </q-btn>
-    <q-btn
-      size="sm"
-      round
-      :icon="mdiLogin"
-      class="q-ml-sm text-white"
-      @click="logout"
     >
     </q-btn>
 
@@ -58,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { mdiAccountPlus, mdiLogin } from '@quasar/extras/mdi-v7';
+import { mdiAccountPlus, mdiLogout } from '@quasar/extras/mdi-v7';
 import { ref, computed } from 'vue';
 import { signInWithGoogle, logout } from 'src/boot/firebase';
 import { storeToRefs } from 'pinia';
@@ -71,6 +74,10 @@ const { user } = storeToRefs(auth);
 
 const userName = computed(() => {
   return user.value ? user.value.displayName : '';
+});
+
+const isConnected = computed(() => {
+  return user.value !== null;
 });
 
 /* onMounted(() => {
