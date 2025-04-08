@@ -69,7 +69,6 @@ import { useRouter } from 'vue-router';
 import { dragOptions } from 'src/utils';
 import { useGlobal } from 'src/stores/global';
 import DeleteDialog from 'src/components/deleteDialog.vue';
-import { updateDataFirestore } from 'src/utils/firestore';
 
 const router = useRouter();
 const listsStore = useLists();
@@ -93,8 +92,6 @@ function isNameUnique(val: string) {
 
 async function inputValidation(scope: any) {
   isNameAlreadyExists.value ? scope.set() : scope.cancel();
-  // mets à jour la db firestore
-  await updateDataFirestore(lists.value, 'lists');
 }
 
 function handleListToDelete(list: List) {

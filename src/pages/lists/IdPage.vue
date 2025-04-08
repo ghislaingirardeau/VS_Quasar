@@ -108,12 +108,10 @@ import sanitizeHtml from 'sanitize-html';
 import DeleteDialog from 'src/components/deleteDialog.vue';
 import { useGlobal } from 'src/stores/global';
 import { storeToRefs } from 'pinia';
-import { updateDataFirestore } from 'src/utils/firestore';
 
 const route = useRoute();
 
 const listsStore = useLists();
-const { lists } = storeToRefs(listsStore);
 const globalStore = useGlobal();
 const { isDialogDeleteVisible } = storeToRefs(globalStore);
 const selectedItem = ref<Ref<Item> | null>(null);
@@ -150,7 +148,6 @@ async function deleteElement() {
     itemsInList.value = itemsInList.value.filter(
       (item) => item.id !== selectedItem.value!.id,
     );
-    await updateDataFirestore(lists.value, 'lists');
   }
   globalStore.hideDeleteDialog();
   isDeleting.value = false;

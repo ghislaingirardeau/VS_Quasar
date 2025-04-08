@@ -25,3 +25,5 @@ Or Quasar peut générer ce type de dossier lors du build
 ### SW
 
 une fois `npm run deploy:pwa` dans le terminal taper `echo "" >> dist/pwa/sw.js` pour forcer la MAJ de sw.js
+
+dans le fichier **custo-service-worker.ts** changer `precacheAndRoute(devmode);` pour `precacheAndRoute(manifest);`

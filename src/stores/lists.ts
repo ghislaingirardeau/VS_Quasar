@@ -2,7 +2,6 @@ import { useLocalStorage } from '@vueuse/core/index.cjs';
 import { defineStore } from 'pinia';
 import { List, FormList, Item } from 'src/types/lists';
 import { computed, ref, Ref } from 'vue';
-import { updateDataFirestore } from 'src/utils/firestore';
 
 export const useLists = defineStore('lists', () => {
   const lists: Ref<List[]> = useLocalStorage('lists', []);
@@ -16,7 +15,6 @@ export const useLists = defineStore('lists', () => {
     return new Promise(async (resolve, reject) => {
       lists.value = lists.value.filter((el) => el.id !== id);
       // Mets à jour firestore
-      await updateDataFirestore(lists.value, 'lists');
       resolve({ success: true });
     });
   }
@@ -30,8 +28,6 @@ export const useLists = defineStore('lists', () => {
         reject({ success: false, nameAlreadyUsed: findListWithSameName.name });
       } else {
         lists.value.push({ ...list, items: [] });
-        // Mets à jour firestore
-        await updateDataFirestore(lists.value, 'lists');
         // send response
         resolve({ success: true });
       }
@@ -43,8 +39,6 @@ export const useLists = defineStore('lists', () => {
       const findList = lists.value.find((el) => el.id === item.list_id);
       if (findList) {
         findList.items.push({ ...item });
-        // Mets à jour firestore
-        await updateDataFirestore(lists.value, 'lists');
         resolve({ success: true });
       } else {
         reject({ success: false, message: 'Can not add item to this list' });

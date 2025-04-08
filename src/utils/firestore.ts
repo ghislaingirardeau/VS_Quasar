@@ -1,6 +1,11 @@
+import { mdiContentSaveCheck, mdiContentSaveOff } from '@quasar/extras/mdi-v7';
 import { getFirestore, doc, updateDoc, getDoc } from 'firebase/firestore';
+import { Notify } from 'quasar';
 import { useAuth } from 'src/stores/auth';
-import { DataProperty } from 'src/types';
+import { useCards } from 'src/stores/card';
+import { useLists } from 'src/stores/lists';
+import { useShoppingItem } from 'src/stores/shoppingItems';
+import { AddPromiseError, DataProperty } from 'src/types';
 import { Card } from 'src/types/cards';
 import { List } from 'src/types/lists';
 import { ShoppingItem } from 'src/types/shopping';
@@ -24,17 +29,35 @@ export async function updateDataFirestore(
   }
 }
 
-export async function updateDataFirestoreOnClose(data: {
-  lists: List[];
-  cards: Card[];
-  currentShopping: ShoppingItem[];
-  userUid: string;
-}) {
-  const userDocRef = doc(db, 'users', data.userUid);
+export async function updateGlobalDataFirestore() {
+  try {
+    const auth = useAuth();
+    const userDocRef = doc(db, 'users', auth.user!.uid!);
 
-  await updateDoc(userDocRef, {
-    currentShopping: data,
-  });
+    const listsStore = useLists();
+    const cardsStore = useCards();
+    const shoppingStore = useShoppingItem();
+
+    await updateDoc(userDocRef, {
+      lists: listsStore.lists,
+      cards: cardsStore.cards,
+      shoppingList: shoppingStore.shoppingsData,
+    });
+
+    Notify.create({
+      message: 'Sauvegarde réussie',
+      color: 'secondary',
+      icon: mdiContentSaveCheck,
+      timeout: 3000,
+    });
+  } catch (error: unknown) {
+    Notify.create({
+      message: (error as AddPromiseError).message,
+      color: 'danger',
+      icon: mdiContentSaveOff,
+      timeout: 3000,
+    });
+  }
 }
 
 export async function getDataFirestore() {
