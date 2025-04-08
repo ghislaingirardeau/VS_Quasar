@@ -24,6 +24,11 @@ const { user } = storeToRefs(auth);
 const isSaving = ref(false);
 const route = useRoute();
 
+fetch('/non-existent-endpoint')
+  .then((res) => res.text())
+  .then(console.log)
+  .catch(console.error);
+
 const isShoppingPage = computed(() => {
   return route.name === 'shopping';
 });
