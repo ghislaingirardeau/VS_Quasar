@@ -34,7 +34,6 @@ export async function updateShoppingDataFirestore() {
     const userDocRef = doc(db, 'users', authStore.user.uid);
     // Vérification du type basée sur les propriétés distinctives
     await updateDoc(userDocRef, { shoppingData: shoppingStore.shoppingsData });
-    console.log('maj de la liste de course');
   }
 }
 

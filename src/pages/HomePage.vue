@@ -1,16 +1,20 @@
 <template>
   <q-page padding>
-    <q-card
-      v-for="menu in menus"
-      :key="menu.id"
-      class="mb-4"
-      @click="goToPage(menu.pathName)"
-    >
-      <q-card-section>
-        <div class="text-h6">{{ menu.title }}</div>
-      </q-card-section>
-      <q-card-section> {{ menu.description }} </q-card-section>
-    </q-card>
+    <div class="flex justify-between">
+      <q-card
+        v-for="menu in menus"
+        :key="menu.id"
+        class="w-40 h-60 m-2 text-center"
+        @click="goToPage(menu.pathName)"
+      >
+        <q-card-section>
+          <div class="text-h6">{{ menu.title }}</div>
+        </q-card-section>
+        <q-separator />
+
+        <q-card-section> {{ menu.description }} </q-card-section>
+      </q-card>
+    </div>
   </q-page>
 </template>
 
@@ -23,15 +27,16 @@ const router = useRouter();
 const menus = ref([
   {
     id: 1,
-    title: 'Liste de courses',
+    title: 'Courses',
     pathName: 'shopping',
-    description: 'Votre liste pour faire les courses',
+    description:
+      'Pour faire les courses et accéder rapidement à votre carte fid',
   },
   {
     id: 2,
-    title: 'Liste simple',
+    title: 'Liste',
     pathName: 'lists',
-    description: 'Votre liste à faire tout simplement',
+    description: 'Liste ou note à mémoriser',
   },
   {
     id: 3,
