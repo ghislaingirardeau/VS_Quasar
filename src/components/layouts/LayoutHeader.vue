@@ -2,7 +2,7 @@
   <q-header elevated class="bg-primary text-white">
     <q-toolbar>
       <HomeWidget />
-      <q-toolbar-title>
+      <q-toolbar-title class="ml-2">
         {{ title }}
       </q-toolbar-title>
       <component

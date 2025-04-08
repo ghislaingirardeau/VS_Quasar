@@ -4,7 +4,7 @@
       <q-card
         v-for="menu in menus"
         :key="menu.id"
-        class="w-40 h-60 m-2 text-center"
+        class="w-40 h-48 m-2 text-center"
         @click="goToPage(menu.pathName)"
       >
         <q-card-section>
