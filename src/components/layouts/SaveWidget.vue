@@ -1,6 +1,6 @@
 <template>
   <q-btn
-    v-if="user"
+    v-if="user && !isShoppingPage"
     class="fixed fixed-bottom-right mr-5 mb-5"
     color="secondary"
     icon="save"
@@ -16,11 +16,17 @@
 import { storeToRefs } from 'pinia';
 import { useAuth } from 'src/stores/auth';
 import { updateGlobalDataFirestore } from 'utils/firestore';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const auth = useAuth();
 const { user } = storeToRefs(auth);
 const isSaving = ref(false);
+const route = useRoute();
+
+const isShoppingPage = computed(() => {
+  return route.name === 'shopping';
+});
 
 async function saveToFirestore() {
   isSaving.value = true;
