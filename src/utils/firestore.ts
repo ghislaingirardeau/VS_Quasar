@@ -5,15 +5,12 @@ import { useAuth } from 'src/stores/auth';
 import { useCards } from 'src/stores/card';
 import { useLists } from 'src/stores/lists';
 import { useShoppingItem } from 'src/stores/shoppingItems';
-import { AddPromiseError, DataProperty } from 'src/types';
-import { Card } from 'src/types/cards';
-import { List } from 'src/types/lists';
-import { ShoppingItem } from 'src/types/shopping';
+import { AddPromiseError, AppDatas } from 'src/types';
 
 // Initialiser Firestore
 const db = getFirestore();
 
-export async function updateDataFirestore(
+/* export async function updateDataFirestore(
   element: List[] | Card[] | ShoppingItem[],
   type: DataProperty,
 ) {
@@ -26,6 +23,18 @@ export async function updateDataFirestore(
     // Vérification du type basée sur les propriétés distinctives
     console.log('firestore is updating...');
     await updateDoc(userDocRef, { [type]: element });
+  }
+} */
+
+export async function updateShoppingDataFirestore() {
+  const authStore = useAuth();
+  const shoppingStore = useShoppingItem();
+
+  if (authStore.user && authStore.user?.uid) {
+    const userDocRef = doc(db, 'users', authStore.user.uid);
+    // Vérification du type basée sur les propriétés distinctives
+    await updateDoc(userDocRef, { shoppingData: shoppingStore.shoppingsData });
+    console.log('maj de la liste de course');
   }
 }
 
@@ -41,7 +50,7 @@ export async function updateGlobalDataFirestore() {
     await updateDoc(userDocRef, {
       lists: listsStore.lists,
       cards: cardsStore.cards,
-      shoppingList: shoppingStore.shoppingsData,
+      shoppingData: shoppingStore.shoppingsData,
     });
 
     Notify.create({
@@ -61,11 +70,39 @@ export async function updateGlobalDataFirestore() {
 }
 
 export async function getDataFirestore() {
-  const authStore = useAuth();
+  try {
+    const authStore = useAuth();
+    const listsStore = useLists();
+    const cardsStore = useCards();
+    const shoppingStore = useShoppingItem();
 
-  if (authStore.user && authStore.user?.uid) {
-    const docRef = doc(db, 'users', authStore.user.uid);
-    const docSnap = await getDoc(docRef);
-    return docSnap.data();
+    // A la connection, meme si persitence, initialise les datas from firestore seulement si une des listes est vide dans le localstorage
+    const hasToSyncData =
+      listsStore.lists.length ||
+      cardsStore.cards.length ||
+      shoppingStore.shoppingsData.length;
+
+    if (!hasToSyncData) {
+      const docRef = doc(db, 'users', authStore.user!.uid!);
+      const docSnap = await getDoc(docRef);
+      console.log(docSnap.data());
+      const { lists, cards, shoppingData } = docSnap.data() as AppDatas;
+      listsStore.initListsFromFirestore(lists);
+      cardsStore.initCardsFromFirestore(cards);
+      shoppingStore.initShoppingDataFromFirestore(shoppingData);
+      Notify.create({
+        message: 'Synchronisation des données réussies',
+        color: 'secondary',
+        icon: mdiContentSaveCheck,
+        timeout: 3000,
+      });
+    }
+  } catch (error) {
+    Notify.create({
+      message: 'Impossible de récupérer les données',
+      color: 'danger',
+      icon: mdiContentSaveOff,
+      timeout: 3000,
+    });
   }
 }

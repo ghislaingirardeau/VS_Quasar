@@ -11,6 +11,10 @@ export const useLists = defineStore('lists', () => {
     return lists.value.length;
   });
 
+  function initListsFromFirestore(listsToUpdate: List[]) {
+    lists.value = listsToUpdate;
+  }
+
   async function deleteList(id: number) {
     return new Promise(async (resolve, reject) => {
       lists.value = lists.value.filter((el) => el.id !== id);
@@ -79,5 +83,6 @@ export const useLists = defineStore('lists', () => {
     showDialogNewList,
     hideNewListDialog,
     findListById,
+    initListsFromFirestore,
   };
 });

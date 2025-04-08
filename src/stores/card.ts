@@ -13,6 +13,10 @@ export const useCards = defineStore('cards', () => {
       : [];
   });
 
+  function initCardsFromFirestore(cardsToUpdate: Card[]) {
+    cards.value = cardsToUpdate;
+  }
+
   async function addcard(card: Card) {
     const cardFound = cards.value.find(
       (el) => el.barcode.code === card.barcode.code,
@@ -53,5 +57,6 @@ export const useCards = defineStore('cards', () => {
     showDialogCard,
     hideDialogCard,
     cardsForShopping,
+    initCardsFromFirestore,
   };
 });

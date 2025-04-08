@@ -1,3 +1,7 @@
+import { Card } from './cards';
+import { List } from './lists';
+import { ShoppingItem } from './shopping';
+
 export interface AddPromiseError {
   nameAlreadyUsed?: string;
   cardAlreadyExist?: string;
@@ -10,3 +14,9 @@ export type DataProperty =
   | 'cards'
   | 'currentShopping'
   | 'shoppingList';
+
+export interface AppDatas {
+  shoppingData: ShoppingItem[];
+  lists: List[];
+  cards: Card[];
+}

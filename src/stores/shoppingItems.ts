@@ -1,6 +1,7 @@
 import { useLocalStorage } from '@vueuse/core/index.cjs';
 import { defineStore } from 'pinia';
 import { ShoppingItem } from 'src/types/shopping';
+import { updateShoppingDataFirestore } from 'utils/firestore';
 import { computed, Ref } from 'vue';
 
 export const useShoppingItem = defineStore('shoppingItem', () => {
@@ -17,6 +18,10 @@ export const useShoppingItem = defineStore('shoppingItem', () => {
   const totalItems = computed(() => {
     return shoppingItems.value.filter((el) => !el.is_purchased).length;
   });
+
+  function initShoppingDataFromFirestore(shoppingDataToUpdate: ShoppingItem[]) {
+    shoppingsData.value = shoppingDataToUpdate;
+  }
 
   function handleDelete(id: string) {
     shoppingItems.value = shoppingItems.value.filter((el) => el.id !== id);
@@ -37,8 +42,9 @@ export const useShoppingItem = defineStore('shoppingItem', () => {
       });
     }
   }
-  function emptyCart() {
+  async function emptyCart() {
     shoppingItems.value = [];
+    await updateShoppingDataFirestore();
   }
   function cleanCart() {
     shoppingItems.value = shoppingItems.value.filter((el) => !el.is_purchased);
@@ -52,5 +58,6 @@ export const useShoppingItem = defineStore('shoppingItem', () => {
     emptyCart,
     cleanCart,
     shoppingsData,
+    initShoppingDataFromFirestore,
   };
 });
