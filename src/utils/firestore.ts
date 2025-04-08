@@ -1,4 +1,4 @@
-import { getFirestore, doc, updateDoc } from 'firebase/firestore';
+import { getFirestore, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { useAuth } from 'src/stores/auth';
 import { DataProperty } from 'src/types';
 import { Card } from 'src/types/cards';
@@ -35,4 +35,14 @@ export async function updateDataFirestoreOnClose(data: {
   await updateDoc(userDocRef, {
     currentShopping: data,
   });
+}
+
+export async function getDataFirestore() {
+  const authStore = useAuth();
+
+  if (authStore.user && authStore.user?.uid) {
+    const docRef = doc(db, 'users', authStore.user.uid);
+    const docSnap = await getDoc(docRef);
+    return docSnap.data();
+  }
 }

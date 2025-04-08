@@ -13,7 +13,6 @@ export const useAuth = defineStore('auth', () => {
     // si connecter ou si la persitence de connection est assuré
     // sinon cel aveut dire qu'aucun user n'est connecté
     if (firebaseUser) {
-      console.log('user connecter');
       const { uid, displayName, email } = firebaseUser;
       user.value = { uid, displayName, email };
       loggedIn.value = true;
