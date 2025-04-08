@@ -2,6 +2,10 @@ export function randomNumber() {
   return Math.round(Math.random() * 100);
 }
 
+export function reloadWindow() {
+  return window.location.reload();
+}
+
 export const dragOptions = {
   animation: 200,
   group: 'description',
