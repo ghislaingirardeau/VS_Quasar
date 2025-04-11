@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { auth } from 'src/boot/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { getDataFirestore } from 'utils/firestore';
+import { setDataFirestoreOnConnection } from 'utils/firestore';
 
 export const useAuth = defineStore('auth', () => {
   const user = ref<Partial<User> | null>(null);
@@ -20,7 +20,7 @@ export const useAuth = defineStore('auth', () => {
       user.value = { uid, displayName, email };
       loggedIn.value = true;
       loggedOut.value = false;
-      await getDataFirestore();
+      await setDataFirestoreOnConnection();
       isFetchingData.value = false;
     } else {
       user.value = null;
