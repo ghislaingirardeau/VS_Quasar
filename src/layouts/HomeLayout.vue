@@ -4,7 +4,7 @@
 
     <q-page-container>
       <router-view />
-      <SaveWidget />
+      <SaveWidget ref="save-widget-ref" />
     </q-page-container>
   </q-layout>
 </template>
@@ -12,6 +12,32 @@
 <script setup lang="ts">
 import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
 import SaveWidget from 'src/components/layouts/SaveWidget.vue';
+import { onMounted, useTemplateRef } from 'vue';
+import { Notify } from 'quasar';
+import { updateGlobalDataFirestore } from 'utils/firestore';
+
+const saveWidgetRef = useTemplateRef('save-widget-ref');
+
+onMounted(() => {
+  navigator.serviceWorker.addEventListener('message', async (event) => {
+    if (event.data?.type === 'PROCESS_FIRESTORE_QUEUE') {
+      try {
+        saveWidgetRef.value!.isSaving = true;
+        await updateGlobalDataFirestore(false);
+        Notify.create({
+          message: 'De nouveau en ligne : données synchronisées',
+          color: 'secondary',
+          icon: 'cloud_sync',
+          timeout: 3000,
+        });
+        saveWidgetRef.value!.isSaving = false;
+      } catch (err) {
+        console.error('Erreur Firestore:', err);
+        return; // stop ici, on réessaiera plus tard
+      }
+    }
+  });
+});
 </script>
 
 <style scoped></style>

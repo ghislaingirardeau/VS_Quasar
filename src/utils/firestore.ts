@@ -44,7 +44,7 @@ export async function updateShoppingDataFirestore() {
 }
 
 // Au clique de la sauvegarde, on met à jour les données de l'utilisateur dans Firestore
-export async function updateGlobalDataFirestore() {
+export async function updateGlobalDataFirestore(showNotification = true) {
   try {
     const authStore = useAuth();
     const userDocRef = doc(db, 'users', authStore.user!.uid!);
@@ -53,18 +53,21 @@ export async function updateGlobalDataFirestore() {
     const cardsStore = useCards();
     const shoppingStore = useShoppingItem();
 
+    console.log(listsStore.lists);
+
     await updateDoc(userDocRef, {
       lists: listsStore.lists,
       cards: cardsStore.cards,
       shoppingData: shoppingStore.shoppingsData,
     });
 
-    Notify.create({
-      message: 'Sauvegarde réussie',
-      color: 'secondary',
-      icon: mdiContentSaveCheck,
-      timeout: 3000,
-    });
+    if (showNotification)
+      Notify.create({
+        message: 'Sauvegarde réussie',
+        color: 'secondary',
+        icon: mdiContentSaveCheck,
+        timeout: 3000,
+      });
   } catch (error: unknown) {
     Notify.create({
       message: (error as AddPromiseError).message,
