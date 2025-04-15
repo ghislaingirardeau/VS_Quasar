@@ -19,6 +19,7 @@ import { updateGlobalDataFirestore } from 'utils/firestore';
 const saveWidgetRef = useTemplateRef('save-widget-ref');
 
 onMounted(() => {
+  // Quand tu recois un message du service worker PROCESS_FIRESTORE_QUEUE depuis custom-service-worker, tu fais la syncro
   navigator.serviceWorker.addEventListener('message', async (event) => {
     if (event.data?.type === 'PROCESS_FIRESTORE_QUEUE') {
       try {

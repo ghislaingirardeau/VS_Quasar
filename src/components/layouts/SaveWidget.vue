@@ -35,6 +35,8 @@ async function saveToFirestore() {
   if (navigator.onLine) {
     await updateGlobalDataFirestore();
   } else {
+    // Si l'utilisateur est hors ligne, envoie l'instruction au service worker pour qu'il fasse la syncro plus tard (une fois en ligne)
+    // "sync-firestore" est le tag attendu par custom-service-worker pour préparer la syncro
     const sw = await navigator.serviceWorker.ready;
     await sw.sync.register('sync-firestore');
 
