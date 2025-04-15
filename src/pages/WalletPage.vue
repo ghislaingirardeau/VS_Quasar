@@ -5,6 +5,7 @@
       tag="div"
       item-key="id"
       v-bind="dragOptions"
+      handle=".icon_draggable"
     >
       <template #item="{ element }">
         <q-card
@@ -41,7 +42,12 @@
               :name="mdiDelete"
               @click.stop="handleCardToDelete(element)"
             />
-            <q-icon color="grey-8" size="sm" :name="mdiReorderHorizontal" />
+            <q-icon
+              class="icon_draggable"
+              color="grey-8"
+              size="sm"
+              :name="mdiReorderHorizontal"
+            />
           </q-card-section>
           <q-separator />
           <q-card-section class="flex flex-center">
