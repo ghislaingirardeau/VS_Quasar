@@ -6,11 +6,13 @@
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <transition name="fade">
+        <transition name="fade-slide-y">
           <component :is="Component" />
         </transition>
       </router-view>
-      <SaveWidget ref="save-widget-ref" />
+      <transition name="fade" mode="out-in">
+        <SaveWidget ref="save-widget-ref" :key="route.path" />
+      </transition>
     </q-page-container>
   </q-layout>
 </template>
@@ -57,6 +59,17 @@ onMounted(() => {
 
 .fade-enter-from,
 .fade-leave-to {
+  opacity: 0;
+}
+
+.fade-slide-y-enter-active,
+.fade-slide-y-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+
+.fade-slide-y-enter-from,
+.fade-slide-y-leave-to {
+  transform: translateY(15px);
   opacity: 0;
 }
 </style>
