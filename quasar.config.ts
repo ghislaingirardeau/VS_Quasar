@@ -21,7 +21,7 @@ export default configure((ctx) => {
     boot: [
       'i18n',
       'axios',
-      // 'authentification',
+      'navigationGuards',
       'moment',
       'quillEditor',
       'firebase',

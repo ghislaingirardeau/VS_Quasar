@@ -1,16 +1,18 @@
 <template>
   <q-header elevated class="bg-primary text-white">
-    <q-toolbar>
-      <HomeWidget />
-      <q-toolbar-title class="ml-2">
-        {{ title }}
-      </q-toolbar-title>
-      <component
-        :is="component"
-        v-for="(component, index) in componentsToLoad"
-        :key="index"
-      ></component>
-    </q-toolbar>
+    <transition name="fade" mode="out-in">
+      <q-toolbar :key="route.path">
+        <HomeWidget />
+        <q-toolbar-title class="ml-2">
+          {{ title }}
+        </q-toolbar-title>
+        <component
+          :is="component"
+          v-for="(component, index) in componentsToLoad"
+          :key="index"
+        ></component>
+      </q-toolbar>
+    </transition>
   </q-header>
 </template>
 

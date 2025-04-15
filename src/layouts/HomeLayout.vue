@@ -1,12 +1,13 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <transition name="fade">
-      <LayoutHeader :key="route.path" />
-    </transition>
+    <LayoutHeader />
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <transition name="fade-slide-y">
+        <transition
+          :name="(route.meta.transition as string) || 'fade'"
+          mode="out-in"
+        >
           <component :is="Component" />
         </transition>
       </router-view>
@@ -51,7 +52,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style>
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.3s ease-in-out;
@@ -62,14 +63,25 @@ onMounted(() => {
   opacity: 0;
 }
 
-.fade-slide-y-enter-active,
-.fade-slide-y-leave-active {
+.slide-left-enter-active,
+.slide-left-leave-active {
   transition: all 0.3s ease-in-out;
 }
 
-.fade-slide-y-enter-from,
-.fade-slide-y-leave-to {
-  transform: translateY(15px);
+.slide-left-enter-from,
+.slide-left-leave-to {
+  transform: translateX(15px);
+  opacity: 0;
+}
+
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+
+.slide-right-enter-from,
+.slide-right-leave-to {
+  transform: translateX(-15px);
   opacity: 0;
 }
 </style>

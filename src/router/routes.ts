@@ -65,6 +65,7 @@ const routes: RouteRecordRaw[] = [
         name: 'home',
         meta: {
           title: 'Shop Tools',
+          // transition: 'slide-right',
         },
         component: () => import('pages/HomePage.vue'),
       },
@@ -73,6 +74,7 @@ const routes: RouteRecordRaw[] = [
         name: 'shopping',
         meta: {
           title: 'Liste de course',
+          // transition: 'slide-left',
         },
         component: () => import('pages/ShoppingPage.vue'),
       },
@@ -81,6 +83,7 @@ const routes: RouteRecordRaw[] = [
         name: 'wallet',
         meta: {
           title: 'Carte Fidelité',
+          // transition: 'slide-left',
         },
         component: () => import('pages/WalletPage.vue'),
       },
@@ -95,6 +98,7 @@ const routes: RouteRecordRaw[] = [
         name: 'lists',
         meta: {
           title: 'Listes',
+          // transition: 'slide-left',
         },
         component: () => import('pages/lists/ListsPage.vue'),
       },
