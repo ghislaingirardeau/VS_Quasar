@@ -65,8 +65,6 @@ const registerButton = ref(true);
 const authenticateButton = ref(false);
 const deleteButton = ref(false);
 
-console.log(process.env.API_URL_WEBAUTH);
-
 const bufferToBase64 = (buffer) =>
   btoa(String.fromCharCode(...new Uint8Array(buffer)));
 const base64ToBuffer = (base64) =>
@@ -222,8 +220,6 @@ async function handleAuthenticate() {
       removeCredential();
     } else {
       const assertionResponse = await response.json();
-
-      console.log('authenticate ok', assertionResponse);
 
       dialogInformationMessage.value = 'Authentication successful!';
       dialogInformation.value = true;

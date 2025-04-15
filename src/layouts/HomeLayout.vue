@@ -1,9 +1,15 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <LayoutHeader />
+    <transition name="fade">
+      <LayoutHeader :key="route.path" />
+    </transition>
 
     <q-page-container>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <transition name="fade">
+          <component :is="Component" />
+        </transition>
+      </router-view>
       <SaveWidget ref="save-widget-ref" />
     </q-page-container>
   </q-layout>
@@ -15,8 +21,10 @@ import SaveWidget from 'src/components/layouts/SaveWidget.vue';
 import { onMounted, useTemplateRef } from 'vue';
 import { Notify } from 'quasar';
 import { updateGlobalDataFirestore } from 'utils/firestore';
+import { useRoute } from 'vue-router';
 
 const saveWidgetRef = useTemplateRef('save-widget-ref');
+const route = useRoute();
 
 onMounted(() => {
   // Quand tu recois un message du service worker PROCESS_FIRESTORE_QUEUE depuis custom-service-worker, tu fais la syncro
@@ -41,4 +49,14 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

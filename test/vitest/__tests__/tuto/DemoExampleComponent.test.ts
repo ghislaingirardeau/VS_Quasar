@@ -28,7 +28,7 @@ describe('example Component', () => {
     });
 
     // Debug - afficher le HTML pour voir si q-item est présent
-    console.log('HTML rendu:', wrapper.html());
+    // console.log('HTML rendu:', wrapper.html());
 
     // Vérifier que le composant est monté correctement
     expect(wrapper.text()).toContain('Hello');
