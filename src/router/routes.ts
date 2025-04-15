@@ -64,7 +64,7 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'home',
         meta: {
-          title: 'Menu',
+          title: 'Shop Tools',
         },
         component: () => import('pages/HomePage.vue'),
       },
