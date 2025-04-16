@@ -5,7 +5,7 @@
       tag="div"
       item-key="id"
       v-bind="dragOptions"
-      handle=".icon_draggable"
+      handle=".handle_icon"
     >
       <template #item="{ element }">
         <q-card
@@ -43,7 +43,7 @@
               @click.stop="handleCardToDelete(element)"
             />
             <q-icon
-              class="icon_draggable"
+              class="handle_icon"
               color="grey-8"
               size="sm"
               :name="mdiReorderHorizontal"

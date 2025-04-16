@@ -4,7 +4,7 @@
       <draggable
         v-model="shoppingItems"
         tag="div"
-        handle=".handle"
+        handle=".handle_icon"
         item-key="title"
         style="height: 200px"
         v-bind="dragOptions"
@@ -94,7 +94,7 @@
                   </transition>
                 </q-item-section>
                 <q-item-section side>
-                  <q-icon :name="mdiMenu" class="handle"></q-icon>
+                  <q-icon :name="mdiMenu" class="handle_icon"></q-icon>
                 </q-item-section>
               </q-item>
             </q-slide-item>

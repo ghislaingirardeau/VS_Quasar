@@ -7,6 +7,7 @@
       tag="div"
       item-key="id"
       v-bind="dragOptions"
+      handle=".handle_icon"
     >
       <template #item="{ element }">
         <q-card :key="element.id" class="cursor-grab flex flex-col">
@@ -45,7 +46,12 @@
               :name="mdiDelete"
               @click="showDeleteItemDialog(element)"
             />
-            <q-icon color="grey-8" size="sm" :name="mdiReorderHorizontal" />
+            <q-icon
+              color="grey-8"
+              size="sm"
+              :name="mdiReorderHorizontal"
+              class="handle_icon"
+            />
           </q-card-section>
           <q-separator />
 

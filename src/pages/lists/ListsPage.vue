@@ -1,6 +1,12 @@
 <template>
   <q-page padding>
-    <draggable v-model="lists" tag="div" item-key="id" v-bind="dragOptions">
+    <draggable
+      v-model="lists"
+      tag="div"
+      item-key="id"
+      v-bind="dragOptions"
+      handle=".handle_icon"
+    >
       <template #item="{ element }">
         <q-list bordered separator>
           <q-item :key="element.id" v-ripple clickable>
@@ -35,7 +41,11 @@
                 :name="mdiDelete"
                 @click="handleListToDelete(element)"
               />
-              <q-icon color="grey-8" :name="mdiReorderHorizontal" />
+              <q-icon
+                color="grey-8"
+                :name="mdiReorderHorizontal"
+                class="handle_icon"
+              />
             </q-item-section> </q-item
         ></q-list>
       </template>
