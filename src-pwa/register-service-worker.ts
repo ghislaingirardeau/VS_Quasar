@@ -1,5 +1,5 @@
 import { register } from 'register-service-worker';
-import { Notify } from 'quasar';
+import { Notify, Loading } from 'quasar';
 import { reloadWindow } from 'src/utils/index';
 // import { updateDataFirestoreOnClose } from 'src/utils/firestore';
 
@@ -66,12 +66,15 @@ register(process.env.SERVICE_WORKER_FILE, {
       icon: 'cloud_download',
       timeout: 5000,
       progress: true,
+      onDismiss: () => {
+        Loading.show();
+      },
     });
   },
 
   updated(registration: ServiceWorkerRegistration) {
     // console.log('New content is available; please refresh.')
-
+    Loading.hide();
     Notify.create({
       message: "Mise à jour disponible ! Cliquez ici pour l'appliquer.",
       color: 'positive',
