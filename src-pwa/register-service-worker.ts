@@ -85,25 +85,17 @@ register(process.env.SERVICE_WORKER_FILE, {
           label: 'Rafraîchir',
           color: 'white',
           handler: () => {
-            if (registration.waiting) {
-              registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+              isRefreshing.value = true;
+              setTimeout(async () => {
+                // Attend un cycle pour que tout soit à jour
+                await nextTick();
 
-              // Attends que le nouveau service worker prenne le contrôle
-              navigator.serviceWorker.addEventListener(
-                'controllerchange',
-                () => {
-                  isRefreshing.value = true;
-                  setTimeout(async () => {
-                    // Attend un cycle pour que tout soit à jour
-                    await nextTick();
-
-                    // Recharge la route actuelle proprement (sans reload)
-                    router.replace(router.currentRoute.value.fullPath);
-                    isRefreshing.value = false;
-                  }, 2000);
-                },
-              );
-            }
+                // Recharge la route actuelle proprement (sans reload)
+                router.replace(router.currentRoute.value.fullPath);
+                isRefreshing.value = false;
+              }, 2000);
+            });
           },
         },
       ],
