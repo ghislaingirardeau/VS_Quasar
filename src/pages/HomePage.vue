@@ -29,7 +29,8 @@ const menus = ref([
     id: 1,
     title: 'Courses',
     pathName: 'shopping',
-    description: 'Pour faire les courses et accéder rapidement à votre carte',
+    description:
+      'Pour faire les courses et accéder rapidement à votre carte fidélité',
   },
   {
     id: 2,
