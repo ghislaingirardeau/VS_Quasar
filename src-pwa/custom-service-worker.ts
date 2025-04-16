@@ -27,13 +27,13 @@ clientsClaim();
 
 // EN PROD
 const manifest = self.__WB_MANIFEST;
-// precacheAndRoute(manifest);
+precacheAndRoute(manifest);
 
 // EN DEV
-const fallbackHtml = 'index.html';
-const additionalManifest = [{ url: fallbackHtml, revision: null }];
-const devmode = [...manifest, ...additionalManifest];
-precacheAndRoute(devmode);
+// const fallbackHtml = 'index.html';
+// const additionalManifest = [{ url: fallbackHtml, revision: null }];
+// const devmode = [...manifest, ...additionalManifest];
+// precacheAndRoute(devmode);
 
 cleanupOutdatedCaches();
 
