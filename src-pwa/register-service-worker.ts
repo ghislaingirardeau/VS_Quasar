@@ -1,5 +1,5 @@
 import { register } from 'register-service-worker';
-import { Notify, Loading } from 'quasar';
+import { Notify } from 'quasar';
 import { reloadWindow } from 'src/utils/index';
 // import { updateDataFirestoreOnClose } from 'src/utils/firestore';
 
@@ -60,21 +60,18 @@ register(process.env.SERVICE_WORKER_FILE, {
 
   updatefound(/* registration */) {
     // console.log('New content is downloading.')
+    /* je ne mets pas de loader, car l'utilisateur pour toujours utiliser l'application pendant le chargement */
     Notify.create({
       message: 'Une mise à jour est en cours...',
       color: 'primary',
       icon: 'cloud_download',
       timeout: 5000,
       progress: true,
-      onDismiss: () => {
-        Loading.show();
-      },
     });
   },
 
   updated(registration: ServiceWorkerRegistration) {
     // console.log('New content is available; please refresh.')
-    Loading.hide();
     Notify.create({
       message: "Mise à jour disponible ! Cliquez ici pour l'appliquer.",
       color: 'positive',
