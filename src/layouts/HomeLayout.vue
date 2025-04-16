@@ -30,7 +30,13 @@ const saveWidgetRef = useTemplateRef('save-widget-ref');
 const route = useRoute();
 
 onMounted(() => {
-  // Quand tu recois un message du service worker PROCESS_FIRESTORE_QUEUE depuis custom-service-worker, tu fais la syncro
+  serviceWorkerSyncListener();
+});
+
+/**
+ Ecoute le message PROCESS_FIRESTORE_QUEUE depuis custom-service-worker, du service worker pour synchroniser les données Firestore
+ */
+function serviceWorkerSyncListener() {
   navigator.serviceWorker.addEventListener('message', async (event) => {
     if (event.data?.type === 'PROCESS_FIRESTORE_QUEUE') {
       try {
@@ -43,13 +49,14 @@ onMounted(() => {
           timeout: 3000,
         });
         saveWidgetRef.value!.isSaving = false;
+        saveWidgetRef.value!.isSyncPending = false;
       } catch (err) {
         console.error('Erreur Firestore:', err);
         return; // stop ici, on réessaiera plus tard
       }
     }
   });
-});
+}
 </script>
 
 <style>

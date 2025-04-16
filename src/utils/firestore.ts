@@ -53,8 +53,6 @@ export async function updateGlobalDataFirestore(showNotification = true) {
     const cardsStore = useCards();
     const shoppingStore = useShoppingItem();
 
-    console.log(listsStore.lists);
-
     await updateDoc(userDocRef, {
       lists: listsStore.lists,
       cards: cardsStore.cards,

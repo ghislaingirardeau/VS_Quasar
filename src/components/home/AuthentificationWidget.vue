@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="online">
     {{ userName }}
 
     <q-btn
@@ -66,11 +66,14 @@ import { ref, computed } from 'vue';
 import { signInWithGoogle, logout } from 'src/boot/firebase';
 import { storeToRefs } from 'pinia';
 import { useAuth } from 'src/stores/auth';
+import { useOnline } from '@vueuse/core';
 
 const dialogSign = ref(false);
 const dialogInformationMessage = ref('');
 const auth = useAuth();
 const { user } = storeToRefs(auth);
+
+const online = useOnline();
 
 const userName = computed(() => {
   return user.value ? user.value.displayName : '';
