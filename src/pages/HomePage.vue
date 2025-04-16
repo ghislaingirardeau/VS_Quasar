@@ -30,7 +30,7 @@ const menus = ref([
     title: 'Courses',
     pathName: 'shopping',
     description:
-      'Pour faire les courses et accéder rapidement à votre carte fidelite',
+      'Pour faire les courses et accéder rapidement à votre carte fidelité',
   },
   {
     id: 2,
