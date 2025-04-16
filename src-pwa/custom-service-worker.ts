@@ -75,12 +75,6 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
-
 /* -------- PENDING SYNCHRO DONNEE IF NOT CONNECTED: Événement de Background Sync (lorsque le réseau revient) ----------------*/
 
 self.addEventListener('sync', (event) => {

@@ -1,10 +1,7 @@
 import { register } from 'register-service-worker';
 import { Notify } from 'quasar';
-// import { reloadWindow } from 'src/utils/index';
-import { nextTick } from 'vue';
+import { reloadWindow } from 'src/utils/index';
 // import { updateDataFirestoreOnClose } from 'src/utils/firestore';
-import { router } from 'src/router';
-import { isRefreshing } from 'src/utils/useRefresh';
 
 declare const window: Window & typeof globalThis;
 
@@ -85,17 +82,7 @@ register(process.env.SERVICE_WORKER_FILE, {
           label: 'Rafraîchir',
           color: 'white',
           handler: () => {
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-              isRefreshing.value = true;
-              setTimeout(async () => {
-                // Attend un cycle pour que tout soit à jour
-                await nextTick();
-
-                // Recharge la route actuelle proprement (sans reload)
-                router.replace(router.currentRoute.value.fullPath);
-                isRefreshing.value = false;
-              }, 2000);
-            });
+            reloadWindow();
           },
         },
       ],

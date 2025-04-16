@@ -3,7 +3,6 @@
     <LayoutHeader />
 
     <q-page-container>
-      {{ isRefreshing }}
       <router-view v-slot="{ Component }">
         <transition
           :name="(route.meta.transition as string) || 'fade'"
@@ -26,7 +25,6 @@ import { onMounted, useTemplateRef } from 'vue';
 import { Notify } from 'quasar';
 import { updateGlobalDataFirestore } from 'utils/firestore';
 import { useRoute } from 'vue-router';
-import { isRefreshing } from 'src/utils/useRefresh';
 
 const saveWidgetRef = useTemplateRef('save-widget-ref');
 const route = useRoute();
