@@ -42,8 +42,6 @@ declare const window: Window & typeof globalThis;
   }
 }); */
 
-let notifyer: null | any = null;
-
 register(process.env.SERVICE_WORKER_FILE, {
   // The registrationOptions object will be passed as the second argument
   // to ServiceWorkerContainer.register()
@@ -65,11 +63,11 @@ register(process.env.SERVICE_WORKER_FILE, {
 
   updatefound(/* registration */) {
     // console.log('New content is downloading.')
-    notifyer = Notify.create({
+    Notify.create({
       message: 'Une mise à jour est en cours...',
       color: 'primary',
       icon: 'cloud_download',
-      timeout: 25000,
+      timeout: 5000,
       progress: true,
     });
   },
@@ -77,7 +75,6 @@ register(process.env.SERVICE_WORKER_FILE, {
   updated(registration: ServiceWorkerRegistration) {
     // console.log('New content is available; please refresh.')
 
-    notifyer?.dismiss();
     Notify.create({
       message: "Mise à jour disponible ! Cliquez ici pour l'appliquer.",
       color: 'positive',
