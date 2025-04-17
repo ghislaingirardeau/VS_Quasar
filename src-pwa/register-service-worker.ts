@@ -73,19 +73,13 @@ register(process.env.SERVICE_WORKER_FILE, {
   updated(registration: ServiceWorkerRegistration) {
     // console.log('New content is available; please refresh.')
     Notify.create({
-      message: "Mise à jour disponible ! Cliquez ici pour l'appliquer.",
+      message: "Mise à jour disponible ! L'application va se rafraichir.",
       color: 'positive',
       icon: 'system_update',
       timeout: 5000,
-      actions: [
-        {
-          label: 'Rafraîchir',
-          color: 'white',
-          handler: () => {
-            reloadWindow();
-          },
-        },
-      ],
+      onDismiss: () => {
+        reloadWindow();
+      },
     });
   },
 
