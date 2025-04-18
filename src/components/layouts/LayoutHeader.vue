@@ -29,6 +29,7 @@ import HomeWidget from './HomeWidget.vue';
 import AddListWidget from '../list/AddListWidget.vue';
 import AddItemWidget from 'src/components/list/AddItemWidget.vue';
 import AddCardWidget from '../cards/AddCardWidget.vue';
+import WebAuthWidget from '../home/webAuthWidget.vue';
 
 const route = useRoute();
 
@@ -49,7 +50,7 @@ const componentsToLoad = computed(() => {
     case 'shopping':
       return [EmptyCartWidget, CleanCartWidget, ShoppingCartWidget];
     default:
-      return [DownloadWidget, AuthentificationWidget];
+      return [DownloadWidget, AuthentificationWidget, WebAuthWidget];
   }
 });
 </script>

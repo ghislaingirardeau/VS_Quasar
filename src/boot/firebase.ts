@@ -5,8 +5,10 @@ import {
   getAuth,
   GoogleAuthProvider,
   setPersistence,
+  signInWithCustomToken,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -42,6 +44,18 @@ const signInWithGoogle = async () => {
   }
 };
 
+const signInWithWebAuth = async (token: string) => {
+  try {
+    const res = await signInWithCustomToken(auth, token);
+    await updateProfile(auth.currentUser!, {
+      displayName: 'alice',
+    });
+    console.log('Utilisateur connecté avec webAuth', res);
+  } catch (error) {
+    console.error("Erreur d'authentification :", error);
+  }
+};
+
 const logout = async () => {
   await signOut(auth);
   console.log('Utilisateur déconnecté');
@@ -49,5 +63,5 @@ const logout = async () => {
 };
 
 // export ce que l'on veut pouvoir réutiliser par la suite dans l'app
-export { auth, signInWithGoogle, logout };
+export { auth, signInWithGoogle, logout, signInWithWebAuth };
 export default boot(() => {});
