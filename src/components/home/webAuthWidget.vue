@@ -10,21 +10,12 @@
     >
     </q-btn>
     <q-btn
-      v-else-if="!isRegister"
-      size="sm"
-      round
-      :icon="mdiAccountPlus"
-      class="q-ml-sm text-yellow-500"
-      @click="register"
-    >
-    </q-btn>
-    <q-btn
       v-else
       size="sm"
       round
-      :icon="mdiLogin"
+      :icon="mdiFingerprint"
       class="q-ml-sm text-yellow-500"
-      @click="login"
+      @click="initWebAuth"
     >
     </q-btn>
   </div>
@@ -32,19 +23,18 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { mdiAccountPlus, mdiLogin, mdiLogout } from '@quasar/extras/mdi-v7';
+import { mdiFingerprint, mdiLogout } from '@quasar/extras/mdi-v7';
 import { useWebAuth } from 'utils/useWebAuth';
 import { logout } from 'src/boot/firebase';
 import { storeToRefs } from 'pinia';
 import { useAuth } from 'src/stores/auth';
 
 const auth = useAuth();
-const { user } = storeToRefs(auth);
+const { user, hasWebAuthRegister } = storeToRefs(auth);
 
 const isLoading = ref(false);
 const message = ref('');
 const isLoggedIn = ref(false);
-const isRegister = ref(false);
 
 const isConnected = computed(() => {
   return user.value !== null;
@@ -55,6 +45,16 @@ onMounted(async () => {
   if (result.user) isLoggedIn.value = true;
 });
 
+async function initWebAuth() {
+  // Vérifie dans le storage si webAuth existe déjà pour cet utilisateur
+  // si oui, tu le login, sinon tu créées l'utilisateur via register
+  if (hasWebAuthRegister.value) {
+    await login();
+  } else {
+    await register();
+  }
+}
+
 async function register() {
   isLoading.value = true;
   message.value = '';
@@ -64,7 +64,8 @@ async function register() {
   message.value = result.message;
 
   if (result.success) {
-    isRegister.value = true;
+    // le localstorage enregistre le fait que l'utilisateur a deja fait une demande de registration
+    hasWebAuthRegister.value = true;
   }
   isLoading.value = false;
 }

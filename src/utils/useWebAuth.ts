@@ -16,6 +16,16 @@ export const useWebAuth = {
       );
       const options = await res.json();
 
+      // 🔥 Injecte la config pour resident key
+      options.authenticatorSelection = {
+        residentKey: 'required',
+        userVerification: 'preferred', // ou 'required' si tu veux forcer biométrie
+      };
+
+      options.extensions = {
+        credProps: true,
+      };
+
       const attResp = await startRegistration({ optionsJSON: options });
 
       const response = await fetch(
@@ -69,9 +79,9 @@ export const useWebAuth = {
         },
       );
 
-      // const { token } = await response.json();
+      const { token } = await response.json();
 
-      // await signInWithWebAuth(token);
+      await signInWithWebAuth(token);
 
       return {
         message: 'Vous êtes connecté',

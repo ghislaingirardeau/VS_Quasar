@@ -3,12 +3,14 @@ import { ref } from 'vue';
 import { auth } from 'src/boot/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { setDataFirestoreOnConnection } from 'utils/firestore';
+import { useLocalStorage } from '@vueuse/core';
 
 export const useAuth = defineStore('auth', () => {
   const user = ref<Partial<User> | null>(null);
   const loggedIn = ref(false);
   const loggedOut = ref(true);
   const isFetchingData = ref(false);
+  const hasWebAuthRegister = useLocalStorage('hasWebAuthRegister', false);
 
   // Écouter les changements d'état d'authentification
   onAuthStateChanged(auth, async (firebaseUser) => {
@@ -34,5 +36,6 @@ export const useAuth = defineStore('auth', () => {
     loggedIn,
     loggedOut,
     isFetchingData,
+    hasWebAuthRegister,
   };
 });
