@@ -1,7 +1,7 @@
 <template>
   <div class="webauthn-container">
     <q-btn
-      v-if="isConnected"
+      v-if="isConnected || isLoggedIn"
       size="sm"
       round
       :icon="mdiLogout"
