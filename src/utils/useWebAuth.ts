@@ -28,6 +28,8 @@ export const useWebAuth = {
 
       const attResp = await startRegistration({ optionsJSON: options });
 
+      console.log(attResp);
+
       const response = await fetch(
         'http://localhost:3000/auth/verify-registration',
         {
@@ -67,7 +69,13 @@ export const useWebAuth = {
       );
       const options = await res.json();
 
+      options.userVerification = 'required';
+
+      console.log(options);
+
       const asseResp = await startAuthentication({ optionsJSON: options });
+
+      console.log('userHandle:', asseResp.response.userHandle);
 
       const response = await fetch(
         'http://localhost:3000/auth/verify-authentication',

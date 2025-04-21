@@ -8,7 +8,6 @@ import {
   signInWithCustomToken,
   signInWithPopup,
   signOut,
-  updateProfile,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -47,11 +46,6 @@ const signInWithGoogle = async () => {
 const signInWithWebAuth = async (token: string) => {
   try {
     const res = await signInWithCustomToken(auth, token);
-
-    /* Pour ajouter plus d'informations au nouvelle utilisateur */
-    /* await updateProfile(auth.currentUser!, {
-      displayName: 'Lulu',
-    }); */
     console.log('Utilisateur connecté avec webAuth', res);
   } catch (error) {
     console.error("Erreur d'authentification :", error);
