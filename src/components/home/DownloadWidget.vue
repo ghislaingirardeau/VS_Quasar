@@ -1,6 +1,6 @@
 <template>
   <q-btn
-    v-if="deferredPrompt && !isInstalled"
+    v-if="true"
     size="sm"
     round
     :icon="mdiDownload"

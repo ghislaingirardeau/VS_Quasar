@@ -1,11 +1,10 @@
 <template>
   <q-btn
-    v-if="isLogoutAndRegister || isConnectedAndNotRegister"
     size="sm"
     round
     :icon="mdiFingerprint"
     :loading="isFetchingData"
-    class="q-ml-sm text-yellow-500"
+    class="q-ml-sm text-white"
     @click="initWebAuth"
   >
   </q-btn>
@@ -25,16 +24,26 @@ const isLoading = ref(false);
 const isLoggedIn = ref(false);
 
 const isConnectedAndNotRegister = computed(() => {
-  return user.value !== null && hasWebAuthRegister.value === false;
+  return (
+    process.env.NODE_ENV === 'development' &&
+    user.value !== null &&
+    hasWebAuthRegister.value === false
+  );
 });
 
 const isLogoutAndRegister = computed(() => {
-  return user.value === null && hasWebAuthRegister.value === true;
+  return (
+    process.env.NODE_ENV === 'development' &&
+    user.value === null &&
+    hasWebAuthRegister.value === true
+  );
 });
 
 onMounted(async () => {
-  const result = await useWebAuth.isAuthentificate();
-  if (result.user) isLoggedIn.value = true;
+  if (process.env.NODE_ENV === 'development') {
+    const result = await useWebAuth.isAuthentificate();
+    if (result.user) isLoggedIn.value = true;
+  }
 });
 
 async function initWebAuth() {

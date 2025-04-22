@@ -1,7 +1,6 @@
 <template>
-  <div v-if="online">
+  <div>
     <span>{{ userName }}</span>
-
     <q-btn
       v-if="isConnected"
       size="sm"
@@ -29,19 +28,16 @@ import { computed } from 'vue';
 import { useFirebaseAuth } from 'utils/useFirebaseAuth';
 import { storeToRefs } from 'pinia';
 import { useAuth } from 'src/stores/auth';
-import { useOnline } from '@vueuse/core';
 
 const auth = useAuth();
 const { user } = storeToRefs(auth);
 
-const online = useOnline();
+const isConnected = computed(() => {
+  return user.value !== null;
+});
 
 const userName = computed(() => {
   return user.value ? user.value.displayName : '';
-});
-
-const isConnected = computed(() => {
-  return user.value !== null;
 });
 
 /* onMounted(() => {

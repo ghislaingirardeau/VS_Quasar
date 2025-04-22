@@ -104,6 +104,7 @@ export const useWebAuth = {
         timeout: 3000,
         progress: true,
       });
+      auth.isFetchingData = false;
       return {
         success: false,
       };
