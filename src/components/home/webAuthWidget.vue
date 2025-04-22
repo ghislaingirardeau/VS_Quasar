@@ -1,15 +1,14 @@
 <template>
-  <div class="webauthn-container">
-    <q-btn
-      v-if="isLogoutAndRegister || isConnectedAndNotRegister"
-      size="sm"
-      round
-      :icon="mdiFingerprint"
-      class="q-ml-sm text-yellow-500"
-      @click="initWebAuth"
-    >
-    </q-btn>
-  </div>
+  <q-btn
+    v-if="isLogoutAndRegister || isConnectedAndNotRegister"
+    size="sm"
+    round
+    :icon="mdiFingerprint"
+    :loading="isFetchingData"
+    class="q-ml-sm text-yellow-500"
+    @click="initWebAuth"
+  >
+  </q-btn>
 </template>
 
 <script setup lang="ts">
@@ -20,7 +19,7 @@ import { storeToRefs } from 'pinia';
 import { useAuth } from 'src/stores/auth';
 
 const auth = useAuth();
-const { user, hasWebAuthRegister } = storeToRefs(auth);
+const { user, hasWebAuthRegister, isFetchingData } = storeToRefs(auth);
 
 const isLoading = ref(false);
 const isLoggedIn = ref(false);

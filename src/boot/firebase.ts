@@ -5,11 +5,7 @@ import {
   getAuth,
   GoogleAuthProvider,
   setPersistence,
-  signInWithCustomToken,
-  signInWithPopup,
-  signOut,
 } from 'firebase/auth';
-import { useWebAuth } from 'utils/useWebAuth';
 
 const firebaseConfig = {
   apiKey: process.env.APIKEY,

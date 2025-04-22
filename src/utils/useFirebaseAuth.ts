@@ -6,7 +6,6 @@ export const useFirebaseAuth = {
   async signInWithGoogle() {
     try {
       await signInWithPopup(auth, provider);
-      console.log('Utilisateur connecté');
     } catch (error) {
       console.error("Erreur d'authentification :", error);
     }
@@ -14,8 +13,7 @@ export const useFirebaseAuth = {
 
   async signInWithWebAuth(token: string) {
     try {
-      const res = await signInWithCustomToken(auth, token);
-      console.log('Utilisateur connecté avec webAuth', res);
+      await signInWithCustomToken(auth, token);
     } catch (error) {
       console.error("Erreur d'authentification :", error);
     }

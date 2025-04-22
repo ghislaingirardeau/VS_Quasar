@@ -6,11 +6,13 @@
         <q-toolbar-title class="ml-2">
           {{ title }}
         </q-toolbar-title>
-        <component
-          :is="component"
-          v-for="(component, index) in componentsToLoad"
-          :key="index"
-        ></component>
+        <transition-group name="fade" mode="out-in"
+          ><component
+            :is="component"
+            v-for="(component, index) in componentsToLoad"
+            :key="index"
+          ></component
+        ></transition-group>
       </q-toolbar>
     </transition>
   </q-header>

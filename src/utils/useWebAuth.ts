@@ -8,11 +8,11 @@ import { useAuth } from 'src/stores/auth';
 import { Notify } from 'quasar';
 import { mdiAlertCircleOutline } from '@quasar/extras/mdi-v7';
 
+const auth = useAuth();
+
 export const useWebAuth = {
   async registerCredential() {
     try {
-      const auth = useAuth();
-
       const res = await fetch(
         'http://localhost:3000/auth/generate-registration-options',
         {
@@ -38,8 +38,6 @@ export const useWebAuth = {
 
       const attResp = await startRegistration({ optionsJSON: options });
 
-      console.log('attResp:', attResp);
-
       await fetch('http://localhost:3000/auth/verify-registration', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -64,6 +62,7 @@ export const useWebAuth = {
   },
   async loginWithCredential() {
     try {
+      auth.isFetchingData = true;
       const res = await fetch(
         'http://localhost:3000/auth/generate-authentication-options',
         {
@@ -74,11 +73,7 @@ export const useWebAuth = {
 
       options.userVerification = 'required';
 
-      console.log(options);
-
       const asseResp = await startAuthentication({ optionsJSON: options });
-
-      console.log('asseResp:', asseResp);
 
       const response = await fetch(
         'http://localhost:3000/auth/verify-authentication',
@@ -93,6 +88,8 @@ export const useWebAuth = {
       const { token } = await response.json();
 
       await useFirebaseAuth.signInWithWebAuth(token);
+
+      auth.isFetchingData = false;
 
       return {
         success: true,
