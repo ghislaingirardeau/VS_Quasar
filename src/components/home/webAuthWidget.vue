@@ -11,33 +11,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { mdiFingerprint } from '@quasar/extras/mdi-v7';
 import { useWebAuth } from 'utils/useWebAuth';
 import { storeToRefs } from 'pinia';
 import { useAuth } from 'src/stores/auth';
 
 const auth = useAuth();
-const { user, hasWebAuthRegister, isFetchingData } = storeToRefs(auth);
+const { hasWebAuthRegister, isFetchingData } = storeToRefs(auth);
 
 const isLoading = ref(false);
 const isLoggedIn = ref(false);
-
-const isConnectedAndNotRegister = computed(() => {
-  return (
-    process.env.NODE_ENV === 'development' &&
-    user.value !== null &&
-    hasWebAuthRegister.value === false
-  );
-});
-
-const isLogoutAndRegister = computed(() => {
-  return (
-    process.env.NODE_ENV === 'development' &&
-    user.value === null &&
-    hasWebAuthRegister.value === true
-  );
-});
 
 onMounted(async () => {
   if (process.env.NODE_ENV === 'development') {
