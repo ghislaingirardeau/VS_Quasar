@@ -1,8 +1,7 @@
 <template>
   <div>
-    <span>{{ userName }}</span>
     <q-btn
-      v-if="isConnected"
+      v-if="loggedIn"
       size="sm"
       round
       :icon="mdiLogout"
@@ -24,21 +23,12 @@
 
 <script setup lang="ts">
 import { mdiAccountPlus, mdiLogout } from '@quasar/extras/mdi-v7';
-import { computed } from 'vue';
 import { useFirebaseAuth } from 'utils/useFirebaseAuth';
 import { storeToRefs } from 'pinia';
 import { useAuth } from 'src/stores/auth';
 
 const auth = useAuth();
-const { user } = storeToRefs(auth);
-
-const isConnected = computed(() => {
-  return user.value !== null;
-});
-
-const userName = computed(() => {
-  return user.value ? user.value.displayName : '';
-});
+const { loggedIn } = storeToRefs(auth);
 
 /* onMounted(() => {
   window.addEventListener('beforeunload', () => {

@@ -43,6 +43,7 @@ import WebAuthWidget from '../home/webAuthWidget.vue';
 import { useOnline } from '@vueuse/core';
 import { useAuth } from 'src/stores/auth';
 import { storeToRefs } from 'pinia';
+import UserNameWidget from '../home/UserNameWidget.vue';
 
 const route = useRoute();
 const online = useOnline();
@@ -88,8 +89,14 @@ const componentsToLoad = computed(() => {
     default:
       if (online.value) {
         return isLogoutAndRegister.value || isConnectedAndNotRegister.value
-          ? [DownloadWidget, AuthentificationWidget, WebAuthWidget]
-          : [DownloadWidget, AuthentificationWidget];
+          ? [
+              DownloadWidget,
+              UserNameWidget,
+              AuthentificationWidget,
+
+              WebAuthWidget,
+            ]
+          : [DownloadWidget, UserNameWidget, AuthentificationWidget];
       } else {
         return [DownloadWidget];
       }
