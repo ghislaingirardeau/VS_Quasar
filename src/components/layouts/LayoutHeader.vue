@@ -48,7 +48,7 @@ import UserNameWidget from '../home/UserNameWidget.vue';
 const route = useRoute();
 const online = useOnline();
 const auth = useAuth();
-const { user, hasWebAuthRegister } = storeToRefs(auth);
+const { user, hasWebAuthRegister, loggedIn } = storeToRefs(auth);
 
 const title = computed(() => {
   return route.meta.title || window.history.state?.name;
@@ -88,15 +88,19 @@ const componentsToLoad = computed(() => {
       return [EmptyCartWidget, CleanCartWidget, ShoppingCartWidget];
     default:
       if (online.value) {
-        return isLogoutAndRegister.value || isConnectedAndNotRegister.value
-          ? [
-              DownloadWidget,
-              UserNameWidget,
-              AuthentificationWidget,
-
-              WebAuthWidget,
-            ]
-          : [DownloadWidget, UserNameWidget, AuthentificationWidget];
+        if (isLogoutAndRegister.value || isConnectedAndNotRegister.value) {
+          return [
+            DownloadWidget,
+            UserNameWidget,
+            AuthentificationWidget,
+            WebAuthWidget,
+          ];
+        }
+        if (loggedIn.value) {
+          return [DownloadWidget, UserNameWidget, AuthentificationWidget];
+        } else {
+          return [DownloadWidget, AuthentificationWidget];
+        }
       } else {
         return [DownloadWidget];
       }
