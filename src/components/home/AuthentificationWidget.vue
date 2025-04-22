@@ -8,7 +8,7 @@
       round
       :icon="mdiLogout"
       class="q-ml-sm text-white"
-      @click="logout"
+      @click="useFirebaseAuth.logout"
     >
     </q-btn>
     <q-btn
@@ -17,7 +17,7 @@
       round
       :icon="mdiAccountPlus"
       class="q-ml-sm text-white"
-      @click="signInWithGoogle"
+      @click="useFirebaseAuth.signInWithGoogle"
     >
     </q-btn>
 
@@ -63,7 +63,7 @@
 <script setup lang="ts">
 import { mdiAccountPlus, mdiLogout } from '@quasar/extras/mdi-v7';
 import { ref, computed } from 'vue';
-import { signInWithGoogle, logout } from 'src/boot/firebase';
+import { useFirebaseAuth } from 'utils/useFirebaseAuth';
 import { storeToRefs } from 'pinia';
 import { useAuth } from 'src/stores/auth';
 import { useOnline } from '@vueuse/core';

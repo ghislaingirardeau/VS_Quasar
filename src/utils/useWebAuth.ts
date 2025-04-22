@@ -3,14 +3,24 @@ import {
   startAuthentication,
 } from '@simplewebauthn/browser';
 import { AddPromiseError } from 'src/types';
-import { signInWithWebAuth } from 'src/boot/firebase';
+import { useFirebaseAuth } from 'utils/useFirebaseAuth';
+import { useAuth } from 'src/stores/auth';
+import { Notify } from 'quasar';
+import { mdiAlertCircleOutline } from '@quasar/extras/mdi-v7';
 
 export const useWebAuth = {
   async registerCredential() {
     try {
+      const auth = useAuth();
+
       const res = await fetch(
         'http://localhost:3000/auth/generate-registration-options',
         {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user: auth.user,
+          }),
           credentials: 'include',
         },
       );
@@ -28,23 +38,16 @@ export const useWebAuth = {
 
       const attResp = await startRegistration({ optionsJSON: options });
 
-      console.log(attResp);
+      console.log('attResp:', attResp);
 
-      const response = await fetch(
-        'http://localhost:3000/auth/verify-registration',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            attResp,
-          }),
-          credentials: 'include',
-        },
-      );
-
-      // const { token } = await response.json();
-
-      // await signInWithWebAuth(token);
+      await fetch('http://localhost:3000/auth/verify-registration', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          attResp,
+        }),
+        credentials: 'include',
+      });
 
       return {
         message: 'Enregistrement réussi',
@@ -75,7 +78,7 @@ export const useWebAuth = {
 
       const asseResp = await startAuthentication({ optionsJSON: options });
 
-      console.log('userHandle:', asseResp.response.userHandle);
+      console.log('asseResp:', asseResp);
 
       const response = await fetch(
         'http://localhost:3000/auth/verify-authentication',
@@ -89,17 +92,22 @@ export const useWebAuth = {
 
       const { token } = await response.json();
 
-      await signInWithWebAuth(token);
+      await useFirebaseAuth.signInWithWebAuth(token);
 
       return {
-        message: 'Vous êtes connecté',
         success: true,
       };
     } catch (error) {
       const typedError = error as AddPromiseError;
-      console.log(typedError.message);
+      console.log(typedError.message, 'try to regsiter credential first');
+      Notify.create({
+        message: "L'authentification a échoué, veuillez réessayer",
+        color: 'negative',
+        icon: mdiAlertCircleOutline,
+        timeout: 3000,
+        progress: true,
+      });
       return {
-        message: "Une erreur est survenue lors de l'authentification",
         success: false,
       };
     }

@@ -1,16 +1,7 @@
 <template>
   <div class="webauthn-container">
     <q-btn
-      v-if="isConnected || isLoggedIn"
-      size="sm"
-      round
-      :icon="mdiLogout"
-      class="q-ml-sm text-red-500"
-      @click="logoutWebAuth"
-    >
-    </q-btn>
-    <q-btn
-      v-else
+      v-if="isLogoutAndRegister || isConnectedAndNotRegister"
       size="sm"
       round
       :icon="mdiFingerprint"
@@ -23,9 +14,8 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { mdiFingerprint, mdiLogout } from '@quasar/extras/mdi-v7';
+import { mdiFingerprint } from '@quasar/extras/mdi-v7';
 import { useWebAuth } from 'utils/useWebAuth';
-import { logout } from 'src/boot/firebase';
 import { storeToRefs } from 'pinia';
 import { useAuth } from 'src/stores/auth';
 
@@ -33,11 +23,14 @@ const auth = useAuth();
 const { user, hasWebAuthRegister } = storeToRefs(auth);
 
 const isLoading = ref(false);
-const message = ref('');
 const isLoggedIn = ref(false);
 
-const isConnected = computed(() => {
-  return user.value !== null;
+const isConnectedAndNotRegister = computed(() => {
+  return user.value !== null && hasWebAuthRegister.value === false;
+});
+
+const isLogoutAndRegister = computed(() => {
+  return user.value === null && hasWebAuthRegister.value === true;
 });
 
 onMounted(async () => {
@@ -57,11 +50,8 @@ async function initWebAuth() {
 
 async function register() {
   isLoading.value = true;
-  message.value = '';
 
   const result = await useWebAuth.registerCredential();
-
-  message.value = result.message;
 
   if (result.success) {
     // le localstorage enregistre le fait que l'utilisateur a deja fait une demande de registration
@@ -72,23 +62,12 @@ async function register() {
 
 async function login() {
   isLoading.value = true;
-  message.value = '';
 
   const result = await useWebAuth.loginWithCredential();
-
-  message.value = result.message;
 
   if (result.success) {
     isLoggedIn.value = true;
   }
   isLoading.value = false;
-}
-
-async function logoutWebAuth() {
-  // disconnect from firebase
-  await logout();
-  // disconnect from server
-  await useWebAuth.logout();
-  isLoggedIn.value = false;
 }
 </script>
