@@ -21,15 +21,15 @@ const port = process.env.PORT || 3000;
 /* BACKEND */
 
 // Configuration WebAuthn
-const rpID = process.env.DEV ? 'localhost' : 'ghislaingirardeau.github.io'; // Domaine de votre application
+const rpID = process.env.DEV ? 'localhost' : 'shops-tools.onrender.com'; // Domaine de votre application
 const origin = process.env.DEV
   ? `http://${rpID}:3000`
-  : 'https://ghislaingirardeau.github.io'; // Changez pour https en production
+  : 'https://shops-tools.onrender.com'; // Changez pour https en production
 
 // Configuration de base
 app.use(
   cors({
-    origin: ['http://localhost:9200', 'https://ghislaingirardeau.github.io'],
+    origin: ['http://localhost:9200', 'https://shops-tools.onrender.com'],
     credentials: true,
   }),
 );
