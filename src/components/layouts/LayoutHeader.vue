@@ -55,19 +55,11 @@ const title = computed(() => {
 });
 
 const isConnectedAndNotRegister = computed(() => {
-  return (
-    process.env.NODE_ENV === 'development' &&
-    user.value !== null &&
-    hasWebAuthRegister.value === false
-  );
+  return user.value !== null && hasWebAuthRegister.value === false;
 });
 
 const isLogoutAndRegister = computed(() => {
-  return (
-    process.env.NODE_ENV === 'development' &&
-    user.value === null &&
-    hasWebAuthRegister.value === true
-  );
+  return user.value === null && hasWebAuthRegister.value === true;
 });
 
 /**

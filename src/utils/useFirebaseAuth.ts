@@ -1,6 +1,9 @@
 import { signInWithCustomToken, signInWithPopup, signOut } from 'firebase/auth';
 import { useWebAuth } from 'utils/useWebAuth';
 import { auth, provider } from 'src/boot/firebase';
+import { useAuth } from 'src/stores/auth';
+
+const authStore = useAuth();
 
 export const useFirebaseAuth = {
   async signInWithGoogle() {
@@ -22,7 +25,7 @@ export const useFirebaseAuth = {
   async logout() {
     await signOut(auth);
     console.log('Utilisateur déconnecté');
-    if (process.env.NODE_ENV === 'development') {
+    if (authStore.hasWebAuthRegister) {
       await useWebAuth.logout();
     }
   },

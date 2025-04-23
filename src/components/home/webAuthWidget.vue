@@ -24,10 +24,8 @@ const isLoading = ref(false);
 const isLoggedIn = ref(false);
 
 onMounted(async () => {
-  if (process.env.NODE_ENV === 'development') {
-    const result = await useWebAuth.isAuthentificate();
-    if (result.user) isLoggedIn.value = true;
-  }
+  const result = await useWebAuth.isAuthentificate();
+  if (result.user) isLoggedIn.value = true;
 });
 
 async function initWebAuth() {
