@@ -2,12 +2,52 @@
 
 ## Fichier liés à la fonctionnalité
 
+webAuth a besoin d'avoir une même origine coté serveur et coté front (appel de l'api), cela ne fonctionnera pas sinon
+& github ne prend pas en charge webauth, donc on ne peut plus utiliser https://ghislaingirardeau.github.io/
+
+### AVANT avec https://ghislaingirardeau.github.io/, obligé de passer par localhost pour que cela fonctionne
+
 - Front:
   - webAuthWidget.vue => visu des boutons webAuth
   - useWebAuth.ts => gère les appels API au back
   - firebase.ts => gère les appels vers firebase
 - Back:
   - server: dans le dossier /Quasar => gère les responses de authentificators et son enregistrement dans la db
+
+### RENDER pour deployer https://shops-tools.onrender.com/
+
+**Un fichier serveur qui gere à la fois le front et le back !!! pour avoir la même origine lors de l'utilisation de webAuth**
+
+Sur render, un nouveau service web est créer qui est lier au repo du projet VS_Quasar
+
+A notre projet, nous avons intégrer le serveur (qui était utilisé pour gerer webAuth) directement à la source de notre projet et installer les dépendances nécessaires
+
+Fichiers liés au serveur:
+
+- server.js
+- firebase.js => gere la connexion admin au back
+- service_todo_list.json
+- ajout des env nécessaire
+
+Roadmap du serveur:
+
+- Front:
+  - Le serveur sert les fichiers nécessaires pour le front: index.html qui dans le fichier src/pwa
+  - Route que je passe à la fin du serveur, pour qu'il capte avant tous les routes API
+- Back:
+  - les routes sont servis avec le prefix /api
+
+Pour le test de déploiement, on fait `npm run build:pwa` puis teste avec `node server.js` => l'app devrait alors etre déployer en local
+
+Pour le déploiement sur render, il suffira de faire un push sur le repo
+
+### Dans Render
+
+- Build Command: npm install; quasar build -m pwa
+- Start Command: npm start (soit node server.js dans script)
+
+Ajoute les .env
+Ajoute le fichier secrete `service_todo_list.json`
 
 ## Librairies
 
