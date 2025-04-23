@@ -14,7 +14,7 @@ export const useWebAuth = {
   async registerCredential() {
     try {
       const res = await fetch(
-        'http://localhost:3000/auth/generate-registration-options',
+        `${process.env.API_URL_WEBAUTH}/auth/generate-registration-options`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -38,7 +38,7 @@ export const useWebAuth = {
 
       const attResp = await startRegistration({ optionsJSON: options });
 
-      await fetch('http://localhost:3000/auth/verify-registration', {
+      await fetch(`${process.env.API_URL_WEBAUTH}/auth/verify-registration`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -64,7 +64,7 @@ export const useWebAuth = {
     try {
       auth.isFetchingData = true;
       const res = await fetch(
-        'http://localhost:3000/auth/generate-authentication-options',
+        `${process.env.API_URL_WEBAUTH}/auth/generate-authentication-options`,
         {
           credentials: 'include',
         },
@@ -76,7 +76,7 @@ export const useWebAuth = {
       const asseResp = await startAuthentication({ optionsJSON: options });
 
       const response = await fetch(
-        'http://localhost:3000/auth/verify-authentication',
+        `${process.env.API_URL_WEBAUTH}/auth/verify-authentication`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -112,7 +112,7 @@ export const useWebAuth = {
   },
   async logout() {
     try {
-      await fetch('http://localhost:3000/logout', {
+      await fetch(`${process.env.API_URL_WEBAUTH}/logout`, {
         credentials: 'include',
       });
       return {
@@ -126,7 +126,7 @@ export const useWebAuth = {
   },
   async isAuthentificate() {
     try {
-      const result = await fetch('http://localhost:3000/me', {
+      const result = await fetch(`${process.env.API_URL_WEBAUTH}/me`, {
         credentials: 'include',
       });
       const { user } = await result.json();
