@@ -140,10 +140,11 @@ export default configure((ctx) => {
         ],
       ],
       afterBuild: function (buildConfig) {
-        if (buildConfig.quasarConf.pwa) {
-          fs.writeFileSync('dist/pwa/.nojekyll', '');
-          console.log('✓ .nojekyll file has been created');
-        }
+        // Pour le deploy sur Github Pages, on doit créer un fichier .nojekyll à la racine du dossier dist
+        // if (buildConfig.quasarConf.pwa) {
+        //   fs.writeFileSync('dist/pwa/.nojekyll', '');
+        //   console.log('✓ .nojekyll file has been created');
+        // }
       },
     },
 

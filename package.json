@@ -15,6 +15,7 @@
     "dev:android": "quasar dev -m capacitor -T android",
     "build": "quasar build",
     "build:pwa": "quasar build -m pwa",
+    "start": "node server.js",
     "test:unit": "vitest",
     "test:unit:ci": "vitest run",
     "deploy": "push-dir --dir=dist/spa --remote=gh-pages --branch=main",
