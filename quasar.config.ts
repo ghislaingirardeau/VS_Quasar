@@ -7,7 +7,7 @@ import { configure } from 'quasar/wrappers';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import 'dotenv/config';
-import fs from 'fs';
+// import fs from 'fs';
 
 export default configure((ctx) => {
   return {
