@@ -85,7 +85,7 @@ export default configure((ctx) => {
           : process.env.API_URL_WEBPUSH,
         API_URL_WEBAUTH: ctx.dev
           ? 'http://localhost:3000'
-          : 'https://webauth-firebase.onrender.com/',
+          : 'https://webauth-firebase.onrender.com',
         BASE_URL: ctx.dev
           ? process.env.MY_STAGING_API
           : process.env.MY_PROD_API,
