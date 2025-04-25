@@ -19,6 +19,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 /* BACKEND */
+/* Toutes les routes commenceront donc par /api */
 
 // Configuration WebAuthn
 const rpID = process.env.DEV ? 'localhost' : 'shops-tools.onrender.com'; // Domaine de votre application
@@ -113,7 +114,7 @@ app.post('/api/auth/verify-registration', async (req, res) => {
   }
 });
 
-/* LOGIN */
+/* 1- LOGIN */
 
 app.get('/api/auth/generate-authentication-options', async (req, res) => {
   const options = await generateAuthenticationOptions({
@@ -127,6 +128,7 @@ app.get('/api/auth/generate-authentication-options', async (req, res) => {
   res.json(options);
 });
 
+/* 2- LOGIN */
 app.post('/api/auth/verify-authentication', async (req, res) => {
   const expectedChallenge = req.session.challenge;
 
@@ -170,7 +172,9 @@ app.post('/api/auth/verify-authentication', async (req, res) => {
 /* LOGOUT */
 
 /* WebAuthn sert uniquement à authentifier un utilisateur en prouvant qu’il possède une clé privée via un appareil biométrique.
- Mais la session ou le token d'authentification reste ce qui maintient l’état connecté, comme dans un login classique. */
+ Mais la session ou le token d'authentification reste ce qui maintient l’état connecté, comme dans un login classique. 
+ Donc pas de cookie 'connect.sid' => pas de connection
+ */
 app.get('/api/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -181,21 +185,23 @@ app.get('/api/logout', (req, res) => {
   });
 });
 
-/* IS USER CONNECTED ? */
+/* IS USER CONNECTED => pour accéder au route seulement si connecté */
 
 app.get('/api/me', async (req, res) => {
   /* const userDb = await admin.auth().getUser('95AoiUHOIdTf4gPxgZxpVKAwjid2'); */
   res.json({ user: req.session.user /* userDb */ });
 });
 
-/* SERVE FRONTEND */
+/* 
+SERVE FRONTEND 
+La route appelé ne concerne pas l'API, alors sert le front
+*/
 
 // Pour ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // 📁 Chemins absolus vers ton build PWA
 const pwaPath = path.resolve(__dirname, 'dist/pwa');
-const indexPath = path.resolve(pwaPath, 'index.html');
 
 // Sert les fichiers statiques (JS, CSS, etc.)
 app.use(express.static(pwaPath));
