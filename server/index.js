@@ -201,14 +201,14 @@ La route appelé ne concerne pas l'API, alors sert le front
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // 📁 Chemins absolus vers ton build PWA
-const pwaPath = path.resolve(__dirname, 'dist/pwa');
+const pwaPath = path.resolve(__dirname, '../dist/pwa');
 
 // Sert les fichiers statiques (JS, CSS, etc.)
 app.use(express.static(pwaPath));
 // Redirige toutes les routes vers index.html (pour Vue Router mode history)
 
 app.use((req, res, next) => {
-  const indexPath = path.resolve(__dirname, 'dist/pwa/index.html');
+  const indexPath = path.resolve(__dirname, '../dist/pwa/index.html');
   res.sendFile(indexPath);
 });
 
