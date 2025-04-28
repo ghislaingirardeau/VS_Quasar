@@ -1,3 +1,8 @@
+## DEV mode
+
+npm run dev:pwa => localhost:9200
+npm start => l'appli et le serveur sur localhost:3000 mais on ne l'utilise pas ! utile seulement pour les call api de localhost:9200
+
 ## Build and deploy github-page
 
 Build PWA App inside /Dist

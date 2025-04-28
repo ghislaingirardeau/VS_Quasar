@@ -137,6 +137,14 @@ const menuList = ref([
     },
   },
   {
+    icon: 'description',
+    label: 'form Creation',
+    separator: false,
+    to: {
+      name: 'formCreation',
+    },
+  },
+  {
     icon: 'list',
     label: 'list',
     separator: false,

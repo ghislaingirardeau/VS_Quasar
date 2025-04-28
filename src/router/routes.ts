@@ -27,6 +27,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/tutos/FormPage.vue'),
       },
       {
+        path: 'form-creation',
+        name: 'formCreation',
+        component: () => import('pages/tutos/FormCreationPage.vue'),
+      },
+      {
         path: 'list',
         name: 'list',
         component: () => import('pages/tutos/ListPage.vue'),
