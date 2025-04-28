@@ -181,6 +181,7 @@ import {
   mdiListBoxOutline,
   mdiStoreSearch,
 } from '@quasar/extras/mdi-v7';
+import { CryptoJS } from 'src/boot/libraries';
 
 const cardStore = useCards();
 const { isDialogCardVisible } = storeToRefs(cardStore);
@@ -226,6 +227,13 @@ async function onSubmit() {
   try {
     isSaving.value = true;
     form.value.id = Date.now();
+    if (form.value.password) {
+      const ciphertext = CryptoJS.AES.encrypt(
+        form.value.password,
+        process.env.APP_CRYPT_KEY!,
+      ).toString();
+      form.value.password = ciphertext;
+    }
     await cardStore.addcard(form.value);
     closeDialog();
     isSaving.value = false;

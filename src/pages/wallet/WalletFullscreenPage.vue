@@ -5,8 +5,9 @@
         <BarcodeRender :barcode-value="currentCard.barcode" />
       </q-card-section>
 
-      <q-card-section v-if="currentCard.isCardCode" class="flex flex-center">
-        <PasswordInput v-model:password="currentCard.password" />
+      <q-card-section v-if="currentCard.isCardCode" class="">
+        <p>Votre mot de passe:</p>
+        <PasswordInput v-model:password="decryptPassword" />
       </q-card-section>
     </q-card>
   </q-page>
@@ -19,6 +20,7 @@ import PasswordInput from 'src/components/cards/passwordInput.vue';
 import { useCards } from 'src/stores/card';
 import { computed, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { CryptoJS } from 'src/boot/libraries';
 
 declare global {
   interface Window {
@@ -38,6 +40,15 @@ const isCordova = () => !!window.cordova;
 
 const cardId = computed(() => {
   return route.params.id as string;
+});
+
+const decryptPassword = computed(() => {
+  const bytes = CryptoJS.AES.decrypt(
+    currentCard.value.password,
+    process.env.APP_CRYPT_KEY!,
+  );
+  const originalText = bytes.toString(CryptoJS.enc.Utf8);
+  return originalText;
 });
 
 const currentCard = computed(() => {
