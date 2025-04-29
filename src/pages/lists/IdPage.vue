@@ -10,7 +10,7 @@
       handle=".handle_icon"
     >
       <template #item="{ element }">
-        <q-card :key="element.id" class="cursor-grab flex flex-col">
+        <q-card :key="element.id" class="cursor-grab flex flex-col mb-3">
           <q-card-section class="flex flex-row">
             <div class="text-h5 font-bold italic">
               {{ element.title }}

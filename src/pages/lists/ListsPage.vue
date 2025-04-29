@@ -8,7 +8,7 @@
       handle=".handle_icon"
     >
       <template #item="{ element }">
-        <q-list bordered separator>
+        <q-list bordered separator class="mb-2">
           <q-item :key="element.id" v-ripple clickable>
             <q-item-section @click="goToListId(element.id, element.name)">
               <q-item-label class="font-bold italic text-base">{{
