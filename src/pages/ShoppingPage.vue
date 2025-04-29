@@ -102,14 +102,11 @@
         </template>
       </draggable>
     </q-scroll-area>
-    <transition name="fade">
-      <ShoppingToolbar
-        :key="shoppingItems.length"
-        v-model:new-item="newItem"
-        class="absolute absolute-bottom"
-        @add-new-item="addNewItem"
-      />
-    </transition>
+    <ShoppingToolbar
+      v-model:new-item="newItem"
+      class="absolute absolute-bottom"
+      @add-new-item="addNewItem"
+    />
   </q-page>
 </template>
 

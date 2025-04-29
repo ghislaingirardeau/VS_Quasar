@@ -31,6 +31,7 @@
       </q-popup-proxy>
     </q-btn>
     <q-select
+      :key="shoppingsData.length"
       ref="elementItemsSelect"
       :model-value="newItem.title"
       use-input
