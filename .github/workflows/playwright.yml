@@ -30,16 +30,13 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Build Quasar app
-        run: npm run build
-
       - name: Start Quasar app
         run: |
+          npm run build
           npm run start &
-          sleep 2
           for i in {1..10}; do
             curl --silent http://localhost:3000 && break
-            echo "Waiting for server on port 3000..."
+            echo "Waiting for server..."
             sleep 2
           done
         env:
