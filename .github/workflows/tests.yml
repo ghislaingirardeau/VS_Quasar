@@ -1,4 +1,4 @@
-name: Run Vitest on Push and PR
+name: Run Vitest on Push
 
 on:
   push:
