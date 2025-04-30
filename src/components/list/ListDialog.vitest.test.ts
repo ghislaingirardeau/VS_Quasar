@@ -1,7 +1,7 @@
 import { mount, flushPromises } from '@vue/test-utils';
 import ListDialog from './ListDialog.vue';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { createPinia, setActivePinia, storeToRefs } from 'pinia';
+import {storeToRefs } from 'pinia';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
 import { useLists } from 'src/stores/lists';
 import { nextTick } from 'vue';
@@ -16,8 +16,6 @@ describe('ListDialog action', () => {
   let wrapper: any;
 
   beforeEach(() => {
-    // active le store
-    setActivePinia(createPinia());
     const listsStore = useLists();
     listsStore.showDialogNewList();
     wrapper = mount(ListDialog, {

@@ -3,7 +3,6 @@ import { mount } from '@vue/test-utils';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import ShoppingToolbar from 'src/components/shopping/ShoppingToolbar.vue';
 import { categories } from 'src/assets/category.json';
-import { setActivePinia, createPinia } from 'pinia';
 
 installQuasarPlugin();
 
@@ -11,8 +10,6 @@ describe('toolbar', () => {
   let wrapper: ReturnType<typeof mount>;
   beforeEach((): void => {
     vi.spyOn(window, 'alert');
-
-    setActivePinia(createPinia());
 
     wrapper = mount(ShoppingToolbar, {
       props: {

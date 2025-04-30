@@ -1,6 +1,21 @@
 // Firebase est utilisé dans l'application mais aussi lors des tests, il faut donc le mocker
 // peu importe les donnees renvoyé par les mocks, c'est juste pour que le test ne plante pas mais reconnaisse les fonctions associé à FB
 import { vi } from 'vitest';
+import { setActivePinia, createPinia } from 'pinia';
+
+// ✅ Set Pinia globally;
+setActivePinia(createPinia());
+
+// ✅ Mock Quasar Notify
+vi.mock('quasar', async () => {
+  const actual = await vi.importActual<any>('quasar');
+  return {
+    ...actual,
+    Notify: {
+      create: vi.fn(),
+    },
+  };
+});
 
 // ✅ Mock firebase/app
 vi.mock('firebase/app', () => ({

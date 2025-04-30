@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import ListsPage from './ListsPage.vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import { setActivePinia, createPinia, storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-vitest';
 import { useLists } from 'src/stores/lists';
 import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
@@ -46,7 +46,6 @@ describe('Lists Page should display list of lists', () => {
   let wrapperLayout: ReturnType<typeof mount>;
 
   beforeEach(async () => {
-    setActivePinia(createPinia());
     router = createRouter({
       history: createWebHistory('/lists'),
       routes,

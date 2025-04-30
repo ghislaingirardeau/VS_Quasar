@@ -7,7 +7,7 @@ import LayoutHeader from 'src/components/layouts/LayoutHeader.vue';
 import EmptyCartWidget from 'src/components/shopping/EmptyCartWidget.vue';
 import CleanCartWidget from 'src/components/shopping/CleanCartWidget.vue';
 
-import { setActivePinia, createPinia, storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia';
 import { useShoppingItem } from 'src/stores/shoppingItems';
 import ShoppingListPage from 'src/pages/ShoppingPage.vue';
 import { createRouter, createMemoryHistory } from 'vue-router';
@@ -34,8 +34,6 @@ describe('shopping list', () => {
 
   beforeEach(async () => {
     vi.spyOn(window, 'alert');
-
-    setActivePinia(createPinia());
 
     // Créer le routeur avec une route mémoire
     router = createRouter({
