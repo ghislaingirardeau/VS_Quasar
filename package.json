@@ -17,6 +17,7 @@
     "start": "node server/index.js",
     "test:unit": "vitest",
     "test:unit:ci": "vitest run",
+    "test:e2e": "playwright test",
     "deploy": "push-dir --dir=dist/spa --remote=gh-pages --branch=main",
     "deploy:pwa": "push-dir --dir=dist/pwa --remote=gh-pages --branch=main --cleanup",
     "clean:sw": "echo \"\" >> dist/pwa/sw.js"
@@ -52,6 +53,7 @@
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^2.0.0",
+    "@playwright/test": "^1.52.0",
     "@quasar/app-vite": "^2.0.0-beta.12",
     "@quasar/quasar-app-extension-testing-unit-vitest": "^1.1.0",
     "@testing-library/vue": "^8.1.0",
