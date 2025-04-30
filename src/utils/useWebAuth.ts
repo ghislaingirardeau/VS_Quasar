@@ -90,12 +90,14 @@ export const useWebAuth = {
       await useFirebaseAuth.signInWithWebAuth(token);
 
       auth.isFetchingData = false;
+      auth.hasWebAuthRegister = true;
 
       return {
         success: true,
       };
     } catch (error) {
       const typedError = error as AddPromiseError;
+      auth.hasWebAuthRegister = false;
       console.log(typedError.message, 'try to regsiter credential first');
       Notify.create({
         message: "L'authentification a échoué, veuillez réessayer",
