@@ -31,7 +31,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Build PWA
-        run: npm run build
+        run: npm run build:pwa
 
       - name: Start Quasar app
         run: |
