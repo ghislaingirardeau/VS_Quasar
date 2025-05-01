@@ -2,9 +2,9 @@ name: Run Playwright on Push
 
 on:
   push:
-    branches: [main, master]
+    branches: [staging, master]
   pull_request:
-    branches: [main, master]
+    branches: [staging, master]
 
 jobs:
   test:
