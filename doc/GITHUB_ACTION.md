@@ -1,5 +1,7 @@
 Dans le dossier .github
 
+MY NEW COMMENT §§§§§§§§§
+
 Les fichiers permettent de configurer les Actions github à réaliser apres chaque Push
 
 Ici, vitest et playwright pour les tests e2e
