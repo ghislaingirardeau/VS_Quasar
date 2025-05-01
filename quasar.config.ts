@@ -79,7 +79,7 @@ export default configure((ctx) => {
         API: ctx.dev
           ? 'https://jsonplaceholder.typicode.com'
           : 'https://jsonplaceholder.typicode.com',
-        VAPIDKEY: process.env.VAPIDKEY,
+        VAPIDKEY: import.meta.env.VAPIDKEY,
         API_URL_WEBAUTH: ctx.dev
           ? 'http://localhost:3000/api'
           : 'https://shops-tools.onrender.com/api',

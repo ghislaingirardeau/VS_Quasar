@@ -2,9 +2,9 @@ name: Run Playwright on Push
 
 on:
   push:
-    branches: [staging, master]
+    branches: [staging]
   pull_request:
-    branches: [staging, master]
+    branches: [staging]
 
 jobs:
   test:
@@ -32,6 +32,16 @@ jobs:
 
       - name: Build PWA
         run: npm run build:pwa
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          VAPIDKEY: ${{ secrets.VAPIDKEY }}
+          APIKEY: ${{ secrets.APIKEY }}
+          AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          STORAGE_BUCKET: ${{ secrets.STORAGE_BUCKET }}
+          MESSAGING_SENDER_ID: ${{ secrets.MESSAGING_SENDER_ID }}
+          APP_ID: ${{ secrets.APP_ID }}
+          APP_CRYPT_KEY: ${{ secrets.APP_CRYPT_KEY }}
 
       - name: Start Quasar app
         run: |
@@ -42,16 +52,7 @@ jobs:
             sleep 2
           done
         env:
-          NODE_ENV: production
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
-          VAPIDKEY: ${{ secrets.VAPIDKEY }}
-          APIKEY: ${{ secrets.APIKEY }}
-          AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          STORAGE_BUCKET: ${{ secrets.STORAGE_BUCKET }}
-          MESSAGING_SENDER_ID: ${{ secrets.MESSAGING_SENDER_ID }}
-          APP_ID: ${{ secrets.APP_ID }}
-          APP_CRYPT_KEY: ${{ secrets.APP_CRYPT_KEY }}
 
       - name: Run Playwright tests
         run: npx playwright test
