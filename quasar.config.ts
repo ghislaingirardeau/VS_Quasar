@@ -83,9 +83,6 @@ export default configure((ctx) => {
         API_URL_WEBAUTH: ctx.dev
           ? 'http://localhost:3000/api'
           : 'https://shops-tools.onrender.com/api',
-        BASE_URL: ctx.dev
-          ? process.env.MY_STAGING_API
-          : process.env.MY_PROD_API,
         APIKEY: process.env.APIKEY,
         AUTH_DOMAIN: process.env.AUTH_DOMAIN,
         PROJECT_ID: process.env.PROJECT_ID,
