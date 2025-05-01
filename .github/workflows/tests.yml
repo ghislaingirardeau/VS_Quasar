@@ -2,9 +2,9 @@ name: Run Vitest on Push
 
 on:
   push:
-    branches: [master]
+    branches: [staging]
   pull_request:
-    branches: [master]
+    branches: [staging]
 
 jobs:
   test:
