@@ -6,9 +6,10 @@
       item-key="id"
       v-bind="dragOptions"
       handle=".handle_icon"
+      class="flex sm:justify-center gap-2"
     >
       <template #item="{ element }">
-        <q-list bordered separator class="mb-2">
+        <q-list bordered separator class="w-full sm:w-[500px]">
           <q-item :key="element.id" v-ripple clickable>
             <q-item-section @click="goToListId(element.id, element.name)">
               <q-item-label class="font-bold italic text-base">{{

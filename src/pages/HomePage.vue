@@ -1,10 +1,10 @@
 <template>
   <q-page padding>
-    <div class="flex justify-between">
+    <div class="flex gap-4 justify-between">
       <q-card
         v-for="menu in menus"
         :key="menu.id"
-        class="w-full sm:w-5/12 m-3 text-center"
+        class="w-full sm:flex-1 text-center"
         @click="goToPage(menu.pathName)"
       >
         <q-card-section>
