@@ -28,16 +28,6 @@ export default configure((ctx) => {
       'libraries' /* , 'unocss' */,
     ],
 
-    html: {
-      scripts: [
-        {
-          src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5669622405351722',
-          async: true,
-          crossorigin: 'anonymous',
-        },
-      ],
-    },
-
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss', 'tailwind.css'],
 
