@@ -6,11 +6,12 @@
       item-key="id"
       v-bind="dragOptions"
       handle=".handle_icon"
+      class="flex sm:justify-center gap-4"
     >
       <template #item="{ element }">
         <q-card
           :key="element.id"
-          class="mb-4 border-1 border-gray-500 border-opacity-25"
+          class="w-full sm:w-[400px] border-1 border-gray-500 border-opacity-25"
           :style="{ backgroundColor: element.color }"
           @click="goToWallet(element.id, element.shop.label)"
         >

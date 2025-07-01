@@ -1,5 +1,7 @@
 Dans le dossier .github
 
+MY NEW COMMENT §§§§§§§§§
+
 Les fichiers permettent de configurer les Actions github à réaliser apres chaque Push
 
 Ici, vitest et playwright pour les tests e2e
@@ -11,3 +13,5 @@ On pourrait aussi configurer un build sur github action pour etre sur que tout c
 A faire:
 
 - si bug github action ne pas deployer sur render ! => distinguer 2 branches staging et prod et utiliser pull request pour le push sur prod
+
+COMMENT FROM OTHER DEVELOPPER §§§§§§§§§§§
