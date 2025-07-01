@@ -22,5 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Générer .quasar
+        run: npx quasar prepare
+
       - name: Run Vitest
         run: npm run test:unit:ci
