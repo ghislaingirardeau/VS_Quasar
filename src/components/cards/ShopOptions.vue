@@ -1,5 +1,6 @@
 <template>
   <q-select
+    ref="select"
     v-model="form.shop"
     :options="filterOptions"
     label="Séléctionne une enseigne"
@@ -13,14 +14,16 @@
     ]"
     @new-value="createShops"
     @focus="resetModel"
-    @filter="handleFilter"
+    @popup-hide="blurInput"
   />
 </template>
 
 <script setup lang="ts">
 import { Card } from 'src/types/cards';
 import { shops } from 'src/assets/shops.js';
-import { ref } from 'vue';
+import { ref, useTemplateRef } from 'vue';
+
+const saveWidgetRef = useTemplateRef<HTMLInputElement>('select');
 
 const form = defineModel('form', {
   type: Object as () => Card,
@@ -28,19 +31,6 @@ const form = defineModel('form', {
 });
 
 const filterOptions = ref(shops);
-
-function handleFilter(val: string, update: (callback: () => void) => void) {
-  update(() => {
-    if (val === '') {
-      filterOptions.value = shops;
-    } else {
-      const needle = val.toLowerCase();
-      filterOptions.value = shops.filter(
-        (v) => v.label.toLowerCase().indexOf(needle) > -1,
-      );
-    }
-  });
-}
 
 function createShops(
   val: string,
@@ -50,18 +40,22 @@ function createShops(
     const shopFound = shops.find(
       (shop) => shop.label.toLowerCase() === val.toLowerCase(),
     );
+    if (shopFound) return;
+
     const newShop = {
       label: val,
       id: shops.length + 1,
     };
-    if (!shopFound) {
-      shops.push(newShop);
-    }
     done(newShop, 'toggle');
   }
 }
 
+function blurInput() {
+  saveWidgetRef.value.blur();
+}
+
 function resetModel() {
+  console.log('reset');
   form.value.shop = {
     label: '',
     id: 0,
