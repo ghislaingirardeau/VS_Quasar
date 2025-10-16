@@ -1,5 +1,6 @@
 # Quasar App (quasar-vueschool)
 
+
 A Quasar Project
 
 - [Quasar App (quasar-vueschool)](#quasar-app-quasar-vueschool)
@@ -18,7 +19,6 @@ A Quasar Project
   - [assets VS public](#assets-vs-public)
   - [Quasar electron](#quasar-electron)
   - [Quasar Capacitor for Mobile app](#quasar-capacitor-for-mobile-app)
-  - [Test Unitaire](#test-unitaire)
 
 ## Quasar CLI
 

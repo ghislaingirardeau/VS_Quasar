@@ -29,26 +29,6 @@ import { useAuth } from 'src/stores/auth';
 
 const auth = useAuth();
 const { loggedIn } = storeToRefs(auth);
-
-/* onMounted(() => {
-  window.addEventListener('beforeunload', () => {
-    if (navigator.serviceWorker.controller) {
-      const listsStore = useLists();
-      // const cardsStore = useCards();
-      // const shoppingStore = useShoppingItem();
-
-      if (navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.postMessage({
-          type: 'SAVE_TO_FIRESTORE',
-          payload: {
-            lists: JSON.parse(JSON.stringify(listsStore.lists)),
-            userUid: 'ikySwLfqboQpBh4eDZQeGc87k0F3',
-          },
-        });
-      }
-    }
-  });
-}); */
 </script>
 
 <style scoped></style>
